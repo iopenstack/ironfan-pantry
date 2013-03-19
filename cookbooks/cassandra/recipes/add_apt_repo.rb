@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'apt'
+include_recipe 'ironfan-apt'
 
 apt_repository "apache-cassandra" do
   uri "http://www.apache.org/dist/cassandra/debian"

@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'zookeeper'
-include_recipe 'hadoop_cluster::add_cloudera_repo'
+include_recipe 'ironfan-zookeeper'
+include_recipe 'ironfan-hadoop_cluster::add_cloudera_repo'
 
 package 'hadoop-zookeeper'

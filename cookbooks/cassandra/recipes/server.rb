@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'runit'
+include_recipe 'ironfan-runit'
 
 directory('/etc/sv/cassandra/env'){ owner 'root' ; action :create ; recursive true }
 runit_service "cassandra" do

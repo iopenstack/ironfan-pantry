@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'pig'
-include_recipe 'hadoop_cluster::add_cloudera_repo'
+include_recipe 'ironfan-pig'
+include_recipe 'ironfan-hadoop_cluster::add_cloudera_repo'
 
 #
 # Install package

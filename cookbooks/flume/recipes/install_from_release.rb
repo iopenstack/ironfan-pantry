@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'flume::default'
+include_recipe 'ironfan-flume::default'
 
 #
 # install into eg. /usr/local/share/flume-git

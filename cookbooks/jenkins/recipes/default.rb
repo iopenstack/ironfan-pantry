@@ -20,9 +20,9 @@
 # limitations under the License.
 #
 
-include_recipe 'java'
-include_recipe 'silverware'
-include_recipe 'volumes'
+include_recipe 'ironfan-java'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-volumes'
 
 jenkins_server = discover(:jenkins, :server)
 # FIXME: This step is unnecessary; both port and url should be received
@@ -36,7 +36,7 @@ if jenkins_server
 end
 
 if platform?('ubuntu')
-  include_recipe 'jenkins::add_apt_repo'
+  include_recipe 'ironfan-jenkins::add_apt_repo'
 end
 
 

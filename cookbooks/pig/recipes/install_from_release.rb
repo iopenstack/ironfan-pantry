@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'pig'
-include_recipe 'ant'
-include_recipe 'install_from'
+include_recipe 'ironfan-pig'
+include_recipe 'ironfan-ant'
+include_recipe 'ironfan-install_from'
 
 package "ivy" if platform?('ubuntu')
 package "subversion" if platform?('centos')

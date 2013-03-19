@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'flume'
-include_recipe 'runit'
+include_recipe 'ironfan-flume'
+include_recipe 'ironfan-runit'
 
 standard_dirs('flume.agent') do
   directories [:log_dir]

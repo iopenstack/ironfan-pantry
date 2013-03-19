@@ -21,7 +21,7 @@
 
 # == Recipes
 
-include_recipe 'cassandra'
+include_recipe 'ironfan-cassandra'
 
 # == Packages
 

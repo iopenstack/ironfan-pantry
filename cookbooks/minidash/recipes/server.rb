@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'minidash'
-include_recipe 'runit'
+include_recipe 'ironfan-minidash'
+include_recipe 'ironfan-runit'
 
 #
 # Lightweight THTTPD server

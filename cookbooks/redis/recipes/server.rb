@@ -25,9 +25,9 @@ end
 
 package "redis-server"
 
-include_recipe 'runit'
-include_recipe 'silverware'
-include_recipe 'redis::default'
+include_recipe 'ironfan-runit'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-redis::default'
 
 standard_dirs('redis.server') do
   directories   :conf_dir, :log_dir, :data_dir

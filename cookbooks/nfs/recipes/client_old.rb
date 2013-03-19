@@ -9,7 +9,7 @@
 # (no license specified)
 #
 
-include_recipe 'nfs::default'
+include_recipe 'ironfan-nfs::default'
 
 service('rpcbind').run_action(:start) if platform?(:centos)
 

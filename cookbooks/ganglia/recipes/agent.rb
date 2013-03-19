@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'ganglia'
-include_recipe 'runit'
+include_recipe 'ironfan-ganglia'
+include_recipe 'ironfan-runit'
 
 daemon_user('ganglia.agent')
 

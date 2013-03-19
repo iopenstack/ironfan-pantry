@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'xfs'
+include_recipe 'ironfan-xfs'
 
 #
 # install mdadm immediately

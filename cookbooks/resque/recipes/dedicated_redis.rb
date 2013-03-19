@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'redis'
-include_recipe 'resque'
-include_recipe 'runit'
+include_recipe 'ironfan-redis'
+include_recipe 'ironfan-resque'
+include_recipe 'ironfan-runit'
 
 #
 # Config

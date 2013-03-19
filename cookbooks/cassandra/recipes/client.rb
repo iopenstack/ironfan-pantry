@@ -23,4 +23,4 @@
 # actually provide the service or start the daemon, or try to become a seed
 # or anything like that....
 
-include_recipe 'cassandra::config_files'
+include_recipe 'ironfan-cassandra::config_files'

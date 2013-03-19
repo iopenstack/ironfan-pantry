@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'zookeeper'
+include_recipe 'ironfan-zookeeper'
 
 # Stuff the Zookeeper jars into the classpath
 node.set[:hadoop][:extra_classpaths][:zookeeper] = "#{node[:zookeeper][:home_dir]}/zookeeper.jar" if node[:hadoop] and node[:hadoop][:extra_classpaths]

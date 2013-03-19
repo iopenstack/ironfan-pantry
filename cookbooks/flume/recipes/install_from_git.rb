@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'flume::default'
-include_recipe 'maven'
+include_recipe 'ironfan-flume::default'
+include_recipe 'ironfan-maven'
 
 #
 # install into eg. /usr/local/share/flume-git

@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
+include_recipe 'ironfan-silverware'
 
 # FLIP FIX THIS -- it breaks on new builds.  chef_gem is definitely
 # the future, but the code in libraries/rubix_connection.rb:21 used to

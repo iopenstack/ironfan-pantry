@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'route53'
+include_recipe 'ironfan-route53'
 
 # aws = data_bag_item("aws", "route53")
 aws = node[:aws]

@@ -1,4 +1,4 @@
-include_recipe 'apache2::mod_python'
+include_recipe 'ironfan-apache2::mod_python'
 
 template "#{node[:apache][:dir]}/sites-available/graphite.conf" do
   mode          0644

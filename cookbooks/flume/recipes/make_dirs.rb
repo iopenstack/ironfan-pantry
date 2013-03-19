@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
-include_recipe 'volumes'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-volumes'
 
 #
 # Install package

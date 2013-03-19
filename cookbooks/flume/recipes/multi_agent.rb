@@ -1,5 +1,5 @@
-include_recipe 'flume'
-include_recipe 'runit'
+include_recipe 'ironfan-flume'
+include_recipe 'ironfan-runit'
 
 node[:flume][:multi_agent][:count].times.map do |index|
 

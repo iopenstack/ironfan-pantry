@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'graphite'
-include_recipe 'ganglia'
+include_recipe 'ironfan-graphite'
+include_recipe 'ironfan-ganglia'
 
 target = "#{node[:graphite][:data_dir]}/rrd/#{node[:ganglia][:cluster_name]}"
 

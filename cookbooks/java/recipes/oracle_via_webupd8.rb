@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'apt'
+include_recipe 'ironfan-apt'
 
 java_home = node['java']["java_home"]
 jdk_version = node['java']['jdk_version'].to_s

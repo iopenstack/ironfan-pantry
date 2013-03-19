@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'mongodb'
-include_recipe 'volumes'
-include_recipe 'runit'
+include_recipe 'ironfan-mongodb'
+include_recipe 'ironfan-volumes'
+include_recipe 'ironfan-runit'
 
 #
 # Directories

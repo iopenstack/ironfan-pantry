@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'runit'
-include_recipe 'tuning'
+include_recipe 'ironfan-runit'
+include_recipe 'ironfan-tuning'
 
 #
 # Locations

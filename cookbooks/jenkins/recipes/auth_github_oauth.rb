@@ -19,6 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe 'jenkins::build_from_github'
+include_recipe 'ironfan-jenkins::build_from_github'
 
 jenkins_plugins('github-oauth')

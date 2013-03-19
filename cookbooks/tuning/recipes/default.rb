@@ -20,5 +20,5 @@
 #
 
 if platform?(%w[ debian ubuntu ])
-  include_recipe 'tuning::ubuntu'
+  include_recipe 'ironfan-tuning::ubuntu'
 end

@@ -18,7 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'silverware'
+include_recipe 'ironfan-silverware'
 class Chef::Resource::Template ; include FlumeCluster ; end
 
 # :hadoop, :hbase, :zookeeper, :jruby

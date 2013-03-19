@@ -19,5 +19,5 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
-include_recipe 'java'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-java'

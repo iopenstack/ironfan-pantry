@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'ganglia'
-include_recipe 'runit'
-include_recipe 'volumes'
+include_recipe 'ironfan-ganglia'
+include_recipe 'ironfan-runit'
+include_recipe 'ironfan-volumes'
 
 daemon_user('ganglia.server')
 

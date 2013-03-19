@@ -19,6 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
+include_recipe 'ironfan-ironfan-silverware'
 
 minidash_dashboard('volumes') if defined?(minidash_dashboard)

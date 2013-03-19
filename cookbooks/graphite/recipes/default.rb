@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'python'
-include_recipe 'silverware'
+include_recipe 'ironfan-python'
+include_recipe 'ironfan-silverware'
 
 daemon_user(:graphite)
 

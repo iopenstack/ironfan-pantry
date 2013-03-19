@@ -3,10 +3,10 @@
 # Recipe::              backup_tables
 # Author::              Brandon Bell - Infochimps, Inc
 
-include_recipe 'hadoop_cluster::config_files'
-include_recipe 'hbase::default'
-include_recipe 'hbase::config_files'
-include_recipe 'backups::s3cfg'
+include_recipe 'ironfan-hadoop_cluster::config_files'
+include_recipe 'ironfan-hbase::default'
+include_recipe 'ironfan-hbase::config_files'
+include_recipe 'ironfan-backups::s3cfg'
 
 template "#{node[:backups][:hbase][:conf]}" do
   source	"hbase_backup.yaml.erb"

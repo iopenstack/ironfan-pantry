@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'runit'
-include_recipe 'silverware'
-include_recipe 'zookeeper'
+include_recipe 'ironfan-runit'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-zookeeper'
 
 # === Locations
 

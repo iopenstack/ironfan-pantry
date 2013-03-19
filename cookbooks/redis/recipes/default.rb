@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
+include_recipe 'ironfan-silverware'
 
 standard_dirs('redis.server') do
   directories   :conf_dir

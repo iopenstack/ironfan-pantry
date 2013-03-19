@@ -36,7 +36,7 @@ node.set[:motd][:private_ips]   = node[:cloud][:private_ips]    || []
 node.set[:motd][:public_ips]    = node[:cloud][:public_ips]     || []
 node.set[:motd][:description]   = node[:lsb][:description]      || ''
 
-include_recipe 'motd::ec2' if node[:ec2]
+include_recipe 'ironfan-motd::ec2' if node[:ec2]
 
 template "/etc/motd" do
   owner  "root"

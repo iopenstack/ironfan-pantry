@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'ufw'
+include_recipe 'ironfan-ufw'
 # enable platform default firewall
 firewall "ufw" do
   action :enable

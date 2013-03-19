@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'jenkins'
+include_recipe 'ironfan-jenkins'
 
 announce(:jenkins, :server,
   :port => node[:jenkins][:server][:port],
@@ -55,7 +55,7 @@ package "jenkins"
 case node.platform
 when "ubuntu", "debian"
 
-  include_recipe 'runit'
+  include_recipe 'ironfan-runit'
   package        "daemon"
 
   template '/etc/default/jenkins' do

@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'minidash'
+include_recipe 'ironfan-minidash'
 
 #
 # Register dashboard

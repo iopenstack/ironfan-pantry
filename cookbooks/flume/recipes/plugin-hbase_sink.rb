@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
+include_recipe 'ironfan-silverware'
 
 directory File.join(node[:flume][:home_dir], 'plugins') do
   owner node[:flume][:user]

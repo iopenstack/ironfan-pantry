@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'hbase'
+include_recipe 'ironfan-hbase'
 
 template "/etc/cron.weekly/backup_hbase_tables" do
   source        "export_hbase_tables.rb.erb"

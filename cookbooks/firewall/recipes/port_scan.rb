@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'iptables'
+include_recipe 'ironfan-iptables'
 
 (node[:firewall][:port_scan] || {}).each do |svc, info|
   iptables_rule "no_port_scan_#{svc}" do

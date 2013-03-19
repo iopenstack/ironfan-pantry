@@ -19,10 +19,10 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
-include_recipe 'java' ; complain_if_not_sun_java(:flume)
-include_recipe 'volumes'
-include_recipe 'thrift'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-java' ; complain_if_not_sun_java(:flume)
+include_recipe 'ironfan-volumes'
+include_recipe 'ironfan-thrift'
 class Chef::Resource::Template ; include FlumeCluster ; end
 
 #

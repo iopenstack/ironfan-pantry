@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'install_from'
+include_recipe 'ironfan-install_from'
 
 install_from_release('snappy') do
   release_url   node[:snappy][:release_url]

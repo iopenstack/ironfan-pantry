@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'hadoop_cluster'
-include_recipe 'runit'
+include_recipe 'ironfan-hadoop_cluster'
+include_recipe 'ironfan-runit'
 
 hadoop_service(:secondarynn) do 
   old_service_name :secondarynamenode

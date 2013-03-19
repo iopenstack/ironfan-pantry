@@ -32,7 +32,7 @@ when 'centos'
   end
 
 when 'ubuntu'
-  include_recipe 'apt'
+  include_recipe 'ironfan-apt'
 
   if node[:apt][:cloudera][:force_distro] != node[:lsb][:codename]
     Chef::Log.info "Forcing cloudera distro to '#{node[:apt][:cloudera][:force_distro]}' (your machine is '#{node[:lsb][:codename]}')"

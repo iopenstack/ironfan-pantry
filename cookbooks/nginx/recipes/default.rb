@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include_recipe 'yum::epel' if platform?('centos')
+include_recipe 'ironfan-yum::epel' if platform?('centos')
 
 package "nginx"
 

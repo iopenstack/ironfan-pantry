@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'redis::client'
-include_recipe 'runit'
+include_recipe 'ironfan-redis::client'
+include_recipe 'ironfan-runit'
 
 #
 # Install

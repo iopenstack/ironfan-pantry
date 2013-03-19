@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'volumes'
-include_recipe 'silverware'
-include_recipe 'java' ; complain_if_not_sun_java(:elasticsearch)
+include_recipe 'ironfan-volumes'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-java' ; complain_if_not_sun_java(:elasticsearch)
 
 # freeze the value of the cluster_name
 node.set[:elasticsearch][:realm] = node[:elasticsearch][:realm]

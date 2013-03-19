@@ -27,7 +27,7 @@
 #
 #
 
-include_recipe 'install_from'
+include_recipe 'ironfan-install_from'
 
 install_from_release(:mx4j) do
   release_url   node[:cassandra][:mx4j_release_url]

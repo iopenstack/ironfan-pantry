@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'volumes'
-include_recipe 'silverware'
-include_recipe 'java'       ; complain_if_not_sun_java(:zookeeper)
+include_recipe 'ironfan-volumes'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-java'       ; complain_if_not_sun_java(:zookeeper)
 
 #
 # User

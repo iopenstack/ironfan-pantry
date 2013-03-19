@@ -19,6 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe 'git'
+include_recipe 'ironfan-git'
 
 jenkins_plugins('git', 'github', 'github-api')

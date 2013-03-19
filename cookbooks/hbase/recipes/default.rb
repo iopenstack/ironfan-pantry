@@ -19,14 +19,14 @@
 # limitations under the License.
 #
 
-include_recipe 'java' ; complain_if_not_sun_java(:hbase)
-include_recipe 'silverware'
-include_recipe 'volumes'
-include_recipe 'ganglia'
+include_recipe 'ironfan-java' ; complain_if_not_sun_java(:hbase)
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-volumes'
+include_recipe 'ironfan-ganglia'
 
-include_recipe 'hadoop_cluster'
-include_recipe 'hadoop_cluster::add_cloudera_repo'
-include_recipe 'zookeeper::client'
+include_recipe 'ironfan-hadoop_cluster'
+include_recipe 'ironfan-hadoop_cluster::add_cloudera_repo'
+include_recipe 'ironfan-zookeeper::client'
 
 #
 # Users

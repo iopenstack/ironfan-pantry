@@ -19,10 +19,10 @@
 
 version = node['thrift']['version']
 
-include_recipe "build-essential"
-include_recipe "boost"
-include_recipe "python"
-include_recipe "install_from"
+include_recipe "ironfan-build-essential"
+include_recipe "ironfan-boost"
+include_recipe "ironfan-python"
+include_recipe "ironfan-install_from"
 
 # no seriously -- thrift wants these ancient and unjustified gem versions
 gem_package('rspec'){   version '1.3.2';      action :install }

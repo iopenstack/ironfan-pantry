@@ -23,7 +23,7 @@
 case node['platform']
 when 'ubuntu','debian'
 
-  include_recipe 'apt'
+  include_recipe 'ironfan-apt'
 
   # use opscode apt repo for older releases
   if (platform?("debian") && (node.platform_version.to_f < 7.0)) || 

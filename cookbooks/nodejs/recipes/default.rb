@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-include_recipe 'python'
+include_recipe 'ironfan-python'
 
 package "python-software-properties" if platform?('ubuntu')
 
 # # FIXME: this should be done in role
-# include_recipe 'nodejs::install_from_package'
+# include_recipe 'ironfan-nodejs::install_from_package'

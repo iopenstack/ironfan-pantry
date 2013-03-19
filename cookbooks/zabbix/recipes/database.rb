@@ -19,6 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe 'database'
+include_recipe 'ironfan-database'
 
-include_recipe "zabbix::database_#{node.zabbix.database.install_method}"
+include_recipe "ironfan-zabbix::database_#{node.zabbix.database.install_method}"

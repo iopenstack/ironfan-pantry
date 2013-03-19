@@ -6,7 +6,7 @@
 #  directories [:conf_dir]
 #end
 
-include_recipe 'silverware'
+include_recipe 'ironfan-silverware'
 package "git"
 
 directory node['iron_cuke']['conf_dir'] do

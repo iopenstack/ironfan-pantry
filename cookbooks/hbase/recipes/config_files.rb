@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'hbase'
+include_recipe 'ironfan-hbase'
 
 #
 # Configuration files

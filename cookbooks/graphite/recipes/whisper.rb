@@ -19,5 +19,5 @@
 # limitations under the License.
 #
 
-include_recipe 'runit'
-include_recipe 'install_from'
+include_recipe 'ironfan-runit'
+include_recipe 'ironfan-install_from'

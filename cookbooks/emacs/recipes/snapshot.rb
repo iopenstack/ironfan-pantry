@@ -1,4 +1,4 @@
-include_recipe 'apt'
+include_recipe 'ironfan-apt'
 
 # Add cloudera package repo
 apt_repository 'emacs_snapshot' do

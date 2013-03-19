@@ -19,4 +19,4 @@
 # limitations under the License.
 #
 
-include_recipe 'java' ; complain_if_not_sun_java(:pig)
+include_recipe 'ironfan-java' ; complain_if_not_sun_java(:pig)

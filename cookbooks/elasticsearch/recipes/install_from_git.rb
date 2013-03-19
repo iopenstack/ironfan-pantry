@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'java' ; complain_if_not_sun_java(:elasticsearch)
+include_recipe 'ironfan-java' ; complain_if_not_sun_java(:elasticsearch)
 package 'unzip'
 
 #

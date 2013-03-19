@@ -19,10 +19,10 @@
 # limitations under the License.
 #
 
-include_recipe 'runit'
-include_recipe 'silverware'
-include_recipe 'statsd'
-include_recipe 'graphite'
+include_recipe 'ironfan-runit'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-statsd'
+include_recipe 'ironfan-graphite'
 
 daemon_user(:statsd)
 

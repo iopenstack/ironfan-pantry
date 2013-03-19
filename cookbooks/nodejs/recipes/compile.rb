@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'python'
-include_recipe 'build-essential'
+include_recipe 'ironfan-python'
+include_recipe 'ironfan-build-essential'
 
 package "git"
 

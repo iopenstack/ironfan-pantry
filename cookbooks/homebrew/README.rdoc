@@ -48,7 +48,7 @@ None.
 Just make sure that this cookbook is selected before you start installing
 packages. You can add:
 
-  include_recipe 'homebrew'
+  include_recipe 'ironfan-homebrew'
 
 to all your recipes that install packages, or you can just make sure it's on
 the run list somewhere early on. The bookbook itself ensures that Homebrew is

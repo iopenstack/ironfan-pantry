@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-include_recipe 'flume::default'
-include_recipe 'hadoop_cluster::add_cloudera_repo'
+include_recipe 'ironfan-flume::default'
+include_recipe 'ironfan-hadoop_cluster::add_cloudera_repo'
 
 #
 # Install from package

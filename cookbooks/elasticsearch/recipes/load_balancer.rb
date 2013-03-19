@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'aws'
+include_recipe 'ironfan-aws'
 
 # TODO: Check to make sure this doesn't depend on the obselete nginx front-end setup
 load_balancer   node[:elasticsearch][:load_balancer] if node[:elasticsearch][:load_balancer]

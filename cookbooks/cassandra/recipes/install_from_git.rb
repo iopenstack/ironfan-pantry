@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe 'cassandra'
+include_recipe 'ironfan-cassandra'
 
 home_dir        = node[:cassandra][:home_dir]
 cassandra_install_dir = home_dir + '-git'

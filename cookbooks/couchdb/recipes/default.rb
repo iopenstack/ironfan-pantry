@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "erlang"
+include_recipe "ironfan-erlang"
 
 case node['platform']
 when "redhat","centos","fedora","amazon"
@@ -33,7 +33,7 @@ when "redhat","centos","fedora","amazon"
     system true
   end
   
-  include_recipe 'yum::epel'
+  include_recipe 'ironfan-yum::epel'
 end
 
 package "couchdb" do

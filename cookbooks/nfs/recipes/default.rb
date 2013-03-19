@@ -9,7 +9,7 @@
 # (no license specified)
 #
 
-include_recipe 'silverware'
+include_recipe 'ironfan-silverware'
 
 nfs_package =
   case node[:platform]
