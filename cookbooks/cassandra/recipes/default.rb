@@ -21,10 +21,10 @@
 
 # == Recipes
 
-include_recipe 'ironfan-ironfan-silverware'
-include_recipe 'ironfan-ironfan-volumes'
-include_recipe 'ironfan-ironfan-java' ; complain_if_not_sun_java(:cassandra)
-include_recipe 'ironfan-ironfan-thrift'
+include_recipe 'ironfan-silverware'
+include_recipe 'ironfan-volumes'
+include_recipe 'ironfan-java' ; complain_if_not_sun_java(:cassandra)
+include_recipe 'ironfan-thrift'
 
 # == Packages
 

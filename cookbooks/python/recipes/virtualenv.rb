@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include_recipe "python::pip"
+include_recipe "ironfan-python::pip"
 
 python_pip "virtualenv" do
   action :install
