@@ -6,14 +6,14 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Cassandra: a massively scalable high-performance distributed storage system"
 
-depends          "java"
-depends          "apt"
-depends          "runit"
-depends          "thrift"
-depends          "iptables"
-depends          "volumes"
-depends          "silverware"
-depends          "install_from"
+depends          "ironfan-java"
+depends          "ironfan-apt"
+depends          "ironfan-runit"
+depends          "ironfan-thrift"
+depends          "ironfan-iptables"
+depends          "ironfan-volumes"
+depends          "ironfan-silverware"
+depends          "ironfan-install_from"
 
 recipe           "cassandra::autoconf",                "Automatically configure nodes from chef-server information."
 recipe           "cassandra::ec2snitch",               "Automatically configure properties snitch for clusters on EC2."
