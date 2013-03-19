@@ -6,11 +6,11 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Installs/Configures jruby"
 
-depends          "java"
-depends          "install_from"
+depends          "ironfan-java"
+depends          "ironfan-install_from"
 
-recipe           "jruby::default",                     "Base configuration for jruby"
-recipe           "jruby::gems",                        "Gems"
+recipe           "ironfan-jruby::default",                     "Base configuration for jruby"
+recipe           "ironfan-jruby::gems",                        "Gems"
 
 %w[ debian ubuntu ].each do |os|
   supports os

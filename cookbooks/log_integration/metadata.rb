@@ -6,13 +6,13 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Log integration -- coordinates rotation and archival of logs."
 
-recipe           "log_integration::logrotate", "Rotates logs using lograte."
+recipe           "ironfan-log_integration::logrotate", "Rotates logs using lograte."
 
 %w[ debian ubuntu ].each do |os|
   supports os
 end
 
-depends 'silverware'
+depends 'ironfan-silverware'
 
 
 attribute "log_integration/logrotate/conf_dir",

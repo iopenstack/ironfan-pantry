@@ -4,8 +4,8 @@ license           "Apache 2.0"
 description       "Installs git and/or sets up a Git server daemon"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
-recipe            "git", "Installs git"
-recipe            "git::server", "Sets up a runit_service for git daemon"
+recipe            "ironfan-git", "Installs git"
+recipe            "ironfan-git::server", "Sets up a runit_service for git daemon"
 
 %w{ ubuntu debian arch centos }.each do |os|
   supports os

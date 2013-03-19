@@ -3,11 +3,11 @@ maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs and configures RabbitMQ server"
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
-recipe            "rabbitmq", "Install and configure RabbitMQ"
-recipe            "rabbitmq::cluster", "Set up RabbitMQ clustering."
-depends           "apt", ">= 1.1"
-depends           "yum", ">= 0.5.0"
-depends           "erlang", ">= 0.9"
+recipe            "ironfan-rabbitmq", "Install and configure RabbitMQ"
+recipe            "ironfan-rabbitmq::cluster", "Set up RabbitMQ clustering."
+depends           "ironfan-apt", ">= 1.1"
+depends           "ironfan-yum", ">= 0.5.0"
+depends           "ironfan-erlang", ">= 0.9"
 
 %w{ubuntu debian redhat centos scientific}.each do |os|
   supports os

@@ -6,9 +6,9 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Installs/Configures snappy, the compression codec from google"
 
-depends          "install_from"
+depends          "ironfan-install_from"
 
-recipe           "snappy::default",                    "Base configuration for snappy"
+recipe           "ironfan-snappy::default",                    "Base configuration for snappy"
 
 %w[ debian ubuntu ].each do |os|
   supports os

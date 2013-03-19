@@ -12,4 +12,4 @@ end
   supports os
 end
 
-recipe "ant::default", "Installs and configures Ant"
+recipe "ironfan-ant::default", "Installs and configures Ant"

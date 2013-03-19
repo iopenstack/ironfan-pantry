@@ -6,13 +6,13 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "MongoDB is a scalable, high-performance, open source NoSQL database. "
 
-depends          "runit"
-depends          "volumes"
-depends		 "install_from"
+depends          "ironfan-runit"
+depends          "ironfan-volumes"
+depends		 "ironfan-install_from"
 
-recipe           "mongodb::default",                   "Base configuration for mongodb"
-recipe           "mongodb::server",                    "MongoDB server"
-recipe           "mongodb::config_files",              "Final configuration"
+recipe           "ironfan-mongodb::default",                   "Base configuration for mongodb"
+recipe           "ironfan-mongodb::server",                    "MongoDB server"
+recipe           "ironfan-mongodb::config_files",              "Final configuration"
 
 %w[ debian ubuntu ].each do |os|
   supports os

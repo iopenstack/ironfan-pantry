@@ -6,18 +6,18 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Zookeeper, a distributed high-availability consistent datastore"
 
-depends          "ant"
-depends          "java"
-depends          "runit"
-depends          "volumes"
-depends          "silverware"
-depends          "hadoop_cluster"
-depends          "install_from"
+depends          "ironfan-ant"
+depends          "ironfan-java"
+depends          "ironfan-runit"
+depends          "ironfan-volumes"
+depends          "ironfan-silverware"
+depends          "ironfan-hadoop_cluster"
+depends          "ironfan-install_from"
 
-recipe           "zookeeper::client",                  "Installs Zookeeper client libraries"
-recipe           "zookeeper::default",                 "Base configuration for zookeeper"
-recipe           "zookeeper::server",                  "Installs Zookeeper server, sets up and starts service"
-recipe           "zookeeper::config_files",            "Config files -- include this last after discovery"
+recipe           "ironfan-zookeeper::client",                  "Installs Zookeeper client libraries"
+recipe           "ironfan-zookeeper::default",                 "Base configuration for zookeeper"
+recipe           "ironfan-zookeeper::server",                  "Installs Zookeeper server, sets up and starts service"
+recipe           "ironfan-zookeeper::config_files",            "Config files -- include this last after discovery"
 
 %w[ debian ubuntu ].each do |os|
   supports os

@@ -5,10 +5,10 @@ description      "Installs/Configures jpackage"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-depends "java"
+depends "ironfan-java"
 
 %w{ centos redhat fedora }.each do |os|
   supports os
 end
 
-recipe "jpackage::default", "Installs and configures jpackage"
+recipe "ironfan-jpackage::default", "Installs and configures jpackage"

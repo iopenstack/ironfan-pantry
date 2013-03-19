@@ -6,18 +6,18 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Installs/Configures graphite"
 
-depends          "python"
-depends          "apache2"
-depends          "runit"
-depends          "ganglia"
-depends          "install_from"
-depends          "silverware"
+depends          "ironfan-python"
+depends          "ironfan-apache2"
+depends          "ironfan-runit"
+depends          "ironfan-ganglia"
+depends          "ironfan-install_from"
+depends          "ironfan-silverware"
 
-recipe           "graphite::carbon",                   "Carbon"
-recipe           "graphite::default",                  "Base configuration for graphite"
-recipe           "graphite::ganglia",                  "Ganglia"
-recipe           "graphite::dashboard",                "Web Dashboard"
-recipe           "graphite::whisper",                  "Whisper"
+recipe           "ironfan-graphite::carbon",                   "Carbon"
+recipe           "ironfan-graphite::default",                  "Base configuration for graphite"
+recipe           "ironfan-graphite::ganglia",                  "Ganglia"
+recipe           "ironfan-graphite::dashboard",                "Web Dashboard"
+recipe           "ironfan-graphite::whisper",                  "Whisper"
 
 %w[ debian ubuntu ].each do |os|
   supports os

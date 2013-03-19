@@ -6,11 +6,11 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Installs/Configures nodejs"
 
-depends          "python"
-depends          "build-essential"
+depends          "ironfan-python"
+depends          "ironfan-build-essential"
 
-recipe           "nodejs::compile",                    "Compile"
-recipe           "nodejs::default",                    "Base configuration for nodejs"
+recipe           "ironfan-nodejs::compile",                    "Compile"
+recipe           "ironfan-nodejs::default",                    "Base configuration for nodejs"
 
 %w[ debian ubuntu ].each do |os|
   supports os

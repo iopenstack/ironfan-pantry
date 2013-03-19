@@ -5,11 +5,11 @@ description      "Installs thrift from source"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-recipe "thrift", "Installs thrift from source"
+recipe "ironfan-thrift", "Installs thrift from source"
 
 supports "ubuntu"
 
-depends 'build-essential'
-depends 'boost'
-depends 'python'
-depends 'install_from'
+depends 'ironfan-build-essential'
+depends 'ironfan-boost'
+depends 'ironfan-python'
+depends 'ironfan-install_from'

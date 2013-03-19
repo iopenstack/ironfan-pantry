@@ -4,7 +4,7 @@ license          "Apache 2.0"
 description      "Installs/Configures ufw"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
-depends          "firewall", ">= 0.8"
+depends          "ironfan-firewall", ">= 0.8"
 
 %w{ ubuntu }.each do |os|
   supports os

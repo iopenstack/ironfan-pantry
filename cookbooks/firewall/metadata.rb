@@ -6,10 +6,10 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Installs/Configures firewall"
 
-depends          "iptables"
+depends          "ironfan-iptables"
 
-recipe           "firewall::default",                  "Base configuration for firewall"
-recipe           "firewall::port_scan",                "Port Scan"
+recipe           "ironfan-firewall::default",                  "Base configuration for firewall"
+recipe           "ironfan-firewall::port_scan",                "Port Scan"
 
 %w[ debian ubuntu ].each do |os|
   supports os

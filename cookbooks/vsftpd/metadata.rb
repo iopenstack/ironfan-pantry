@@ -5,5 +5,5 @@ description      "Installs/Configures vsftpd"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-depends 'silverware'
-depends 'volumes'
+depends 'ironfan-silverware'
+depends 'ironfan-volumes'

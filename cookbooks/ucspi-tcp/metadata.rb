@@ -5,7 +5,7 @@ description      "Installs ucspi-tcp"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-recipe "ucspi-tcp", "Installs ucspi-tcp"
+recipe "ironfan-ucspi-tcp", "Installs ucspi-tcp"
 
 %w{ build-essential }.each do |cb|
   depends cb

@@ -4,7 +4,7 @@ license          "Apache 2.0"
 description      "Installs/Configures daemontools"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
-recipe "daemontools", "Installs daemontools by source or package depending on platform"
+recipe "ironfan-daemontools", "Installs daemontools by source or package depending on platform"
 
 %w{ build-essential ucspi-tcp }.each do |cb|
   depends cb

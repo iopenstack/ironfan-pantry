@@ -4,8 +4,8 @@ license           "Apache 2.0"
 description       "Installs and configures nginx"
 version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-recipe "nginx", "Installs nginx package and sets up configuration with Debian apache style with sites-enabled/sites-available"
-recipe "nginx::source", "Installs nginx from source and sets up configuration with Debian apache style with sites-enabled/sites-available"
+recipe "ironfan-nginx", "Installs nginx package and sets up configuration with Debian apache style with sites-enabled/sites-available"
+recipe "ironfan-nginx::source", "Installs nginx from source and sets up configuration with Debian apache style with sites-enabled/sites-available"
 
 %w{ ubuntu debian centos redhat fedora }.each do |os|
   supports os

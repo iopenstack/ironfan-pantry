@@ -6,12 +6,12 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Installs/Configures resque"
 
-depends          "runit"
-depends          "redis"
+depends          "ironfan-runit"
+depends          "ironfan-redis"
 
-recipe           "resque::default",                    "Base configuration for resque"
-recipe           "resque::server",                     "Server"
-recipe           "resque::dedicated_redis",            "Dedicated redis -- a redis solely for this resque"
+recipe           "ironfan-resque::default",                    "Base configuration for resque"
+recipe           "ironfan-resque::server",                     "Server"
+recipe           "ironfan-resque::dedicated_redis",            "Dedicated redis -- a redis solely for this resque"
 
 %w[ debian ubuntu ].each do |os|
   supports os

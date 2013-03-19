@@ -6,11 +6,11 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Creates and serves a lightweight pluggable dashboard for a machine. Requires only the busybox httpd that is typically pre-installed with your OS"
 
-depends          "runit"
-depends          "silverware"
+depends          "ironfan-runit"
+depends          "ironfan-silverware"
 
-recipe           "minidash::default",                   "Dashboard for this machine: index of services and their dashboard snippets"
-recipe           "minidash::server",                    "Lightweight thttpd server to render minidash dashboards"
+recipe           "ironfan-minidash::default",                   "Dashboard for this machine: index of services and their dashboard snippets"
+recipe           "ironfan-minidash::server",                    "Lightweight thttpd server to render minidash dashboards"
 
 %w[ debian ubuntu ].each do |os|
   supports os

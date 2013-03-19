@@ -6,11 +6,11 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "NFS: network shared filesystem"
 
-depends          "silverware"
+depends          "ironfan-silverware"
 
-recipe           "nfs::client",                        "NFS client: uses silverware to discover its server, and mounts the corresponding NFS directory"
-recipe           "nfs::default",                       "Base configuration for nfs"
-recipe           "nfs::server",                        "NFS server: exports directories via NFS; announces using silverware."
+recipe           "ironfan-nfs::client",                        "NFS client: uses silverware to discover its server, and mounts the corresponding NFS directory"
+recipe           "ironfan-nfs::default",                       "Base configuration for nfs"
+recipe           "ironfan-nfs::server",                        "NFS server: exports directories via NFS; announces using silverware."
 
 %w[ debian ubuntu ].each do |os|
   supports os

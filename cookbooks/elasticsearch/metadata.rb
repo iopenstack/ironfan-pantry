@@ -6,22 +6,22 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Elasticsearch: a distributed full-text search database based on Lucene. You know, for search"
 
-depends          "java"
-depends          "runit"
-depends          "aws"
-depends          "volumes"
-depends          "tuning"
-depends          "silverware"
-depends          "install_from"
+depends          "ironfan-java"
+depends          "ironfan-runit"
+depends          "ironfan-aws"
+depends          "ironfan-volumes"
+depends          "ironfan-tuning"
+depends          "ironfan-silverware"
+depends          "ironfan-install_from"
 
-recipe           "elasticsearch::client",              "Client"
-recipe           "elasticsearch::default",             "Base configuration for elasticsearch"
-recipe           "elasticsearch::install_from_git",    "Install From Git"
-recipe           "elasticsearch::install_from_release", "Install From Release"
-recipe           "elasticsearch::plugins",             "Install Plugins"
-recipe           "elasticsearch::server",              "Server"
-recipe           "elasticsearch::config_files",        "Finalizes the config, writes out the config files"
-recipe           "elasticsearch::load_balancer",       "Load Balancer"
+recipe           "ironfan-elasticsearch::client",              "Client"
+recipe           "ironfan-elasticsearch::default",             "Base configuration for elasticsearch"
+recipe           "ironfan-elasticsearch::install_from_git",    "Install From Git"
+recipe           "ironfan-elasticsearch::install_from_release", "Install From Release"
+recipe           "ironfan-elasticsearch::plugins",             "Install Plugins"
+recipe           "ironfan-elasticsearch::server",              "Server"
+recipe           "ironfan-elasticsearch::config_files",        "Finalizes the config, writes out the config files"
+recipe           "ironfan-elasticsearch::load_balancer",       "Load Balancer"
 
 %w[ debian ubuntu ].each do |os|
   supports os

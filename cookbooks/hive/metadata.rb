@@ -6,10 +6,10 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Installs/Configures hive"
 
-depends          "java"
-depends          "hadoop_cluster"
+depends          "ironfan-java"
+depends          "ironfan-hadoop_cluster"
 
-recipe           "hive::default",                      "Base configuration for hive"
+recipe           "ironfan-hive::default",                      "Base configuration for hive"
 
 %w[ debian ubuntu ].each do |os|
   supports os

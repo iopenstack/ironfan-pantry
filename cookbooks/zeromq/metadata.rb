@@ -5,9 +5,9 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "ZeroMQ: The socket library that acts as a concurrency framework."
 
-depends          "silverware"
+depends          "ironfan-silverware"
 
-recipe           "zeromq::install_from_release", "Installs ZeroMQ"
+recipe           "ironfan-zeromq::install_from_release", "Installs ZeroMQ"
 
 %w[ debian ubuntu ].each do |os|
   supports os

@@ -6,16 +6,16 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Pig: a data analysis program for hadoop. It's like SQL but with less suck and more scalable."
 
-depends          "java"
-depends          "install_from"
-depends          "hadoop_cluster"
-depends          "ant"
+depends          "ironfan-java"
+depends          "ironfan-install_from"
+depends          "ironfan-hadoop_cluster"
+depends          "ironfan-ant"
 
-recipe           "pig::default",                       "Base configuration for pig"
-recipe           "pig::install_from_package",          "Installs pig from the cloudera package -- verified compatible, but on a slow update schedule."
-recipe           "pig::install_from_release",          "Install From the release tarball."
-recipe           "pig::integration",                   "Link in jars from hbase and zookeeper"
-recipe           "pig::piggybank",                     "Compiles the Piggybank, a library of useful functions for pig"
+recipe           "ironfan-pig::default",                       "Base configuration for pig"
+recipe           "ironfan-pig::install_from_package",          "Installs pig from the cloudera package -- verified compatible, but on a slow update schedule."
+recipe           "ironfan-pig::install_from_release",          "Install From the release tarball."
+recipe           "ironfan-pig::integration",                   "Link in jars from hbase and zookeeper"
+recipe           "ironfan-pig::piggybank",                     "Compiles the Piggybank, a library of useful functions for pig"
 
 %w[ debian ubuntu ].each do |os|
   supports os

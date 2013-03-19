@@ -6,13 +6,13 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
 description      "Statsd, a non-blocking proxy to graphite: counting and timing for great justice"
 
-depends          "runit"
-depends          "nodejs"
-depends          "graphite"
-depends          "silverware"
+depends          "ironfan-runit"
+depends          "ironfan-nodejs"
+depends          "ironfan-graphite"
+depends          "ironfan-silverware"
 
-recipe           "statsd::default",                    "Base configuration for statsd"
-recipe           "statsd::server",                     "Server"
+recipe           "ironfan-statsd::default",                    "Base configuration for statsd"
+recipe           "ironfan-statsd::server",                     "Server"
 
 %w[ debian ubuntu ].each do |os|
   supports os
