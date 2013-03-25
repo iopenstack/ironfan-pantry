@@ -1,0 +1,10 @@
+#!/bin/bash
+
+LOG_OUT="<%=File.join(@log_dir,"ui.out")%>"
+ulimit -n 1024
+
+export JAVA_HOME=<%= node[:java][:java_home] %>
+
+cd   <%= @options[:pid_dir] %>
+exec chpst -u <%=@options[:user]%> <%=@options[:install_dir]%>/bin/storm ui >$LOG_OUT 2>&1
+
