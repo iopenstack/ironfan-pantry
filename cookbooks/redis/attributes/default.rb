@@ -42,3 +42,9 @@ default[:redis][:shareobjects]      = "no"
 if (node[:redis][:shareobjects] == "yes")
   default[:redis][:shareobjectspoolsize] = 1024
 end
+
+
+# Settings for the Redis C client
+default[:redis][:redis_c_repo]      = "git://github.com/redis/hiredis.git"
+default[:redis][:redis_c_revision]  = "master"
+

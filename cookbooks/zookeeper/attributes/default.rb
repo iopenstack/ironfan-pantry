@@ -84,3 +84,8 @@ default[:zookeeper][:sync_timeout_ticks]     = 5
 # "auto" means "true if there are 4 or more zookeepers, false otherwise"
 #
 default[:zookeeper][:leader_is_also_server]  = 'auto'
+
+# Settings for the ZooKeeper C++ client
+default[:zookeeper][:zookeeper_cpp_repo] = "https://github.com/m1ch1/zookeeper"
+default[:zookeeper][:zookeeper_cpp_revision] = "trunk"
+
