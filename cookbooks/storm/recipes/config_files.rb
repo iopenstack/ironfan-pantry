@@ -18,19 +18,28 @@
 # limitations under the License.
 #
 
-template "#{node[:storm][:conf_dir]}/storm.yaml" do
+template "#{node[:storm][:home_dir]}/conf/storm.yaml" do
     source      'storm.yaml.erb'
     owner       node[:storm][:user]
     group       node[:storm][:group]
     mode        '0644'
-    variables({ :storm      => node[:storm],
-                :nimbus     => storm_nimbus,
-                :zkservers  => storm_zookeepers })
+    variables({ :nimbus     => node[:storm][:nimbus],
+                :zookeeper  => node[:storm][:zookeeper],
+                :supervisor => node[:storm][:supervisor],
+                :worker     => node[:storm][:worker],
+                :task       => node[:storm][:task],
+                :drpc       => node[:storm][:drpc],
+                :zmq        => node[:storm][:zmq],
+                :ui         => node[:storm][:ui],
+                :topology   => node[:storm][:topology],
+                :nimbus_server     => storm_nimbus,
+                :zookeeper_servers => storm_zookeepers,
+                :zookeeper_port    => storm_zookeeper_port })
 
     notify_startable_storm_services
 end
 
-template "#{node[:storm][:conf_dir]}/storm.log.properties" do
+template "#{node[:storm][:home_dir]}/log4j/storm.log.properties" do
     source      'storm.log.properties.erb'
     owner       node[:storm][:user]
     group       node[:storm][:group]

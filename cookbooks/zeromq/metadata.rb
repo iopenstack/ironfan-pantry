@@ -6,6 +6,7 @@ version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 description      "ZeroMQ: The socket library that acts as a concurrency framework."
 
 depends          "silverware"
+depends          "build-essential"
 
 recipe           "zeromq::install_from_release", "Installs ZeroMQ"
 

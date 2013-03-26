@@ -19,16 +19,17 @@
 #
 
 include_recipe 'java' ; complain_if_not_sun_java(:storm)
-include_recipe 'zeromq::install_from_release'
-include_recipe 'jzmq::install_from_release'
 include_recipe 'install_from'
 
+include_recipe 'zeromq::install_from_release'
+include_recipe 'jzmq::install_from_release'
+
 install_from_release(:storm) do
-  release_url   node[:storm][:release_url]
-  home_dir      node[:storm][:home_dir]
-  version       node[:storm][:version]
-  action        [:install]
-  has_binaries  [ 'bin/storm' ]
-  not_if{ ::File.exists?("#{node[:storm][:install_dir]}/bin/storm") }
+    release_url   node[:storm][:release_url]
+    home_dir      node[:storm][:home_dir]
+    version       node[:storm][:version]
+    action        [:install]
+    not_if{ ::File.exists?("#{node[:storm][:home_dir]}/bin/storm") }
 end
+
 

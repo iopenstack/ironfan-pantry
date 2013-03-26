@@ -6,22 +6,22 @@
 # Copyright 2013, Technicolor, Portico
 #
 
-default[:storm][:version]      = "0.8.2"
-default[:storm][:download_url] = "https://dl.dropbox.com/u/133901206"
+default[:storm][:version]     = '0.8.2'
+default[:storm][:release_url] = "https://dl.dropbox.com/u/133901206/storm-#{node[:storm][:version]}.zip"
 
 # general storm attributes
 default[:storm][:user]     = 'storm'
-default[:storm][:group]    = 'nogroup'
-default[:storm][:home_dir] = "/opt/storm"
-default[:storm][:conf_dir] = "/etc/storm"
+default[:storm][:group]    = 'root'
+default[:storm][:home_dir] = "/usr/local/share/storm"
 default[:storm][:pid_dir]  = "/var/run/storm"
 default[:storm][:log_dir]  = "/var/log/storm"
 
 # zookeeper configuration
-default[:storm][:zkservers]                        = []         # automatically discovered when empty or nil
+default[:storm][:zookeeper][:servers]              = []         # automatically discovered when empty or nil
+default[:storm][:zookeeper][:port]                 = 2181
 default[:storm][:zookeeper][:root]                 = "/storm"
 default[:storm][:transactional][:zookeeper][:root] = "/storm-transactional"
-default[:storm][:transactional][:zookeeper][:port] = 2181
+default[:storm][:transactional][:zookeeper][:port] = node[:storm][:zookeeper][:port]
 
 # supervisor attributes
 default[:storm][:supervisor][:run_state]                 = :start

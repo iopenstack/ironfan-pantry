@@ -18,12 +18,12 @@
 # limitations under the License.
 #
 
-daemon_user('storm') do
+daemon_user(:storm) do
     create_group  false
 end
 
-standard_dirs('storm') do
-    directories [:home_dir, :log_dir, :conf_dir, :pid_dir]
+standard_dirs(:storm) do
+    directories [:log_dir, :pid_dir]
     group       'root'
 end
 

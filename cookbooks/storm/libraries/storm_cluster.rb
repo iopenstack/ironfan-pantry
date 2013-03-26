@@ -28,19 +28,27 @@ module StormCluster
         node[:storm][:cluster_name]
     end
 
+    def storm_zookeeper_port
+        if node[:storm][:zookeeper][:servers].any?
+            node[:storm][:zookeeper][:port]
+        else
+            discover(:zookeeper, :server).node_info[:client_port] rescue ""
+        end
+    end
+
     # discover all zookeeper ip addresses
     def storm_zookeepers
-        if node[:storm][:zkservers].any?
-            node[:storm][:zkservers]
+        if node[:storm][:zookeeper][:servers].any?
+            node[:storm][:zookeeper][:servers]
         else
-            discover_all(:zookeeper, :server).map(&:private_ip).sort.uniq rescue ""
+            discover_all(:zookeeper, :server).map(&:private_hostname).sort.uniq rescue ""
         end
     end
 
     # discover nimbus ip address
     def storm_nimbus
         if node[:storm][:nimbus][:host].nil?
-            discover(:storm, :nimbus).private_ip rescue private_ip_of(node)
+            discover(:storm, :nimbus).private_hostname rescue private_hostname_of(node)
         else
             node[:storm][:nimbus][:host]
         end

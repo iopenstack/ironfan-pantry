@@ -1,9 +1,9 @@
 #
-# Author        :: Bart Vercammen (<bart.vercammen@portico.io>)
-# Cookbook Name :: storm
-# Recipe        :: supervisor
+# Cookbook Name:: ark
+# Recipe:: default
 #
-# Copyright 2013, Technicolor, Portico
+# Author:: Bryan W. Berry <bryan.berry@gmail.com>
+# Copyright 2012, Bryan W. Berry
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,15 +18,12 @@
 # limitations under the License.
 #
 
-include_recipe 'java'
-include_recipe 'storm'
-include_recipe 'runit'
 
-directory('/etc/sv/storm/env'){ owner 'root' ; action :create ; recursive true }
-runit_service "supervisor" do
-    options     node[:storm]
-    run_state   node[:storm][:supervisor][:run_state]
+package "unzip"
+package "libtool"
+package "autoconf"
+package "autogen" unless platform_family?("rhel", "fedora")
+
+if platform?("freebsd")
+  package "gtar"
 end
-
-announce(:storm, :supervisor)
-
