@@ -38,14 +38,14 @@ default[:cassandra][:log_dir]           = '/var/log/cassandra'
 default[:cassandra][:lib_dir]           = '/var/lib/cassandra'
 default[:cassandra][:pid_dir]           = '/var/run/cassandra'
 
-default[:cassandra][:data_dirs]         = ["/data/db/cassandra"]
-default[:cassandra][:commitlog_dir]     = "/mnt/cassandra/commitlog"
-default[:cassandra][:saved_caches_dir]  = "/var/lib/cassandra/saved_caches"
+default[:cassandra][:data_dirs]         = nil   # ["/mnt/cassandra/data"]
+default[:cassandra][:commitlog_dir]     = nil   # "/mnt/cassandra/commitlog"
+default[:cassandra][:saved_caches_dir]  = nil   # "/var/lib/cassandra/saved_caches"
 
 default[:cassandra][:user]              = 'cassandra'
 default[:cassandra][:group]             = 'nogroup'
-default[:users]['cassandra'][:uid]      = 330
-default[:users]['cassandra'][:gid]      = 330
+default[:users][:cassandra][:uid]      = 330
+default[:users][:cassandra][:gid]      = 330
 
 default[:cassandra][:run_state]         = :start
 
@@ -86,14 +86,26 @@ default[:cassandra][:mx4j_release_url]  = "http://downloads.sourceforge.net/proj
 
 default[:cassandra][:auto_bootstrap]    = 'false'
 default[:cassandra][:authenticator]     = "org.apache.cassandra.auth.AllowAllAuthenticator"
-default[:cassandra][:authority]         = "org.apache.cassandra.auth.AllowAllAuthority"
-default[:cassandra][:partitioner]       = "org.apache.cassandra.dht.RandomPartitioner"       # "org.apache.cassandra.dht.OrderPreservingPartitioner"
+
+###TODO: if version >= 1.2.0
+default[:cassandra][:authorizer]         = "org.apache.cassandra.auth.AllowAllAuthorizer"
+### else
+#default[:cassandra][:authority]         = "org.apache.cassandra.auth.AllowAllAuthority"
+### endif
+
+###TODO: if version >= 1.2.0
+default[:cassandra][:partitioner]       = "org.apache.cassandra.dht.Murmur3Partitioner"
+### else
+#default[:cassandra][:partitioner]       = "org.apache.cassandra.dht.RandomPartitioner"
+### endif
+
 default[:cassandra][:endpoint_snitch]   = "org.apache.cassandra.locator.SimpleSnitch"
 default[:cassandra][:dynamic_snitch]    = 'true'
 default[:cassandra][:initial_token]     = ""
 default[:cassandra][:hinted_handoff_enabled]       = 'true'
 default[:cassandra][:max_hint_window_in_ms]        = 3600000
 default[:cassandra][:hinted_handoff_delay_ms]      = 50
+default[:cassandra][:hinted_handoff_throttle_kb]   = 1024
 
 #
 # Tunables -- Memory, Disk and Performance
@@ -107,7 +119,13 @@ default[:cassandra][:concurrent_reads]             = 8             # 2 per core
 default[:cassandra][:concurrent_writes]            = 32            # typical number of clients
 default[:cassandra][:memtable_flush_writers]       = 1             # see comment in cassandra.yaml.erb
 default[:cassandra][:memtable_flush_after]         = 60
-default[:cassandra][:sliced_buffer_size]           = 64            # size of column slices
+
+###TODO: if version >= 1.1.0
+# attribute removed
+### else
+#default[:cassandra][:sliced_buffer_size]           = 64            # size of column slices
+### endif
+
 default[:cassandra][:thrift_framed_transport]      = 15            # default 15; fixes CASSANDRA-475, but make sure your client is happy (Set to nil for debugging)
 default[:cassandra][:thrift_max_message_length]    = 16
 default[:cassandra][:incremental_backups]          = false
@@ -123,7 +141,13 @@ default[:cassandra][:commitlog_sync_period]        = 10000
 default[:cassandra][:flush_largest_memtables_at]   = 0.75
 default[:cassandra][:reduce_cache_sizes_at]        = 0.85
 default[:cassandra][:reduce_cache_capacity_to]     = 0.6
-default[:cassandra][:rpc_timeout_in_ms]            = 10000
+
+###TODO: if version >= 1.2.0
+# attribute removed
+### else
+#default[:cassandra][:rpc_timeout_in_ms]            = 10000
+### endif
+
 default[:cassandra][:rpc_keepalive]                = "false"
 default[:cassandra][:phi_convict_threshold]        = 8
 default[:cassandra][:request_scheduler]            = 'org.apache.cassandra.scheduler.NoScheduler'

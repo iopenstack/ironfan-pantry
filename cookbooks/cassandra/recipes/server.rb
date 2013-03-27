@@ -20,6 +20,25 @@
 #
 
 include_recipe 'runit'
+include_recipe 'volumes'
+
+volume_dirs('cassandra.data') do
+    type        :persistent
+    selects     :all
+    owner       node[:cassandra][:user]
+end
+
+volume_dirs('cassandra.commitlog') do
+    type        :scratch
+    selects     :single
+    owner       node[:cassandra][:user]
+end
+
+volume_dirs('cassandra.saved_caches') do
+    type        :scratch
+    selects     :single
+    owner       node[:cassandra][:user]
+end
 
 directory('/etc/sv/cassandra/env'){ owner 'root' ; action :create ; recursive true }
 runit_service "cassandra" do

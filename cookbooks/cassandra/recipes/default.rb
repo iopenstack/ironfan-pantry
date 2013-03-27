@@ -36,7 +36,7 @@ end
 
 # == Directories
 
-standard_dirs('cassandra') do
+standard_dirs(:cassandra) do
   directories   [:conf_dir, :log_dir, :lib_dir, :pid_dir, :data_dirs, :commitlog_dir, :saved_caches_dir]
   group         'root'
 end
