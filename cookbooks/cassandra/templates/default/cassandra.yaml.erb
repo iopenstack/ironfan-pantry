@@ -34,23 +34,24 @@ hinted_handoff_enabled: <%= @cassandra[:hinted_handoff_enabled] %> #true
 # this defines the maximum amount of time a dead host will have hints
 # generated.  After it has been dead this long, hints will be dropped.
 max_hint_window_in_ms: <%= @cassandra[:max_hint_window_in_ms] %> # one hour
-# Sleep this long after delivering each row or row fragment
 
-###TODO: if version >= 1.2.0
+# Sleep this long after delivering each row or row fragment
+# attribute changed in v1.2.0
+<%- if version_atleast?('1.2.0') %>
 hinted_handoff_throttle_in_kb: <%= @cassandra[:hinted_handoff_throttle_kb] %>
-### else
-#hinted_handoff_throttle_delay_in_ms: <%= @cassandra[:hinted_handoff_delay_ms] %>
-### endif
+<%- else %>
+hinted_handoff_throttle_delay_in_ms: <%= @cassandra[:hinted_handoff_delay_ms] %>
+<%- end %>
 
 # authentication backend, implementing IAuthenticator; used to identify users
 authenticator: <%=@cassandra[:authenticator] %>
 
 # authorization backend, implementing IAuthority; used to limit access/provide permissions
-###TODO: if version >= 1.2.0
+<%- if version_atleast?('1.2.0') %>
 authorizer: <%= @cassandra[:authorizer] %>
-### else
-#authority: <%= @cassandra[:authority] %>
-### endif
+<%- else %>
+authority: <%= @cassandra[:authority] %>
+<%- end %>
 
 # any IPartitioner may be used, including your own as long as it is on
 # the classpath.  Out of the box, Cassandra provides
@@ -135,17 +136,18 @@ reduce_cache_capacity_to: <%= @cassandra[:reduce_cache_capacity_to] %>
 # the topology of the ring.  You must change this if you are running
 # multiple nodes!
 
-###TODO: if version >= 1.2.x
+<%- if version_atleast?('1.2.0') %>
 seed_provider:
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
         - seeds: <%= @seeds.flatten.join(",") %>
-### else
-# <%- @seeds.each do |seed| -%>
-#         - <%= seed %>
-#
-# <%- end -%>
-### endif
+<%- else %>
+seeds:
+<%- @seeds.each do |seed| -%>
+    - <%= seed %>
+
+<%- end %>
+<%- end %>
 
 # Access mode.  mmapped i/o is substantially faster, but only practical on
 # a 64bit machine (which notably does not include EC2 "small" instances)
@@ -175,11 +177,10 @@ memtable_flush_writers: <%= @cassandra[:memtable_flush_writers] %>
 # Buffer size to use when performing contiguous column slices. 
 # Increase this to the size of the column slices you typically perform
 
-###TODO: if version >= 1.1.0
-# removed!
-### else
-# sliced_buffer_size_in_kb: <%= @cassandra[:sliced_buffer_size ] %>
-### endif
+# attribute removed in v1.1.0
+<%- if ! version_atleast?('1.1.0') %>
+sliced_buffer_size_in_kb: <%= @cassandra[:sliced_buffer_size ] %>
+<%- end %>
 
 # TCP port, for commands and data
 storage_port: <%= @cassandra[:storage_port] %>
@@ -259,11 +260,9 @@ compaction_preheat_key_cache: <%= @cassandra[:compaction_preheat_key_cache] %>
 
 # Time to wait for a reply from other nodes before failing the command 
 
-###TODO: if version >= 1.2.0
-# removed!
-### else
-#rpc_timeout_in_ms: <%= @cassandra[:rpc_timeout_in_ms] %>
-# endif
+<%- if ! version_atleast?('1.2.0') %>
+rpc_timeout_in_ms: <%= @cassandra[:rpc_timeout_in_ms] %>
+<%- end %>
 
 # phi value that must be reached for a host to be marked down.
 # most users should never need to adjust this.

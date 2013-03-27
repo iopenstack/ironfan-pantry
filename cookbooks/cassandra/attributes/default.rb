@@ -87,17 +87,12 @@ default[:cassandra][:mx4j_release_url]  = "http://downloads.sourceforge.net/proj
 default[:cassandra][:auto_bootstrap]    = 'false'
 default[:cassandra][:authenticator]     = "org.apache.cassandra.auth.AllowAllAuthenticator"
 
-###TODO: if version >= 1.2.0
+# attribute changed in v1.2.0
 default[:cassandra][:authorizer]         = "org.apache.cassandra.auth.AllowAllAuthorizer"
-### else
-#default[:cassandra][:authority]         = "org.apache.cassandra.auth.AllowAllAuthority"
-### endif
+default[:cassandra][:authority]         = "org.apache.cassandra.auth.AllowAllAuthority"
 
-###TODO: if version >= 1.2.0
+# attribute changed in v1.2.0 from "org.apache.cassandra.dht.RandomPartitioner"
 default[:cassandra][:partitioner]       = "org.apache.cassandra.dht.Murmur3Partitioner"
-### else
-#default[:cassandra][:partitioner]       = "org.apache.cassandra.dht.RandomPartitioner"
-### endif
 
 default[:cassandra][:endpoint_snitch]   = "org.apache.cassandra.locator.SimpleSnitch"
 default[:cassandra][:dynamic_snitch]    = 'true'
@@ -120,11 +115,8 @@ default[:cassandra][:concurrent_writes]            = 32            # typical num
 default[:cassandra][:memtable_flush_writers]       = 1             # see comment in cassandra.yaml.erb
 default[:cassandra][:memtable_flush_after]         = 60
 
-###TODO: if version >= 1.1.0
-# attribute removed
-### else
-#default[:cassandra][:sliced_buffer_size]           = 64            # size of column slices
-### endif
+# attribute removed in v1.1.0
+default[:cassandra][:sliced_buffer_size] = 64
 
 default[:cassandra][:thrift_framed_transport]      = 15            # default 15; fixes CASSANDRA-475, but make sure your client is happy (Set to nil for debugging)
 default[:cassandra][:thrift_max_message_length]    = 16
@@ -142,11 +134,8 @@ default[:cassandra][:flush_largest_memtables_at]   = 0.75
 default[:cassandra][:reduce_cache_sizes_at]        = 0.85
 default[:cassandra][:reduce_cache_capacity_to]     = 0.6
 
-###TODO: if version >= 1.2.0
-# attribute removed
-### else
-#default[:cassandra][:rpc_timeout_in_ms]            = 10000
-### endif
+# attribute removed in v1.2.0
+default[:cassandra][:rpc_timeout_in_ms]            = 10000
 
 default[:cassandra][:rpc_keepalive]                = "false"
 default[:cassandra][:phi_convict_threshold]        = 8
