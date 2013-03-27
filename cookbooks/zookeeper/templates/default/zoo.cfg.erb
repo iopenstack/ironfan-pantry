@@ -19,7 +19,7 @@ initLimit=<%=                 @zookeeper[:initial_timeout_ticks] %>
 syncLimit=<%=                 @zookeeper[:sync_timeout_ticks] %>
 
 # Should the leader accepts client connections? default "yes".  
-leaderServes=<%=              @leader_is_also_server %> 
+leaderServes=<%=              @zookeeper[:leader_is_also_server] %> 
 
 # maximum simultaneous connections to allow. 
 maxClientCnxns=<%=            @zookeeper[:max_client_connections] %>
