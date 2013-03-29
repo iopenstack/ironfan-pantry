@@ -20,40 +20,41 @@
 #
 
 #
-# Conf file -- auto-discovers ganglia agents
+# Conf file -- auto-discovers ganglia collectors and generators
 #
 
-monitor_groups = Hash.new{|h,k| h[k] = [] }
-discover_all(:ganglia, :agent).each do |svr|
-  monitor_groups[svr.name] << "#{svr.private_ip}:#{svr.node_info[:rcv_port]}"
-end
+#monitor_groups = Hash.new{|h,k| h[k] = [] }
+#discover_all(:ganglia, :agent).each do |svr|
+#  monitor_groups[svr.name] << "#{svr.private_ip}:#{svr.node_info[:rcv_port]}"
+#    
+#end
 
-# <%- servers.map{|svr| "#{svr[:private_ip]}:#{svr[:rcv_port]}" }.join(' ')  %>
-# <%- all_service_info("#{node[:cluster_name]}-ganglia_agent").each{|svr| monitor_groups[svr[:name]] << svr } %>
+#template "#{node[:ganglia][:conf_dir]}/gmetad.conf" do
+#    source      'gmetad.conf.erb'
+#    backup      false
+#    owner       node[:ganglia][:user]
+#    group       'ganglia'
+#    mode        '0644'
+#    notifies    :restart, "service[ganglia_collector]", :delayed if startable?(node[:ganglia][:collector])
+#    variables   :monitor_groups => monitor_groups
+#    only_if     { is_collector }
+#end
 
-template "#{node[:ganglia][:conf_dir]}/gmetad.conf" do
-  source        "gmetad.conf.erb"
-  backup        false
-  owner         "ganglia"
-  group         "ganglia"
-  mode          "0644"
-  notifies  :restart, "service[ganglia_server]", :delayed if startable?(node[:ganglia][:server])
-  variables :monitor_groups => monitor_groups
-end
-
-template "#{node[:ganglia][:conf_dir]}/gmond.conf" do
-  source        "gmond.conf.erb"
-  backup        false
-  owner         "ganglia"
-  group         "ganglia"
-  mode          "0644"
-  send_addr = discover(:ganglia, :server).private_ip rescue nil
-  variables(
-    :cluster => {
-      :name      => node[:cluster_name],
-      :send_addr => send_addr,
-      :send_port => node[:ganglia][:send_port],
-      :rcv_port  => node[:ganglia][:rcv_port ],
-    })
-  notifies      :restart, 'service[ganglia_agent]' if startable?(node[:ganglia][:agent])
-end
+#template "#{node[:ganglia][:conf_dir]}/gmond.conf" do
+#    source      'gmond.conf.erb'
+#    backup      false
+#    owner       node[:ganglia][:user]
+#    group       'ganglia'
+#    mode        '0644'
+#    send_addr = discover(:ganglia, :collector).private_ip rescue nil
+#    variables(
+#        :cluster => {
+#            :name      => node[:cluster_name],
+#            :send_addr => send_addr,
+#            :send_port => node[:ganglia][:send_port],
+#            :rcv_port  => node[:ganglia][:rcv_port ]
+#        }
+#    )
+#    notifies    :restart, 'service[ganglia_generator]' if startable?(node[:ganglia][:generator])
+#    only_if     { is_generator }
+#end
