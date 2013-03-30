@@ -1,7 +1,7 @@
 globals {                    
   daemonize              = yes              
   setuid                 = yes             
-  user                   = ganglia              
+  user                   = <%= @user %>              
   debug_level            = 0               
   max_udp_msg_len        = 1472        
   mute                   = no             
@@ -20,13 +20,12 @@ cluster {
 } 
 
 host { 
-  location = "<% @cluster[:host_location ] || "unspecified" %>" 
+  location = "<%= @cluster[:host_location] || "unspecified" %>" 
 } 
 
 udp_send_channel { 
-  host         = <%= @cluster[ :send_addr ] || "localhost" %> 
-  port         = <%= @cluster[ :send_port ] || 8649 %>
-  ttl          = 1 
+  host = <%= @send_addr || "localhost" %> 
+  port = <%= @send_port || 8649 %>
 } 
 
 udp_recv_channel    {} 

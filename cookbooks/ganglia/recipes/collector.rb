@@ -54,6 +54,7 @@ runit_service "ganglia_metad" do
 end
 
 find_all_monitorable_clusters.each do |cluster|
+    Chef::Log.info("CAMME: Found cluster to monitor: #{cluster}")
     collector_service(cluster)
 end
 

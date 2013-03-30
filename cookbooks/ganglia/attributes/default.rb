@@ -30,21 +30,22 @@
 #
 
 # general configuration
-default[:ganglia][:grid]             = 'portico'
+default[:ganglia][:grid]             = 'grid'
 default[:ganglia][:home_dir]         = '/var/lib/ganglia'
 default[:ganglia][:conf_dir]         = '/etc/ganglia'
 default[:ganglia][:pid_dir]          = '/var/run/ganglia'
 default[:ganglia][:data_dir]         = nil  # discovered by volumes
-default[:ganglia][:agent ][:log_dir] = '/var/log/ganglia/agent'
+default[:ganglia][:agent][:log_dir]  = '/var/log/ganglia/agent'
 default[:ganglia][:server][:log_dir] = '/var/log/ganglia/server'
 default[:ganglia][:user]             = 'ganglia'
+default[:ganglia][:group]            = 'ganglia'
 default[:users ][:ganglia][:uid]     = 320
 default[:groups][:ganglia][:gid]     = 320
 
 # 'generator' specific configuration
-default[:ganglia][:generator][:run_state] = :stop
+default[:ganglia][:generator][:run_state] = :start
 
 # 'collector' specific configuration
+default[:ganglia][:collector][:run_state] = :start
 default[:ganglia][:collector][:recv_port] = 8600
-default[:ganglia][:collector][:run_state] = :stop
 

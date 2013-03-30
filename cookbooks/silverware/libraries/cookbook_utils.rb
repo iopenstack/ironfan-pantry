@@ -15,9 +15,12 @@ module Ironfan
     end
 
     # among the given components services, the ones this machine actually provides
-    def announced_services(component_name, service_names)
-      service_names.
-        select{|svc| node[:announces]["#{node[:cluster_name]}-#{component_name}-#{svc}"] }
+    def announced_services(component_name, service_names, realm=nil)
+        if realm
+            service_names.select{|svc| node[:announces]["#{realm}-#{component_name}-#{svc}"] }
+        else        
+            service_names.select{|svc| node[:announces]["#{node[:cluster_name]}-#{component_name}-#{svc}"] }
+        end
     end
 
     def notify_startable_services(component_name, service_names)

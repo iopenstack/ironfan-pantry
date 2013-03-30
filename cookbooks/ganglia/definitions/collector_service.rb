@@ -19,11 +19,14 @@
 #
 
 define(:collector_service) do
-    name  = params[:name].to_s
-    port  = next_free_port
+    name  = params[:name]
     realm = node[:ganglia][:grid] || ""
 
-    Chef::Log.info("CAMME: Monitor cluster:#{name} on port:#{port}")
+    if not is_collector_already_announced?(name)
+        port = next_free_port
+    else
+        port = get_announced_collector_port(name) rescue 8888
+    end
 
     # Set up service
     runit_service "ganglia_collector_#{name}" do
@@ -32,6 +35,11 @@ define(:collector_service) do
         options         ({ :cluster_id => name,
                            :port       => port })
     end
-    announce(:ganglia, :collector, :recv_port => port, :realm => realm)
+
+    Chef::Log.info("CAMME: Stats monitoring for cluster '#{realm}::#{name}' @ #{private_ip_of(node)}:#{port}")
+
+    # make sure to announce the service each chef-client run
+    # otherwise the announcement will be gone on the chef-server
+    announce(:ganglia, "collector-#{name}", :recv_port => port, :realm => realm)
 end
 
