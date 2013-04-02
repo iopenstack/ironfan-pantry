@@ -51,5 +51,5 @@ runit_service "ganglia_generator" do
 end
 
 Chef::Log.info("CAMME: Announce stats generator for cluster '#{realm}::#{cluster_id}'")
-announce(:ganglia, :generator, :cluster_id => cluster_id, :realm => realm )
+announce(:ganglia, :generator, {:cluster_id => cluster_id, :realm => realm} )
 
