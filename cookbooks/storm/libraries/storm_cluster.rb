@@ -32,7 +32,7 @@ module StormCluster
         if node[:storm][:zookeeper][:servers].any?
             node[:storm][:zookeeper][:port]
         else
-            discover(:zookeeper, :server).node_info[:client_port] rescue ""
+            discover(:zookeeper, :server, :portico_zk).node_info[:client_port] rescue ""
         end
     end
 
@@ -41,7 +41,7 @@ module StormCluster
         if node[:storm][:zookeeper][:servers].any?
             node[:storm][:zookeeper][:servers]
         else
-            discover_all(:zookeeper, :server).map(&:private_hostname).sort.uniq rescue ""
+            discover_all(:zookeeper, :server, :portico_zk).map(&:private_hostname).sort.uniq rescue ""
         end
     end
 
