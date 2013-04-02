@@ -32,7 +32,11 @@ module StormCluster
         if node[:storm][:zookeeper][:servers].any?
             node[:storm][:zookeeper][:port]
         else
+          if node[:storm][:zookeeper][:cluster_name].nil?
+            discover(:zookeeper, :server).node_info[:client_port] rescue ""
+          else
             discover(:zookeeper, :server, :portico_zk).node_info[:client_port] rescue ""
+          end
         end
     end
 
