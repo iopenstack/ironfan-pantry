@@ -40,6 +40,6 @@ define(:collector_service) do
 
     # make sure to announce the service each chef-client run
     # otherwise the announcement will be gone on the chef-server
-    announce(:ganglia, "collector-#{name}", :recv_port => port, :realm => realm)
+    announce(:ganglia, "collector-#{name}", :info => { :recv_port => port, :cluster_id => name }, :realm => realm)
 end
 

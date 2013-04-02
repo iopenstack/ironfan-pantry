@@ -49,8 +49,8 @@ end
 
 # global data storage for ganglia (gmetad)
 runit_service "ganglia_metad" do
-  run_state     node[:ganglia][:collector][:run_state]
-  options       Mash.new(node[:ganglia].to_hash).merge(node[:ganglia][:collector].to_hash)
+    run_state   node[:ganglia][:collector][:run_state]
+    options     Mash.new(node[:ganglia].to_hash).merge(node[:ganglia][:collector].to_hash)
 end
 
 find_all_monitorable_clusters.each do |cluster|

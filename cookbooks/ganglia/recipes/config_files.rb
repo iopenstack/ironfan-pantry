@@ -29,18 +29,51 @@
 #    
 #end
 
-#template "#{node[:ganglia][:conf_dir]}/gmetad.conf" do
-#    source      'gmetad.conf.erb'
-#    backup      false
-#    owner       node[:ganglia][:user]
-#    group       node[:ganglia][:group]
-#    mode        '0644'
-#    notifies    :restart, "service[ganglia_collector]", :delayed if startable?(node[:ganglia][:collector])
-#    variables   :monitor_groups => monitor_groups
-#    only_if     is_collector
-#end
+if is_collector?
+    # monitoring_groups = map of all 'monitorable clusters' with their contact address:
+    # cluster_name, ip:port
+    # here, as all cluster collectors normally run on the same node as gmetad, 'ip' would always be 'localhost'
 
-#TODO: template for individual collector gmond services
+    monitor_groups = Hash.new{|h,k| h[k] = [] }
+    own_collectors.each do |collector|
+        #TODO: fill port and ip
+        #monitor_groups[collector.name] << "#{collector.private_ip}:#{collector.node_info[:recv_port]}"
+
+        Chef::Log.info("CAMME: own_collector=#{collector.node_info.inspect}")
+        Chef::Log.info("CAMME: monitor_groups=#{monitor_groups.inspect}")
+
+        #template for individual collector gmond services
+        template "#{node[:ganglia][:conf_dir]}/gmond.#{collector}.conf" do
+            source      'gmond.conf.erb'
+            backup      false
+            owner       node[:ganglia][:user]
+            group       node[:ganglia][:group]
+            mode        '0644'
+            variables(
+                :user    => node[:ganglia][:user],
+                :cluster => {
+                    :name          => collector,
+                    :owner         => nil,
+                    :latlong       => nil,
+                    :url           => nil,
+                    :host_location => nil },
+                :send_addr => collector_addr,
+                :send_port => collector_port
+            )
+            notifies :restart, "service[ganglia_collector_#{collector}]", :delayed if startable?(node[:ganglia][:collector])
+        end
+    end
+
+    template "#{node[:ganglia][:conf_dir]}/gmetad.conf" do
+        source      'gmetad.conf.erb'
+        backup      false
+        owner       node[:ganglia][:user]
+        group       node[:ganglia][:group]
+        mode        '0644'
+        notifies    :restart, "service[ganglia_metad]", :delayed if startable?(node[:ganglia][:collector])
+        variables   :monitor_groups => monitor_groups
+    end
+end
 
 if is_generator?
     realm                          = node[:ganglia][:grid]

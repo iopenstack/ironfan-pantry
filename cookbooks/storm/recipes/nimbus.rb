@@ -23,7 +23,7 @@ include_recipe 'storm'
 include_recipe 'runit'
 
 directory('/etc/sv/storm/env'){ owner 'root' ; action :create ; recursive true }
-runit_service "nimbus" do
+runit_service "storm_nimbus" do
     options     node[:storm]
     run_state   node[:storm][:nimbus][:run_state]
 end

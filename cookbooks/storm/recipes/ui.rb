@@ -22,7 +22,7 @@ include_recipe 'storm'
 include_recipe 'runit'
 
 directory('/etc/sv/storm/env'){ owner 'root' ; action :create ; recursive true }
-runit_service "stormui" do
+runit_service "storm_stormui" do
     options     node[:storm]
     run_state   node[:storm][:ui][:run_state]
 end

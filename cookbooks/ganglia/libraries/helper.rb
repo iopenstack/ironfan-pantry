@@ -36,8 +36,16 @@ module GangliaHelper
         announced_services(:ganglia, [:generator], realm).any?
     end
 
+    def own_collectors
+        realm = node[:ganglia][:grid]
+#TODO: check if this works!!
+        search(:node, "announces:#{realm}-ganglia-collector-*").select{ |n| n.name == node.name }.each do |n|
+            Chef::Log.info("CAMME: own_collectors: n=#{n[:announces].inspect}")
+        end
+    end
+
     def number_of_own_collectors
-        search(:node, "announces:grid-ganglia-collector-*").select{ |n| n.name == node.name }
+        own_collectors.length
     end
 
     # check if collector is already announced for this cluster_id
@@ -51,10 +59,12 @@ module GangliaHelper
 
     # true  if :ganglia:collector has been nannounced by this node
     def is_collector?
+#TODO: check if this works!!
         number_of_own_collectors > 0
     end
                                             
     def next_free_port
+#TODO: check if this works!!
         node[:ganglia][:collector][:recv_port].to_i + number_of_own_collectors
     end
 
