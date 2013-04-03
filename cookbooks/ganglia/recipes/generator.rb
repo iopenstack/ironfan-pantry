@@ -34,7 +34,9 @@ kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 #
 
 standard_dirs('ganglia.generator') do
-  directories [:home_dir, :log_dir, :conf_dir, :pid_dir]
+    directories [:home_dir, :log_dir, :conf_dir, :pid_dir]
+    user        node[:ganglia][:user]
+    group       node[:ganglia][:group]
 end
 
 # Set up service
@@ -50,7 +52,7 @@ runit_service "ganglia_generator" do
             :conf   => node[:ganglia][:conf_dir],
             :log    => node[:ganglia][:log_dir]
         },
-        :user  => node[:ganglia][:user]
+        :user  => node[:ganglia][:user],
         :group => node[:ganglia][:group]
     })
 end

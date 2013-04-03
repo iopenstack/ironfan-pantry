@@ -26,7 +26,7 @@ define(:collector_service) do
 
     # Set up service
     runit_service "ganglia_collector_#{name}" do
-        run_state       node[:ganglia][:collector][:run_state]
+        run_state       :nothing
         template_name   'ganglia_collector'
         options         ({ 
             :dirs    => {

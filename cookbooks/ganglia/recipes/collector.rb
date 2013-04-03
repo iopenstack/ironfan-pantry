@@ -52,7 +52,7 @@ end
 
 # global data storage for ganglia (gmetad)
 runit_service "ganglia_metad" do
-    run_state       node[:ganglia][:collector][:run_state]
+    run_state       :nothing
     options         ({ 
         :dirs => {
             :pid    => node[:ganglia][:pid_dir],
