@@ -65,7 +65,7 @@ if is_collector?
     end
 
     h = Hash.new
-    own_collectors_data.map{|k,v| h[k] = "#{v[0]}:#{v[1]}"}
+    own_collectors_data.map{|k,v| h[k] = "localhost:#{v[1]}"}
 
     Chef::Log.debug("Ganglia::config_files --- monitor_groups: #{h.inspect}")
 

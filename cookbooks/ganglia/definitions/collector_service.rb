@@ -35,6 +35,7 @@ define(:collector_service) do
                 :log    => node[:ganglia][:log_dir]
             },
             :user    => node[:ganglia][:user],
+            :group   => node[:ganglia][:group],
             :cluster => {
                 :name   => name
             }

@@ -50,7 +50,8 @@ runit_service "ganglia_generator" do
             :conf   => node[:ganglia][:conf_dir],
             :log    => node[:ganglia][:log_dir]
         },
-        :user => node[:ganglia][:user]
+        :user  => node[:ganglia][:user]
+        :group => node[:ganglia][:group]
     })
 end
 

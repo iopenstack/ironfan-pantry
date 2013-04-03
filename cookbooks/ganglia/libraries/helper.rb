@@ -94,7 +94,7 @@ module GangliaHelper
     def next_free_port
         all_ports = *(node[:ganglia][:collector][:start_port]..node[:ganglia][:collector][:end_port])
         used_ports = []
-        own_collectors.keys.each do |col|
+        own_collectors.keys.each do |k|
             used_ports << node[:announces][k][:info][:recv_port].to_i
         end
 

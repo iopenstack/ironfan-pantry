@@ -1,3 +1,4 @@
 #!/bin/sh
-exec svlogd -tt <%= @options[:dirs][:log] %>
+umask 0027
+exec svlogd -tt ./main
 
