@@ -1,4 +1,6 @@
 #!/bin/bash
 
-echo "start GMETAD"
+exec 2>&1
+cd   <%= @options[:dirs][:pid] %>
+exec chpst -u <%= @options[:user] %> /usr/sbin/gmetad --debug=3
 

@@ -1,4 +1,3 @@
 #!/bin/bash
-
-echo "GMETAD-LOG"
+exec svlogd -tt <%= @options[:dirs][:log] %>
 

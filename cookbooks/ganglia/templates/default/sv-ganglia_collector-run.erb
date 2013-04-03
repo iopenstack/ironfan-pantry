@@ -1,4 +1,6 @@
 #!/bin/bash
 
-echo "start service 'ganglia collector for: '<%= @options[:cluster_name] %>' on port '<%= @options[:port] %>'"
-
+exec 2>&1
+cd   <%= @options[:dirs][:pid] %>
+exec chpst -u <%= @options[:user] %> /usr/sbin/gmond --conf=<%= @options[:dirs][:conf] %>/gmond.<%= @options[:cluster][:name] %>.conf --debug=3 --foreground
+ 

@@ -24,12 +24,25 @@ host {
 } 
 
 udp_send_channel { 
-  host = <%= @send_addr || "localhost" %> 
-  port = <%= @send_port || 8649 %>
+<%- if @send_udp %>
+  host = <%= @send_udp[:addr] || "localhost" %>
+  port = <%= @send_udp[:port] || 8649 %>
+<%- end %>
 } 
 
-udp_recv_channel    {} 
-tcp_accept_channel  {} 
+udp_recv_channel    {
+<%- if @recv_udp %>
+  bind = <%= @recv_udp[:addr] || "localhost" %>
+  port = <%= @recv_udp[:port] || 8650 %>
+<%- end %>
+} 
+
+tcp_accept_channel  {
+<%- if @recv_tcp %>
+  bind = <%= @recv_tcp[:addr] || "localhost" %>
+  port = <%= @recv_tcp[:port] || 8650 %>
+<%- end %>
+} 
 
 
 modules { 

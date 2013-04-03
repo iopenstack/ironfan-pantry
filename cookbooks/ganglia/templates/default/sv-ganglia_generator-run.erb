@@ -3,3 +3,4 @@
 exec 2>&1
 cd   <%= @options[:dirs][:pid] %>
 exec chpst -u <%= @options[:user] %> /usr/sbin/gmond --conf=<%= @options[:dirs][:conf] %>/gmond.conf --debug=1 --foreground
+

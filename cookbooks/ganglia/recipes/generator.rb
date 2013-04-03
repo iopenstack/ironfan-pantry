@@ -44,12 +44,16 @@ runstate   = has_collector?(cluster_id) ? node[:ganglia][:generator][:run_state]
 
 runit_service "ganglia_generator" do
     run_state       runstate 
-    template_name   'ganglia_generator'
-    options         ({ :dirs       => { :pid  => node[:ganglia][:pid_dir],
-                                        :conf => node[:ganglia][:conf_dir] },
-                       :user       => node[:ganglia][:user] })
+    options         ({ 
+        :dirs => {
+            :pid    => node[:ganglia][:pid_dir],
+            :conf   => node[:ganglia][:conf_dir],
+            :log    => node[:ganglia][:log_dir]
+        },
+        :user => node[:ganglia][:user]
+    })
 end
 
-Chef::Log.info("CAMME: Announce stats generator for cluster '#{realm}::#{cluster_id}'")
+Chef::Log.info("Ganglia::generator --- announce stats generator for cluster '#{realm}::#{cluster_id}'")
 announce(:ganglia, :generator, {:cluster_id => cluster_id, :realm => realm} )
 

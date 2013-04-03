@@ -23,27 +23,19 @@
 # Conf file -- auto-discovers ganglia collectors and generators
 #
 
-#monitor_groups = Hash.new{|h,k| h[k] = [] }
-#discover_all(:ganglia, :agent).each do |svr|
-#  monitor_groups[svr.name] << "#{svr.private_ip}:#{svr.node_info[:rcv_port]}"
-#    
-#end
-
 if is_collector?
     # monitoring_groups = map of all 'monitorable clusters' with their contact address:
     # cluster_name, ip:port
     # here, as all cluster collectors normally run on the same node as gmetad, 'ip' would always be 'localhost'
 
-    monitor_groups = Hash.new{|h,k| h[k] = [] }
-    own_collectors.each do |collector|
-        #TODO: fill port and ip
-        #monitor_groups[collector.name] << "#{collector.private_ip}:#{collector.node_info[:recv_port]}"
+    own_collectors_data.each do |cluster_id, collector_addr|
+        ip   = collector_addr[0]
+        port = collector_addr[1]
 
-        Chef::Log.info("CAMME: own_collector=#{collector.node_info.inspect}")
-        Chef::Log.info("CAMME: monitor_groups=#{monitor_groups.inspect}")
+        Chef::Log.debug("Ganglia::config_files --- setup collector for cluster '#{cluster_id}' @ #{ip}:#{port}")
 
         #template for individual collector gmond services
-        template "#{node[:ganglia][:conf_dir]}/gmond.#{collector}.conf" do
+        template "#{node[:ganglia][:conf_dir]}/gmond.#{cluster_id}.conf" do
             source      'gmond.conf.erb'
             backup      false
             owner       node[:ganglia][:user]
@@ -52,17 +44,30 @@ if is_collector?
             variables(
                 :user    => node[:ganglia][:user],
                 :cluster => {
-                    :name          => collector,
+                    :name          => cluster_id,
                     :owner         => nil,
                     :latlong       => nil,
                     :url           => nil,
-                    :host_location => nil },
-                :send_addr => collector_addr,
-                :send_port => collector_port
+                    :host_location => nil
+                },
+                :send_udp => nil,
+                :recv_udp => {
+                    :addr => ip,
+                    :port => port
+                },
+                :recv_tcp => {
+                    :addr => 'localhost',
+                    :port => port
+                }
             )
-            notifies :restart, "service[ganglia_collector_#{collector}]", :delayed if startable?(node[:ganglia][:collector])
+            notifies :restart, "service[ganglia_collector_#{cluster_id}]", :delayed if startable?(node[:ganglia][:collector])
         end
     end
+
+    h = Hash.new
+    own_collectors_data.map{|k,v| h[k] = "#{v[0]}:#{v[1]}"}
+
+    Chef::Log.debug("Ganglia::config_files --- monitor_groups: #{h.inspect}")
 
     template "#{node[:ganglia][:conf_dir]}/gmetad.conf" do
         source      'gmetad.conf.erb'
@@ -71,7 +76,10 @@ if is_collector?
         group       node[:ganglia][:group]
         mode        '0644'
         notifies    :restart, "service[ganglia_metad]", :delayed if startable?(node[:ganglia][:collector])
-        variables   :monitor_groups => monitor_groups
+        variables   ({
+            :monitor_groups => h,
+            :grid           => node[:ganglia][:grid]
+        })
     end
 end
 
@@ -80,7 +88,7 @@ if is_generator?
     cluster_id                     = node[:cluster_name] || ""
     collector_addr, collector_port = find_collector_addr_info(cluster_id) rescue [nil, nil]
 
-    Chef::Log.info("CAMME: Discovered collector for cluster '#{realm}::#{cluster_id}' @ #{collector_addr}:#{collector_port}")
+    Chef::Log.debug("Ganglia::config_files --- found a collector for cluster '#{realm}::#{cluster_id}' @ #{collector_addr}:#{collector_port}")
 
     template "#{node[:ganglia][:conf_dir]}/gmond.conf" do
         source      'gmond.conf.erb'
@@ -95,10 +103,16 @@ if is_generator?
                 :owner         => nil,
                 :latlong       => nil,
                 :url           => nil,
-                :host_location => nil },
-            :send_addr => collector_addr,
-            :send_port => collector_port
+                :host_location => nil
+            },
+            :send_udp => {
+                :addr => collector_addr,
+                :port => collector_port
+            },
+            :recv_udp => nil,
+            :recv_tcp => nil
         )
+
         notifies :restart, 'service[ganglia_generator]' if startable?(node[:ganglia][:generator]) && has_collector?(cluster_id)
     end
 end

@@ -20,4 +20,3 @@
 #
 
 include_recipe 'silverware'
-include_recipe 'java'
