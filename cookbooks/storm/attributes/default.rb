@@ -17,6 +17,7 @@ default[:storm][:pid_dir]  = "/var/run/storm"
 default[:storm][:log_dir]  = "/var/log/storm"
 
 # zookeeper configuration
+default[:storm][:zookeeper][:cluster_name]         = :portico_zk
 default[:storm][:zookeeper][:servers]              = []         # automatically discovered when empty or nil
 default[:storm][:zookeeper][:port]                 = 2181
 default[:storm][:zookeeper][:root]                 = "/storm"
