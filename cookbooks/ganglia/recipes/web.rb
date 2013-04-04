@@ -28,5 +28,4 @@ package "ganglia-webfrontend"
 link '/usr/share/ganglia-webfrontend' do
     to      '/var/www/ganglia-stats'
     action  :create
-    only_if 
 end
