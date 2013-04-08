@@ -1,10 +1,10 @@
 name             "storm"
 maintainer       "Technicolor, Portico"
-maintainer_email "bart.vercammen@portico.io"
+maintainer_email "dev@portico.io"
 license          "Apache 2.0"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 
-version          "0.0.1"
+version          "0.0.2"
 description      "Installs Twitter's Storm distributed computation system"
 
 depends          "java"
@@ -13,6 +13,7 @@ depends          "zeromq"
 depends          "jzmq"
 depends          "silverware"
 depends          "install_from"
+depends          "github"
 
 recipe           "storm::default",                  "Base configuration for storm"
 recipe           "storm::ui",                       "Storm web UI"

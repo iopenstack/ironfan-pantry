@@ -20,9 +20,7 @@
 
 include_recipe 'java' ; complain_if_not_sun_java(:storm)
 include_recipe 'install_from'
-
 include_recipe 'zeromq::install_from_release'
-include_recipe 'jzmq::install_from_release'
 
 install_from_release(:storm) do
     release_url   node[:storm][:release_url]

@@ -18,9 +18,9 @@
 # limitations under the License.
 #
 
-include_recipe 'java'
 include_recipe 'storm'
 include_recipe 'runit'
+include_recipe 'jzmq::install_from_source'
 
 directory('/etc/sv/storm/env'){ owner 'root' ; action :create ; recursive true }
 runit_service "storm_supervisor" do

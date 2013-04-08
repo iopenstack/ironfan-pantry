@@ -52,7 +52,7 @@ module StormCluster
     # discover nimbus ip address
     def storm_nimbus
         if node[:storm][:nimbus][:host].nil?
-            discover(:storm, :nimbus).private_hostname rescue private_hostname_of(node)
+            discover(:storm, :nimbus).private_hostname rescue nil
         else
             node[:storm][:nimbus][:host]
         end
