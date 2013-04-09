@@ -91,15 +91,18 @@ module GangliaHelper
         r
     end
 
-    def next_free_port
+    def allocate_free_port
         all_ports = *(node[:ganglia][:collector][:start_port]..node[:ganglia][:collector][:end_port])
         used_ports = []
-        own_collectors.keys.each do |k|
-            used_ports << node[:announces][k][:info][:recv_port].to_i
+        node[:ganglia][:collector][:used_ports].each do |p|
+            used_ports << p
         end
-
+        
         free_port = (all_ports - used_ports)[0]
-        Chef::Log.debug("Ganglia::helper::next_free_port => free_port:#{free_port.inspect}")
+        used_ports << free_port
+        node.set[:ganglia][:collector][:used_ports] = used_ports
+
+        Chef::Log.debug("Ganglia::helper::next_free_port => free_port:#{free_port}")
         free_port
     end
 

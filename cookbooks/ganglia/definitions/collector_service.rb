@@ -22,7 +22,7 @@ define(:collector_service) do
     name  = params[:name]
     realm = node[:ganglia][:grid] || ""
 
-    port = get_previously_announced_collector_port(name) rescue next_free_port
+    port = get_previously_announced_collector_port(name) rescue allocate_free_port
 
     # Set up service
     runit_service "ganglia_collector_#{name}" do

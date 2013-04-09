@@ -49,4 +49,5 @@ default[:ganglia][:collector][:run_state] = :start
 
 default[:ganglia][:collector][:start_port] = 8600
 default[:ganglia][:collector][:end_port  ] = 8700
+default[:ganglia][:collector][:used_ports] = []
 
