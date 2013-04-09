@@ -45,14 +45,14 @@ module StormCluster
         if node[:storm][:zookeeper][:servers].any?
             node[:storm][:zookeeper][:servers]
         else
-            discover_all(:zookeeper, :server, :portico_zk).map(&:private_hostname).sort.uniq rescue ""
+            discover_all(:zookeeper, :server, :portico_zk).map(&:private_ip).sort.uniq rescue ""
         end
     end
 
     # discover nimbus ip address
     def storm_nimbus
         if node[:storm][:nimbus][:host].nil?
-            discover(:storm, :nimbus).private_hostname rescue nil
+            discover(:storm, :nimbus).private_ip rescue nil
         else
             node[:storm][:nimbus][:host]
         end
