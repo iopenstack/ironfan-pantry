@@ -86,6 +86,9 @@ attribute :autoconf_opts, :kind_of => Array, :default => []
 # Extra installer args -- a hash. Sorry, go look in install_from_release/providers/resource.rb to see how to use
 attribute :install_args,:kind_of => Hash,  :default => Hash.new
 
+# Command to run before configure step
+attribute :before_configure_cmd,    :kind_of => String, :default => nil
+
 def initialize(*args)
   super
   @action ||= :install

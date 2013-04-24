@@ -64,8 +64,21 @@ action :unpack do
   end
 end
 
+
+action :before_configure do
+    if nil != new_resource.before_configure_cmd
+        bash "unpack #{new_resource.name} release" do
+            user        new_resource.user
+            cwd         ::File.dirname(new_resource.install_dir)
+            code        new_resource.before_configure_cmd
+            environment new_resource.environment
+          end
+    end
+end
+
 action :configure do
   action_unpack
+  action_before_configure
 
   link new_resource.home_dir do
     to          new_resource.install_dir
