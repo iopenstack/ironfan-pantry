@@ -3,8 +3,8 @@ maintainer       "Technicolor, Portico"
 maintainer_email "dev@portico.io"
 license          "Apache 2.0"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+version          IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-version          "0.0.2"
 description      "Installs Twitter's Storm distributed computation system"
 
 depends          "java"
