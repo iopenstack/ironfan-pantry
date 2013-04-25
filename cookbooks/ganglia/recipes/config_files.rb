@@ -109,7 +109,7 @@ if is_generator?
                 :addr => collector_addr,
                 :port => collector_port
             },
-            :recv_udp => nil,
+            :recv_udp => node[:ganglia][:generator][:inject_port].nil? ? nil : {:port => node[:ganglia][:generator][:inject_port]},
             :recv_tcp => nil
         )
 
