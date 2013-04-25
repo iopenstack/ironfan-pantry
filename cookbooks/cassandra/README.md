@@ -14,7 +14,7 @@ Cookbook based on Benjamin Black's (<b@b3k.us>) -- original at http://github.com
 
 Modified to use `silverware` discovery and options preparation.
 
-## Recipes 
+## Recipes
 
 * `authentication`           - Authentication
 * `autoconf`                 - Automatically configure nodes from chef-server information.
@@ -55,12 +55,12 @@ Cookbook dependencies:
   - Directories, hosts and ports        # =
 * `[:cassandra][:conf_dir]`           -  (default: "/etc/cassandra")
 * `[:cassandra][:commitlog_dir]`      -  (default: "/mnt/cassandra/commitlog")
-* `[:cassandra][:data_dirs]`          - 
+* `[:cassandra][:data_dirs]`          -
 * `[:cassandra][:saved_caches_dir]`   -  (default: "/var/lib/cassandra/saved_caches")
 * `[:cassandra][:user]`               - cassandra (default: "cassandra")
   - The cassandra user
 * `[:cassandra][:listen_addr]`        -  (default: "localhost")
-* `[:cassandra][:seeds]`              - 
+* `[:cassandra][:seeds]`              -
 * `[:cassandra][:rpc_addr]`           -  (default: "localhost")
 * `[:cassandra][:rpc_port]`           -  (default: "9160")
 * `[:cassandra][:storage_port]`       -  (default: "7000")
@@ -79,18 +79,19 @@ Cookbook dependencies:
   - Boolean indicating whether a node should automatically boostrap on startup.
 * `[:cassandra][:keyspaces]`          - Cassandra keyspaces
   - Make a databag called 'cassandra', with an element 'clusters'. Within that, define a hash named for your cluster:
-    
+
     - keys_cached:        specifies the number of keys per sstable whose locations we keep in memory in "mostly LRU" order.  (JUST the key locations, NOT any column values.) Specify a fraction (value less than 1) or an absolute number of keys to cache.  Defaults to 200000 keys.
     - rows_cached:        specifies the number of rows whose entire contents we cache in memory. Do not use this on ColumnFamilies with large rows, or ColumnFamilies with high write:read ratios. Specify a fraction (value less than 1) or an absolute number of rows to cache. Defaults to 0. (i.e. row caching is off by default)
     - comment:            used to attach additional human-readable information about the column family to its definition.
     - read_repair_chance: specifies the probability with which read repairs should be invoked on non-quorum reads.  must be between 0 and 1. defaults to 1.0 (always read repair).
     - preload_row_cache:  If true, will populate row cache on startup. Defaults to false.
     - gc_grace_seconds:   specifies the time to wait before garbage collecting tombstones (deletion markers). defaults to 864000 (10 days). See http://wiki.apache.org/cassandra/DistributedDeletes
-    
+
 * `[:cassandra][:authenticator]`      - Cassandra authenticator (default: "org.apache.cassandra.auth.AllowAllAuthenticator")
   - The IAuthenticator to be used for access control.
 * `[:cassandra][:partitioner]`        -  (default: "org.apache.cassandra.dht.RandomPartitioner")
-* `[:cassandra][:initial_token]`      - 
+* `[:cassandra][:num_tokens]` -  (default: "256")
+* `[:cassandra][:initial_token]`      -
 * `[:cassandra][:commitlog_rotation_threshold]` -  (default: "128")
 * `[:cassandra][:thrift_framed_transport]` -  (default: "15")
 * `[:cassandra][:disk_access_mode]`   -  (default: "auto")
@@ -114,8 +115,8 @@ Cookbook dependencies:
 * `[:cassandra][:java_heap_size_eden]` -  (default: "1500M")
 * `[:cassandra][:memtable_flush_writers]` -  (default: "1")
 * `[:cassandra][:thrift_max_message_length]` -  (default: "16")
-* `[:cassandra][:incremental_backups]` - 
-* `[:cassandra][:snapshot_before_compaction]` - 
+* `[:cassandra][:incremental_backups]` -
+* `[:cassandra][:snapshot_before_compaction]` -
 * `[:cassandra][:in_memory_compaction_limit]` -  (default: "64")
 * `[:cassandra][:compaction_preheat_key_cache]` -  (default: "true")
 * `[:cassandra][:flush_largest_memtables_at]` -  (default: "0.75")
@@ -140,7 +141,7 @@ Cookbook dependencies:
   - MX4J location (at least as of Version 3.0.2)
 * `[:users][:cassandra][:uid]`        -  (default: "330")
 * `[:users][:cassandra][:gid]`        -  (default: "330")
-* `[:tuning][:ulimit][:cassandra]`    - 
+* `[:tuning][:ulimit][:cassandra]`    -
 
 ## License and Author
 
