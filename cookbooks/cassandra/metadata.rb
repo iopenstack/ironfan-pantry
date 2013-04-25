@@ -148,10 +148,15 @@ attribute "cassandra/authenticator",
   :description           => "The IAuthenticator to be used for access control.",
   :default               => "org.apache.cassandra.auth.AllowAllAuthenticator"
 
+attribute "cassandra/permissions_validity_in_ms",
+  :display_name          => "",
+  :description           => "Validity period for permissions cache. Defaults to 2000, set to 0 to disable.",
+  :default               => "2000"
+
 attribute "cassandra/partitioner",
   :display_name          => "",
-  :description           => "",
-  :default               => "org.apache.cassandra.dht.RandomPartitioner"
+  :description           => "The partitioner is responsible for distributing rows (by key) across nodes in the cluster",
+  :default               => "org.apache.cassandra.dht.Murmur3Partitioner"
 
 attribute "cassandra/num_tokens",
   :display_name          => "Number of tokens",
@@ -162,6 +167,11 @@ attribute "cassandra/initial_token",
   :display_name          => "",
   :description           => "",
   :default               => ""
+
+attribute "cassandra/disk_failure_policy",
+  :display_name          => "",
+  :description           => "Policy for data disk failures: stop, best_effort, ignore",
+  :default               => "stop"
 
 attribute "cassandra/commitlog_rotation_threshold",
   :display_name          => "",
@@ -234,9 +244,19 @@ attribute "cassandra/hinted_handoff_enabled",
   :default               => "true"
 
 attribute "cassandra/max_hint_window_in_ms",
+  :display_name          => "Max hint window in milliseconds",
+  :description           => "The maximum amount of time a dead host will have hints generated",
+  :default               => "10800000"
+
+attribute "cassandra/hinted_handoff_throttle_in_kb",
   :display_name          => "",
-  :description           => "",
-  :default               => "3600000"
+  :description           => "Throttle in KB's per second, per delivery thread",
+  :default               => "1024"
+
+attribute "cassandra/max_hints_delivery_threads",
+  :display_name          => "",
+  :description           => "Number of threads with which to deliver hints",
+  :default               => "2"
 
 attribute "cassandra/hinted_handoff_delay_ms",
   :display_name          => "",
@@ -272,6 +292,11 @@ attribute "cassandra/memtable_flush_writers",
   :display_name          => "",
   :description           => "",
   :default               => "1"
+
+attribute "cassandra/memtable_flush_queue_size",
+  :display_name          => "",
+  :description           => "The number of full memtables to allow pending flush, that is, waiting for a writer thread.  At a minimum, this should be set to the maximum number of secondary indexes created on a single CF.",
+  :default               => "4"
 
 attribute "cassandra/thrift_max_message_length",
   :display_name          => "",
@@ -312,6 +337,21 @@ attribute "cassandra/reduce_cache_capacity_to",
   :display_name          => "",
   :description           => "",
   :default               => "0.6"
+
+attribute "cassandra/key_cache_size_in_mb",
+  :display_name          => "",
+  :description           => "Maximum size of the key cache in memory. Default value is empty to make it auto (min(5% of Heap (in MB), 100MB)). Set to 0 to disable.",
+  :default               => ""
+
+attribute "cassandra/key_cache_save_period",
+  :display_name          => "",
+  :description           => "Duration in seconds after which Cassandra should safe the keys cache. Default is 14400 or 4 hours.",
+  :default               => "14400"
+
+attribute "cassandra/row_cache_size_in_mb",
+  :display_name          => "",
+  :description           => "Number of keys from the key cache to save. Default value is 0, to disable row caching.",
+  :default               => "0"
 
 attribute "cassandra/rpc_timeout_in_ms",
   :display_name          => "",

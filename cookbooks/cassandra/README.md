@@ -89,7 +89,8 @@ Cookbook dependencies:
 
 * `[:cassandra][:authenticator]`      - Cassandra authenticator (default: "org.apache.cassandra.auth.AllowAllAuthenticator")
   - The IAuthenticator to be used for access control.
-* `[:cassandra][:partitioner]`        -  (default: "org.apache.cassandra.dht.RandomPartitioner")
+* `[:cassandra][:permissions_validity_in_ms]` -  (default: "2000")
+* `[:cassandra][:partitioner]`        -  (default: "org.apache.cassandra.dht.Murmur3Partitioner")
 * `[:cassandra][:num_tokens]` -  (default: "256")
 * `[:cassandra][:initial_token]`      -
 * `[:cassandra][:commitlog_rotation_threshold]` -  (default: "128")
@@ -106,14 +107,18 @@ Cookbook dependencies:
 * `[:cassandra][:commitlog_sync_period]` -  (default: "10000")
 * `[:cassandra][:authority]`          -  (default: "org.apache.cassandra.auth.AllowAllAuthority")
 * `[:cassandra][:hinted_handoff_enabled]` -  (default: "true")
-* `[:cassandra][:max_hint_window_in_ms]` -  (default: "3600000")
+* `[:cassandra][:max_hint_window_in_ms]` -  (default: "10800000")
 * `[:cassandra][:hinted_handoff_delay_ms]` -  (default: "50")
+* `[:cassandra][:hinted_handoff_throttle_in_kb]` -  (default: "1024")
+* `[:cassandra][:max_hints_delivery_threads]` -  (default: "2")
+* `[:cassandra][:disk_failure_policy]` -  (default: "stop")
 * `[:cassandra][:endpoint_snitch]`    -  (default: "org.apache.cassandra.locator.SimpleSnitch")
 * `[:cassandra][:dynamic_snitch]`     -  (default: "true")
 * `[:cassandra][:java_heap_size_min]` -  (default: "128M")
 * `[:cassandra][:java_heap_size_max]` -  (default: "1650M")
 * `[:cassandra][:java_heap_size_eden]` -  (default: "1500M")
 * `[:cassandra][:memtable_flush_writers]` -  (default: "1")
+* `[:cassandra][:memtable_flush_queue_size]` -  (default: "4")
 * `[:cassandra][:thrift_max_message_length]` -  (default: "16")
 * `[:cassandra][:incremental_backups]` -
 * `[:cassandra][:snapshot_before_compaction]` -
@@ -122,6 +127,9 @@ Cookbook dependencies:
 * `[:cassandra][:flush_largest_memtables_at]` -  (default: "0.75")
 * `[:cassandra][:reduce_cache_sizes_at]` -  (default: "0.85")
 * `[:cassandra][:reduce_cache_capacity_to]` -  (default: "0.6")
+* `[:cassandra][:key_cache_size_in_mb]` -  (default: "")
+* `[:cassandra][:key_cache_save_period]` -  (default: "14400")
+* `[:cassandra][:row_cache_size_in_mb]` -  (default: "0")
 * `[:cassandra][:rpc_timeout_in_ms]`  -  (default: "10000")
 * `[:cassandra][:rpc_keepalive]`      -  (default: "false")
 * `[:cassandra][:phi_convict_threshold]` -  (default: "8")
