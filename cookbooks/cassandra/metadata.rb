@@ -153,6 +153,11 @@ attribute "cassandra/partitioner",
   :description           => "",
   :default               => "org.apache.cassandra.dht.RandomPartitioner"
 
+attribute "cassandra/num_tokens",
+  :display_name          => "Number of tokens",
+  :description           => "The number of virtual tokens randomly assigned to each node on the ring",
+  :default               => "256"
+
 attribute "cassandra/initial_token",
   :display_name          => "",
   :description           => "",

@@ -96,7 +96,11 @@ default[:cassandra][:partitioner]       = "org.apache.cassandra.dht.Murmur3Parti
 
 default[:cassandra][:endpoint_snitch]   = "org.apache.cassandra.locator.SimpleSnitch"
 default[:cassandra][:dynamic_snitch]    = 'true'
+
+# attribute changed in v1.2.0: num_tokens is preferred over initial_token
+default[:cassandra][:num_tokens]     = "256"
 default[:cassandra][:initial_token]     = ""
+
 default[:cassandra][:hinted_handoff_enabled]       = 'true'
 default[:cassandra][:max_hint_window_in_ms]        = 3600000
 default[:cassandra][:hinted_handoff_delay_ms]      = 50
