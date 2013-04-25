@@ -45,7 +45,11 @@ module StormCluster
         if node[:storm][:zookeeper][:servers].any?
             node[:storm][:zookeeper][:servers]
         else
-            discover_all(:zookeeper, :server, :portico_zk).map(&:private_ip).sort.uniq rescue ""
+          if node[:storm][:zookeeper][:cluster_name].nil?
+            discover_all(:zookeeper, :server).map(&:private_ip).sort.uniq rescue ""
+          else
+            discover_all(:zookeeper, :server,  node[:storm][:zookeeper][:cluster_name]).map(&:private_ip).sort.uniq rescue ""
+          end
         end
     end
 

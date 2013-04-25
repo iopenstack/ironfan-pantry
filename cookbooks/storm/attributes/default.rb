@@ -1,5 +1,5 @@
 #
-# Author        :: Bart Vercammen (<bart.vercammen@portico.io>)
+# Author        :: <dev@portico.io>
 # Cookbook Name :: storm
 # Attribute     :: default
 #

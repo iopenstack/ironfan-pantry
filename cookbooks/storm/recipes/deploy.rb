@@ -1,7 +1,7 @@
 #
-# Author        :: Bart Vercammen (<bart.vercammen@portico.io>)
+# Author        :: <dev@portico.io>
 # Cookbook Name :: storm
-# Recipe        :: install_from_release
+# Recipe        :: deploy topology
 #
 # Copyright 2013, Technicolor, Portico
 #
@@ -21,8 +21,8 @@
 include_recipe 'storm::default'
 include_recipe 'java' ; complain_if_not_sun_java(:storm)
 include_recipe 'install_from'
-include_recipe 'zeromq::install_from_release'
 
+## download and unpack node[:storm][:release_url]
 install_from_release(:storm) do
     release_url   node[:storm][:release_url]
     home_dir      node[:storm][:home_dir]
@@ -30,5 +30,4 @@ install_from_release(:storm) do
     action        [:install]
     not_if{ ::File.exists?("#{node[:storm][:home_dir]}/bin/storm") }
 end
-
 
