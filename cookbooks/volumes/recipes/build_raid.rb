@@ -24,6 +24,8 @@ include_recipe 'xfs'
 #
 # install mdadm immediately
 #
+package('xfsprogs'){ action :nothing }.run_action(:install)
+package('xfsdump'){ action :nothing }.run_action(:install)
 package('mdadm'){ action :nothing }.run_action(:install)
 
 #

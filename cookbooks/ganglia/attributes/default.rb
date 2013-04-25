@@ -42,7 +42,8 @@ default[:users ][:ganglia][:uid]     = 320
 default[:groups][:ganglia][:gid]     = 320
 
 # 'generator' specific configuration
-default[:ganglia][:generator][:run_state] = :start
+default[:ganglia][:generator][:run_state]   = :start
+default[:ganglia][:generator][:inject_port] = nil
 
 # 'collector' specific configuration
 default[:ganglia][:collector][:run_state] = :start
