@@ -1,6 +1,6 @@
 #!/bin/sh
 <%- @cassandra ||= @options %>
-export JAVA_HOME=/usr/lib/jvm/java-6-sun/jre 
+export JAVA_HOME=/usr/lib/jvm/java-6-sun/jre
 export CASSANDRA_CONF=<%= @cassandra[:conf_dir] %>
 export CASSANDRA_HOME=<%= @cassandra[:home_dir] %>
 CASSANDRA_USER=<%= @cassandra[:user] %>
@@ -17,9 +17,11 @@ JMX_PORT=<%= @cassandra[:jmx_dash_port] %>
 JMX_ADDR=<%= Ironfan::NodeUtils.private_ip_of(node) %>
 
 # bump number of open files allowed way way up
-ulimit -n 65535
+ulimit -n <%= @cassandra[:open_file_limit] %>
 # allow cassandra to lock itself into memory if JNA is installed
 ulimit -l unlimited
+# bump number of mappings
+sysctl -w vm.max_map_count=<%= @cassandra[:open_file_limit] %>
 
 echo $JVM_OPTS
 
@@ -71,7 +73,7 @@ org.apache.cassandra.service.CassandraDaemon 2>&1
 <%- else %>
 org.apache.cassandra.thrift.CassandraDaemon 2>&1
 <%- end %>
-      
+
 
 #     -XX:NewRatio=3                                            \
 
@@ -84,7 +86,7 @@ org.apache.cassandra.thrift.CassandraDaemon 2>&1
 # <%- else %>
 # <%- end %>
 #
-      
+
 # # Very Large Heaps and Caches         http://www.devwebsphere.com/devwebsphere/2007/02/very_large_heap.htmla          ## great overview
 # # Cassandra Garbage Collection Tuning http://blog.mikiobraun.de/2010/08/cassandra-gc-tuning.html
 # # Garbage Collection FAQ              http://www.oracle.com/technetwork/java/faq-140837.html
@@ -96,7 +98,7 @@ org.apache.cassandra.thrift.CassandraDaemon 2>&1
 # # Tuning Garbage Collection Outline   http://www.petefreitag.com/articles/gctuning/
 # # Java Tuning White Paper             http://java.sun.com/performance/reference/whitepapers/tuning.html
 # # GC Tuning in the HotSpot VM         http://www.slideshare.net/ludomp/gc-tuning-in-the-hotspot-java-vm-a-fisl-10-presentation
-# #       
+# #
 #
 #   -XX:+UseCompressedOops                  ## Greatly improves memory consumption on 64-bit machines
 #
@@ -135,8 +137,8 @@ org.apache.cassandra.thrift.CassandraDaemon 2>&1
 #   -Xloggc:/var/log/cassandra/cassandra-gc.log               \
 #
 
-#   -XX:TargetSurvivorRatio=90              ##Allows 90% of the survivor spaces to be occupied instead of the default 50%, allowing better utilization of the survivor space memory. 
-      
+#   -XX:TargetSurvivorRatio=90              ##Allows 90% of the survivor spaces to be occupied instead of the default 50%, allowing better utilization of the survivor space memory.
+
 #
 # If application has mid- or long-lived objects: Objects that survive a young
 # generation collection have a copying cost (part of the algorithm for a young

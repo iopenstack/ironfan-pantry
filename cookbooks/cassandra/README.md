@@ -54,8 +54,8 @@ Cookbook dependencies:
 * `[:cassandra][:home_dir]`           -  (default: "/usr/local/share/cassandra")
   - Directories, hosts and ports        # =
 * `[:cassandra][:conf_dir]`           -  (default: "/etc/cassandra")
-* `[:cassandra][:commitlog_dir]`      -  (default: "/mnt/cassandra/commitlog")
-* `[:cassandra][:data_dirs]`          -
+* `[:cassandra][:commitlog_dir]`      -  (default: "/var/lib/cassandra/commitlog")
+* `[:cassandra][:data_dirs]`          -  (default: "/var/lib/cassandra/data")
 * `[:cassandra][:saved_caches_dir]`   -  (default: "/var/lib/cassandra/saved_caches")
 * `[:cassandra][:user]`               - cassandra (default: "cassandra")
   - The cassandra user
@@ -64,9 +64,10 @@ Cookbook dependencies:
 * `[:cassandra][:rpc_addr]`           -  (default: "localhost")
 * `[:cassandra][:rpc_port]`           -  (default: "9160")
 * `[:cassandra][:storage_port]`       -  (default: "7000")
-* `[:cassandra][:jmx_dash_port]`      -  (default: "12345")
+* `[:cassandra][:jmx_dash_port]`      -  (default: "7199")
 * `[:cassandra][:mx4j_port]`          -  (default: "8081")
 * `[:cassandra][:mx4j_addr]`          -  (default: "127.0.0.1")
+* `[:cassandra][:open_file_limit]`    -  (default: "65535")
 * `[:cassandra][:release_url]`        -  (default: ":apache_mirror:/cassandra/:version:/apache-cassandra-:version:-bin.tar.gz")
   - install_from_release: tarball url
 * `[:cassandra][:git_repo]`           -  (default: "git://git.apache.org/cassandra.git")
@@ -90,7 +91,7 @@ Cookbook dependencies:
 * `[:cassandra][:authenticator]`      - Cassandra authenticator (default: "org.apache.cassandra.auth.AllowAllAuthenticator")
   - The IAuthenticator to be used for access control.
 * `[:cassandra][:permissions_validity_in_ms]` -  (default: "2000")
-* `[:cassandra][:partitioner]`        -  (default: "org.apache.cassandra.dht.Murmur3Partitioner")
+* `[:cassandra][:partitioner]`        -  (default: "org.apache.cassandra.dht.RandomPartitioner")
 * `[:cassandra][:num_tokens]` -  (default: "256")
 * `[:cassandra][:initial_token]`      -
 * `[:cassandra][:commitlog_rotation_threshold]` -  (default: "128")

@@ -52,13 +52,13 @@ attribute "cassandra/conf_dir",
 attribute "cassandra/commitlog_dir",
   :display_name          => "",
   :description           => "",
-  :default               => "/mnt/cassandra/commitlog"
+  :default               => "/var/lib/cassandra/commitlog"
 
 attribute "cassandra/data_dirs",
   :display_name          => "",
   :description           => "",
   :type                  => "array",
-  :default               => ["/data/db/cassandra"]
+  :default               => ["/var/lib/cassandra/data"]
 
 attribute "cassandra/saved_caches_dir",
   :display_name          => "",
@@ -99,7 +99,7 @@ attribute "cassandra/storage_port",
 attribute "cassandra/jmx_dash_port",
   :display_name          => "",
   :description           => "",
-  :default               => "12345"
+  :default               => "7199"
 
 attribute "cassandra/mx4j_port",
   :display_name          => "",
@@ -156,7 +156,7 @@ attribute "cassandra/permissions_validity_in_ms",
 attribute "cassandra/partitioner",
   :display_name          => "",
   :description           => "The partitioner is responsible for distributing rows (by key) across nodes in the cluster",
-  :default               => "org.apache.cassandra.dht.Murmur3Partitioner"
+  :default               => "org.apache.cassandra.dht.RandomPartitioner"
 
 attribute "cassandra/num_tokens",
   :display_name          => "Number of tokens",
