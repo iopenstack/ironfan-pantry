@@ -44,6 +44,10 @@ cluster_id = node[:cluster_name] || ""
 realm      = node[:ganglia][:grid] || ""
 runstate   = has_collector?(cluster_id) ? node[:ganglia][:generator][:run_state] : :stop
 
+if !::File.exists?("#{node[:ganglia][:conf_dir]}/gmond.conf")
+    runstate = :stop
+end
+
 runit_service "ganglia_generator" do
     run_state       runstate 
     options         ({ 

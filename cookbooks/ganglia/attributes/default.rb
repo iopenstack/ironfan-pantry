@@ -48,7 +48,7 @@ default[:ganglia][:generator][:inject_port] = nil
 # 'collector' specific configuration
 default[:ganglia][:collector][:run_state] = :start
 
-default[:ganglia][:collector][:start_port] = 8600
-default[:ganglia][:collector][:end_port  ] = 8700
+default[:ganglia][:collector][:start_port] = 40000
+default[:ganglia][:collector][:end_port  ] = 45000
 default[:ganglia][:collector][:used_ports] = []
 
