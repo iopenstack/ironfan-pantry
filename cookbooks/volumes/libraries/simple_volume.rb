@@ -5,10 +5,21 @@ module Silverware
     # Accessor methods for the common keys
     # sample:
     #   def device() self['device'] ; end
-    %w[ device mount_options mount_dump mount_fsck device_type mount_point tags name in_raid_group
+    %w[ device mount_options mount_fsck device_type mount_point tags name in_raid_group
         sub_volumes level chunk read_ahead
       ].each do |attr|
       define_method(attr){ self[attr] if not self[attr].to_s.empty? }
+    end
+
+    def mount_dump
+        if self['mount_dump'].is_a?(Fixnum)
+            self['mount_dump'] > 0
+        elsif self['mount_dump'].is_a?(TrueClass) or self['mount_dump'].is_a?(FalseClass)
+            self['mount_dump'] 
+        else
+            nil
+        end
+        
     end
 
     def initialize(name, node, *args, &block)

@@ -19,4 +19,8 @@
 # limitations under the License.
 #
 
-package "cassandra"
+include_recipe 'apt'
+
+apt_package "cassandra" do
+    version '1.2.4'
+end

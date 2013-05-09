@@ -20,6 +20,7 @@
 #
 
 include_recipe 'cassandra'
+include_recipe 'thrift'
 
 home_dir        = node[:cassandra][:home_dir]
 cassandra_install_dir = home_dir + '-git'
