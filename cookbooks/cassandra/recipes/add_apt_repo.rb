@@ -22,12 +22,12 @@
 include_recipe 'apt'
 
 apt_repository "apache-cassandra" do
-  uri "http://debian.datastax.com/community"
-  distribution "stable"
-  components ["main"]
-  action :add
-  keyserver "pgp.mit.edu"
-  key "350200F2B999A372"
+  uri               "http://debian.datastax.com/community"
+  distribution      "stable"
+  components        ["main"]
+  action            :add
+  keyserver         "pgp.mit.edu"
+  key               "350200F2B999A372"
 end
 
 
