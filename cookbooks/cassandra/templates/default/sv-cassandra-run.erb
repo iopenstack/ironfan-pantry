@@ -1,4 +1,6 @@
 #!/bin/sh
+# File generated from template ironfan-pantry/cookbooks/cassandra/templates/default/sv-cassandra-run.erb
+
 <%- @cassandra ||= @options %>
 export JAVA_HOME=/usr/lib/jvm/java-6-sun/jre
 export CASSANDRA_CONF=<%= @cassandra[:conf_dir] %>

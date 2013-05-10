@@ -66,7 +66,7 @@ default[:cassandra][:open_file_limit]   = "65535"
 #
 
 # install_from_release
-default[:cassandra][:version]           = "1.2.0"
+default[:cassandra][:version]           = "1.0.12"
 # install_from_release: tarball url
 default[:cassandra][:release_url]       = ":apache_mirror:/cassandra/:version:/apache-cassandra-:version:-bin.tar.gz"
 

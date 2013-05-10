@@ -30,9 +30,7 @@ node.set[:cassandra][:rpc_addr]    = private_ip_of(node)
 
 # Discover the other seeds, assuming they've a) announced and b) converged.
 seed_ips = discover_all(:cassandra, :seed).sort_by{|s| s.node.name }.map{|s| s.node.ipaddress }.uniq
-# stabilize their order.
-seed_ips.sort!
-node.set[:cassandra][:seeds] = seed_ips
+node.set[:cassandra][:seeds] = seed_ips.sort
 
 # Pull the initial token from the node attributes if one is given
 if node[:cassandra][:initial_tokens] && (not node[:facet_index].nil?)

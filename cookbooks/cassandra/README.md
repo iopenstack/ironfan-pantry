@@ -142,7 +142,7 @@ Cookbook dependencies:
 * `[:cassandra][:pid_dir]`            -  (default: "/var/run/cassandra")
 * `[:cassandra][:group]`              - nogroup (default: "nogroup")
   - The group that cassandra belongs to
-* `[:cassandra][:version]`            -  (default: "0.7.10")
+* `[:cassandra][:version]`            -  (default: "1.0.12")
   - install_from_release
 * `[:cassandra][:mx4j_version]`       -  (default: "3.0.2")
   - MX4J Version
