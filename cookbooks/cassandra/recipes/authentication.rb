@@ -84,7 +84,7 @@ return unless cluster
 auth = cluster['authentication']
 if auth
   node[:cassandra][:authenticator] = "org.apache.cassandra.auth.SimpleAuthenticator"
-  if auth['use_md5'] 
+  if auth['use_md5']
     node[:cassandra][:passwd_use_md5] = true
   end
 
