@@ -46,7 +46,7 @@ template "#{node[:cassandra][:conf_dir]}/cassandra.yaml" do
   mode          "0644"
   variables({   :cassandra => node[:cassandra],
                 :seeds     => seed_ips })
-  notifies      :restart, "service[cassandra]", :delayed if startable?(node[:cassandra])
+  notifies      :restart, "service[cassandra_server]", :delayed if startable?(node[:cassandra])
 end
 
 template "#{node[:cassandra][:conf_dir]}/log4j-server.properties" do
@@ -55,5 +55,5 @@ template "#{node[:cassandra][:conf_dir]}/log4j-server.properties" do
   group         "root"
   mode          "0644"
   variables     :cassandra => node[:cassandra]
-  notifies      :restart, "service[cassandra]", :delayed if startable?(node[:cassandra])
+  notifies      :restart, "service[cassandra_server]", :delayed if startable?(node[:cassandra])
 end

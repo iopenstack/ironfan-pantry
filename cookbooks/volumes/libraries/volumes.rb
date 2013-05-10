@@ -17,8 +17,10 @@ module Silverware
     return {} unless node[:volumes]
     vols = Mash.new
     node[:volumes].each do |vol_name, vol_hsh|
-      vols[vol_name] = Silverware::SimpleVolume.new(vol_name, node, vol_hsh.to_hash)
-      vols[vol_name].fix_for_xen!
+      if not ["swap","proc"].include?(vol_hsh[:fstype]) 
+        vols[vol_name] = Silverware::SimpleVolume.new(vol_name, node, vol_hsh.to_hash)
+        vols[vol_name].fix_for_xen!
+      end
     end
     vols
   end

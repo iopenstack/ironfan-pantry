@@ -22,6 +22,8 @@
 include_recipe 'runit'
 include_recipe 'volumes'
 
+kill_old_service('cassandra'){ only_if{ File.exists?("/etc/init.d/cassandra") } }
+
 volume_dirs('cassandra.data') do
     type        :persistent
     selects     :all
@@ -41,9 +43,9 @@ volume_dirs('cassandra.saved_caches') do
 end
 
 directory('/etc/sv/cassandra/env'){ owner 'root' ; action :create ; recursive true }
-runit_service "cassandra" do
-  options       node[:cassandra]
-  run_state     node[:cassandra][:run_state]
+runit_service "cassandra_server" do
+    options       node[:cassandra]
+    run_state     node[:cassandra][:run_state]
 end
 
 # have some fraction of the nodes announce as a seed

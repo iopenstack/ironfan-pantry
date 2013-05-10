@@ -20,6 +20,7 @@
 #
 
 include_recipe 'install_from'
+include_recipe 'thrift'
 
 install_from_release(:cassandra) do
   release_url   node[:cassandra][:release_url]
