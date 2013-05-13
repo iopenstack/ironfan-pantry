@@ -82,9 +82,7 @@ gridname "<%= @grid %>"
 # If you want any host which connects to the gmetad XML to receive
 # data, then set this value to "on"
 # default: off
-<%- if @all_trusted %>
-all_trusted on
-<%- end %>
+all_trusted <%= @all_trusted %>
 
 #-------------------------------------------------------------------------------
 # If you don't want gmetad to setuid then set this to off

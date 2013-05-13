@@ -38,7 +38,7 @@ default[:ganglia][:log_dir]          = '/var/log/ganglia'
 default[:ganglia][:data_dir]         = "#{node[:ganglia][:home_dir]}/rrds" #nil  # discovered by volumes
 default[:ganglia][:user]             = 'ganglia'
 default[:ganglia][:group]            = 'ganglia'
-default[:ganglia][:all_trusted]      = false
+default[:ganglia][:all_trusted]      = 'on'
 
 default[:users ][:ganglia][:uid]     = 320
 default[:groups][:ganglia][:gid]     = 320

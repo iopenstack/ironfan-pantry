@@ -36,7 +36,7 @@ Cookbook dependencies:
 * `[:ganglia][:pid_dir]`              -  (default: "/var/run/ganglia")
 * `[:ganglia][:data_dir]`             -  (default: "/var/lib/ganglia/rrds")
 * `[:ganglia][:user]`                 -  (default: "ganglia")
-* `[:ganglia][:all_trusted]`          -  (default: "false")
+* `[:ganglia][:all_trusted]`          -  (default: "off")
 * `[:ganglia][:send_port]`            -  (default: "8649")
 * `[:ganglia][:rcv_port]`             -  (default: "8649")
 * `[:ganglia][:agent ][:run_state]`   -  (default: "start")

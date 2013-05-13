@@ -51,8 +51,8 @@ attribute "ganglia/user",
 
 attribute "ganglia/all_trusted",
   :display_name          => "",
-  :description           => "If you want any host which connects to the gmetad XML to receive data, then set this to true",
-  :default               => "false"
+  :description           => "If you want any host which connects to the gmetad XML to receive data, then set this to 'on'",
+  :default               => "off"
 
 attribute "ganglia/send_port",
   :display_name          => "",
