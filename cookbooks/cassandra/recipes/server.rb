@@ -22,7 +22,7 @@
 include_recipe 'runit'
 include_recipe 'volumes'
 
-kill_old_service('cassandra'){ only_if{ File.exists?("/etc/init.d/cassandra") } }
+kill_old_service('cassandra', true)
 
 volume_dirs('cassandra.data') do
     type        :persistent
@@ -42,7 +42,6 @@ volume_dirs('cassandra.saved_caches') do
     owner       node[:cassandra][:user]
 end
 
-directory('/etc/sv/cassandra/env'){ owner 'root' ; action :create ; recursive true }
 runit_service "cassandra_server" do
     options       node[:cassandra]
     run_state     node[:cassandra][:run_state]
