@@ -78,7 +78,8 @@ if is_collector?
         notifies    :restart, "service[ganglia_metad]", :delayed if startable?(node[:ganglia][:collector])
         variables   ({
             :monitor_groups => h,
-            :grid           => node[:ganglia][:grid]
+            :grid           => node[:ganglia][:grid],
+            :all_trusted    => node[:ganglia][:all_trusted]
         })
     end
 end

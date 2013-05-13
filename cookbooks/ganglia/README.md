@@ -10,7 +10,7 @@ Ganglia: a distributed high-performance monitoring system
 
 Installs/Configures ganglia
 
-## Recipes 
+## Recipes
 
 * `default`                  - Base configuration for ganglia
 * `agent`                    - Ganglia agent -- discovers and sends to its `ganglia_server`
@@ -36,6 +36,7 @@ Cookbook dependencies:
 * `[:ganglia][:pid_dir]`              -  (default: "/var/run/ganglia")
 * `[:ganglia][:data_dir]`             -  (default: "/var/lib/ganglia/rrds")
 * `[:ganglia][:user]`                 -  (default: "ganglia")
+* `[:ganglia][:all_trusted]`          -  (default: "false")
 * `[:ganglia][:send_port]`            -  (default: "8649")
 * `[:ganglia][:rcv_port]`             -  (default: "8649")
 * `[:ganglia][:agent ][:run_state]`   -  (default: "start")

@@ -38,6 +38,8 @@ default[:ganglia][:log_dir]          = '/var/log/ganglia'
 default[:ganglia][:data_dir]         = "#{node[:ganglia][:home_dir]}/rrds" #nil  # discovered by volumes
 default[:ganglia][:user]             = 'ganglia'
 default[:ganglia][:group]            = 'ganglia'
+default[:ganglia][:all_trusted]      = false
+
 default[:users ][:ganglia][:uid]     = 320
 default[:groups][:ganglia][:gid]     = 320
 
@@ -47,7 +49,6 @@ default[:ganglia][:generator][:inject_port] = nil
 
 # 'collector' specific configuration
 default[:ganglia][:collector][:run_state] = :start
-
 default[:ganglia][:collector][:start_port] = 40000
 default[:ganglia][:collector][:end_port  ] = 45000
 default[:ganglia][:collector][:used_ports] = []
