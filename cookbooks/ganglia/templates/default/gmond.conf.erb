@@ -6,10 +6,10 @@ globals {
   max_udp_msg_len        = 1472        
   mute                   = no             
   deaf                   = no             
-  host_dmax              = 0 /*secs */ 
-  cleanup_threshold      = 300 /*secs */ 
+  host_dmax              = <%= @config[:host_lifetime] %> 
+  cleanup_threshold      = <%= @config[:host_cleanup_threshold] %>  
   gexec                  = no             
-  send_metadata_interval = 300     
+  send_metadata_interval = <%= @config[:host_cleanup_threshold] %>
 } 
 
 cluster { 

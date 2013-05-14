@@ -58,6 +58,10 @@ if is_collector?
                 :recv_tcp => {
                     :addr => 'localhost',
                     :port => port
+                },
+                :config => {
+                    :host_lifetime          => node[:ganglia][:config][:host_lifetime],
+                    :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold]
                 }
             )
             notifies :restart, "service[ganglia_collector_#{cluster_id}]", :delayed if startable?(node[:ganglia][:collector])
@@ -111,7 +115,11 @@ if is_generator?
                 :port => collector_port
             },
             :recv_udp => node[:ganglia][:generator][:inject_port].nil? ? nil : {:port => node[:ganglia][:generator][:inject_port]},
-            :recv_tcp => nil
+            :recv_tcp => nil,
+            :config => {
+                :host_lifetime          => node[:ganglia][:config][:host_lifetime],
+                :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold]
+            }
         )
 
         notifies :restart, 'service[ganglia_generator]' if startable?(node[:ganglia][:generator]) && has_collector?(cluster_id)
