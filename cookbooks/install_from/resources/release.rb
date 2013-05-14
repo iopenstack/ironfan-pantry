@@ -30,6 +30,7 @@ actions(
   :build_with_make,
   :build_with_ant,
   :build_with_sbt,
+  :build_custom,
   :install_with_make,
   :install_binaries,
   :install_python
@@ -63,6 +64,9 @@ attribute :checksum,      :kind_of => String, :default => nil
 
 # Command to expand project
 attribute :expand_cmd,    :kind_of => String
+
+# Command to custom build the project
+attribute :build_cmd,    :kind_of => String
 
 # Release file name, eg /usr/local/src/pig-0.8.0.tar.gz
 attribute :release_file,  :kind_of => String
