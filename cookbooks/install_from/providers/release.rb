@@ -36,6 +36,7 @@ action :download do
     mode        '0755'
     action      :create
     recursive   true
+    owner     new_resource.user
   end
 
   remote_file new_resource.release_file do
@@ -50,6 +51,7 @@ end
 action :unpack do
   action_download
   directory(::File.dirname(new_resource.install_dir)) do
+    owner     new_resource.user
     mode      '0755'
     action    :create
     recursive true
