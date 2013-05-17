@@ -10,6 +10,9 @@ globals {
   cleanup_threshold      = <%= @config[:host_cleanup_threshold] %>  
   gexec                  = no             
   send_metadata_interval = <%= @config[:host_cleanup_threshold] %>
+<%- if @config[:hostname] %>
+  override_hostname      = <%= @config[:hostname] %>
+<%- end %>
 } 
 
 cluster { 

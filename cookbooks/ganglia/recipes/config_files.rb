@@ -118,7 +118,8 @@ if is_generator?
             :recv_tcp => nil,
             :config => {
                 :host_lifetime          => node[:ganglia][:config][:host_lifetime],
-                :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold]
+                :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
+                :hostname               => "#{node[:facet_name]}-#{node[:facet_index]}"
             }
         )
 

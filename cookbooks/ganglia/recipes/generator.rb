@@ -21,9 +21,27 @@
 include_recipe 'ganglia'
 include_recipe 'runit'
 
-daemon_user('ganglia.generator')
+include_recipe 'apt'
 
-package "ganglia-monitor"
+# Add cloudera package repo
+apt_repository 'ganglia_generator' do
+  uri             'http://ppa.launchpad.net/rufustfirefly/ganglia/ubuntu'
+  components      ['main']
+  keyserver       'keyserver.ubuntu.com'
+  key             'AD13F4200E7B39DA049B56CF10B02F77A93EFBE2'
+  distribution    node[:lsb][:codename]
+  action          :add
+  notifies        :run, "execute[apt-get-update]", :immediately
+end
+
+package('ganglia-monitor') do
+    options     "--force-yes"
+    action      :upgrade
+end
+
+
+
+daemon_user('ganglia.generator')
 
 # after installation, the services are started automatically
 # stop them first ...
@@ -56,8 +74,8 @@ runit_service "ganglia_generator" do
             :conf   => node[:ganglia][:conf_dir],
             :log    => node[:ganglia][:log_dir]
         },
-        :user  => node[:ganglia][:user],
-        :group => node[:ganglia][:group]
+        :user     => node[:ganglia][:user],
+        :group    => node[:ganglia][:group]
     })
 end
 
