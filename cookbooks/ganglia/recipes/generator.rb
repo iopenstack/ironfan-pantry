@@ -34,14 +34,12 @@ apt_repository 'ganglia_generator' do
   notifies        :run, "execute[apt-get-update]", :immediately
 end
 
+daemon_user('ganglia.generator')
+
 package('ganglia-monitor') do
     options     "--force-yes"
     action      :upgrade
 end
-
-
-
-daemon_user('ganglia.generator')
 
 # after installation, the services are started automatically
 # stop them first ...
