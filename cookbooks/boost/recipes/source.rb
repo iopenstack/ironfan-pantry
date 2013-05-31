@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: boost
-# Recipe:: source
+# Recipe:: release (install from ppa)
 #
 # Copyright 2013, Portico
 #
