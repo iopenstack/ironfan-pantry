@@ -20,7 +20,6 @@
 
 include_recipe 'ganglia'
 include_recipe 'runit'
-
 include_recipe 'apt'
 
 # Add cloudera package repo
@@ -50,7 +49,7 @@ kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 #
 
 standard_dirs('ganglia.generator') do
-    directories [:home_dir, :log_dir, :conf_dir, :pid_dir]
+    directories [:home_dir, :log_dir, :conf_dir, :pid_dir, :plugin_dir]
     user        node[:ganglia][:user]
     group       node[:ganglia][:group]
 end

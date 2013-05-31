@@ -82,7 +82,9 @@ modules {
   } 
 } 
 
-include ('/etc/ganglia/conf.d/*.conf') 
+<%- if @config[:plugin_dir] %>
+include ('<%= @config[:plugin_dir] %>/*.conf')
+<%- end %>
 
 collection_group { 
   collect_once = yes 

@@ -119,11 +119,12 @@ if is_generator?
             :config => {
                 :host_lifetime          => node[:ganglia][:config][:host_lifetime],
                 :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
-                :hostname               => "#{node[:facet_name]}-#{node[:facet_index]}"
+                :hostname               => "#{node[:facet_name]}-#{node[:facet_index]}",
+                :plugin_dir             => node[:ganglia][:plugin_dir]
             }
         )
 
-        notifies :restart, 'service[ganglia_generator]' if startable?(node[:ganglia][:generator]) && has_collector?(cluster_id)
+        notifies :restart, 'service[ganglia_generator]', :delayed if startable?(node[:ganglia][:generator]) && has_collector?(cluster_id)
     end
 end
 
