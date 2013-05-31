@@ -18,7 +18,7 @@
 #
 
 include_recipe "github"
-include_recipe "boost"
+include_recipe "boost::release"
 
 package "cmake"
 package "liblog4cxx10-dev"

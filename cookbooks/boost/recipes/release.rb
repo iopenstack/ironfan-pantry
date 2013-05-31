@@ -17,13 +17,10 @@
 # limitations under the License.
 #
 
-include_recipe 'boost'
 include_recipe 'apt'
 
 version_major = node[:boost][:version].split('.').flatten[0]
 version_minor = node[:boost][:version].split('.').flatten[1]
-
-puts "CAMME: #{node[:lsb][:codename]}"
 
 if(node[:lsb][:codename].to_s == 'quantal')
     apt_repository 'boost_ppa1' do
