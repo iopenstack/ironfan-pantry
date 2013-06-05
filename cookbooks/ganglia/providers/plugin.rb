@@ -9,8 +9,7 @@ def run_deploy
     # parameters :
     # name          (mandatory) plugin name (e.g. "storm") --> will create ganglia plugin named: mod<name>.so
     #                                                                                and config: mod<name>.conf
-    # source_lib    (mandatory) 
-    # source_conf   (mandatory) 
+    # source        (mandatory) 
     #
 
     node_resource = @new_resource
@@ -22,12 +21,21 @@ def run_deploy
     config_fullpath = "#{plugin_dir}/#{config_file}"
     
     if ::File.directory?(plugin_dir)
-        link(plugin_fullpath).to node_resource.source_lib
-        link(config_fullpath).to node_resource.source_conf
+        link(plugin_fullpath).to node_resource.source
     end
 
-    runit_service "ganglia_generator" do
-        action      :restart
+    template "#{config_fullpath}" do
+        source      'module.conf.erb'
+        cookbook    'ganglia'
+        owner       node[:ganglia][:user]
+        group       node[:ganglia][:group]
+        variables   ({
+            :module => {
+                :name => node_resource.name,
+                :path => plugin_fullpath
+            },
+            :metrics => node_resource.metrics
+        })
     end
 end
 

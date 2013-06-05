@@ -1,0 +1,18 @@
+modules {
+    module {
+        name = "<%= @module[:name] %>"
+        path = "<%= @module[:path] %>"
+    }
+}
+
+collection_group {
+    collect_every  = 20
+    time_threshold = 20
+
+    <% @metrics.each do |m| -%>
+    metric {
+        name = <%= m %>
+    }
+    <% end -%>
+}
+
