@@ -34,7 +34,11 @@ def run_deploy
                 :name => node_resource.name,
                 :path => plugin_fullpath
             },
-            :metrics => node_resource.metrics
+            :metrics => node_resource.metrics,
+            :time => {
+                :collect   => node_resource.collect_time,
+                :threshold => node_resource.threshold_time
+            }
         })
     end
 end

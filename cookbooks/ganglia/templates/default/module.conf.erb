@@ -6,8 +6,12 @@ modules {
 }
 
 collection_group {
-    collect_every  = 20
-    time_threshold = 20
+    <%= if @time && @time[:collect] -%>
+    collect_every  = <%= @time[:collect] %>
+    <% end -%>
+    <%= if @time && @time[:threshold] -%>
+    time_threshold = <%= @time[:threshold] %>
+    <% end -%>
 
     <% @metrics.each do |m| -%>
     metric {
