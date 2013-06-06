@@ -63,6 +63,7 @@ template "#{node[:nginx][:dir]}/sites-available/default" do
   owner "root"
   group "root"
   mode 0644
+  only_if { node[:nginx][:create_default_site] }
 end
 
 file "#{node[:nginx][:dir]}/conf.d/default.conf" do
@@ -72,5 +73,5 @@ end if platform?('centos')
 
 service "nginx" do
   supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
+  action node[:nginx][:default_service_actions]
 end
