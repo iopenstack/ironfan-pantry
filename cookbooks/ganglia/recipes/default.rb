@@ -2,7 +2,7 @@
 # Cookbook Name::       ganglia
 # Description::         Base configuration for ganglia
 # Recipe::              default
-# Author::              Chris Howe - Infochimps, Inc
+# Author::              
 #
 # Copyright 2011, Chris Howe - Infochimps, Inc
 #
@@ -19,4 +19,16 @@
 # limitations under the License.
 #
 
-include_recipe 'silverware'
+group node[:ganglia][:group] do
+    action  :create
+end
+
+cmd = "grep #{node[:ganglia][:user]} /etc/passwd"
+
+user node[:ganglia][:user] do
+    comment     "Ganglia Stats user"
+    gid         node[:ganglia][:group]
+    action      :create
+    only_if { `#{cmd}`.chomp == "" }
+end
+

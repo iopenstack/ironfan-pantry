@@ -26,8 +26,9 @@ package 'libconfuse-dev'
 package 'libapr1-dev'
 
 directory "#{node[:ganglia][:plugin_dir]}" do
-    mode    0755
-    owner   node[:ganglia][:user]
-    group   node[:ganglia][:group]
-    action :create
+    mode        0755
+    owner       node[:ganglia][:user]
+    group       node[:ganglia][:group]
+    action      :create
+    recursive   true
 end
