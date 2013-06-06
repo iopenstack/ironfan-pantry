@@ -6,10 +6,10 @@ modules {
 }
 
 collection_group {
-    <%= if @time && @time[:collect] -%>
+    <% if @time && @time[:collect] -%>
     collect_every  = <%= @time[:collect] %>
     <% end -%>
-    <%= if @time && @time[:threshold] -%>
+    <% if @time && @time[:threshold] -%>
     time_threshold = <%= @time[:threshold] %>
     <% end -%>
 
