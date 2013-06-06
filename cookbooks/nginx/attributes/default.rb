@@ -62,3 +62,6 @@ default[:nginx][:worker_connections] = 2048
 default[:nginx][:server_names_hash_bucket_size] = 64
 
 default[:nginx][:disable_access_log] = false
+
+default[:nginx][:create_default_site] = false
+default[:nginx][:default_service_actions] = [ :enable ] #[ :enable, :start ]
