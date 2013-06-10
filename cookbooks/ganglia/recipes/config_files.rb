@@ -119,7 +119,7 @@ if is_generator?
             :config => {
                 :host_lifetime          => node[:ganglia][:config][:host_lifetime],
                 :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
-                :hostname               => "#{node[:facet_name]}-#{node[:facet_index]}",
+                :hostname               => "#{node[:launch_spec][:facet_name]}-#{node[:launch_spec][:facet_index]}",
                 :plugin_dir             => node[:ganglia][:plugin_dir]
             }
         )
