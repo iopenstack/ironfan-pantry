@@ -14,14 +14,16 @@ depends          "jzmq"
 depends          "silverware"
 depends          "install_from"
 depends          "github"
+depends          "ganglia"
 
 recipe           "storm::default",                  "Base configuration for storm"
 recipe           "storm::ui",                       "Storm web UI"
 recipe           "storm::nimbus",                   "Storm NIMBUS service"
 recipe           "storm::supervisor",               "Storm SUPERVISOR service"
 recipe           "storm::install_from_release",     "Install from release version"
+recipe           "storm::statistics",               "Install Ganglia statistics plugin"
 
-%w[ debian ubuntu ].each do |os|
+%w[ ubuntu ].each do |os|
   supports os
 end
 
