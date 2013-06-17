@@ -62,7 +62,7 @@ define(:hadoop_service, :service_name => nil, :old_service_name => nil, :package
 
   logs = {}.tap do |h|
     h[:main] = {
-      :path      => File.join(node[:hadoop][:log_dir], "#{node[:cluster_name]}-hadoop-#{service_name}-#{node.name}.log"),
+      :path      => File.join(node[:hadoop][:log_dir], "hadoop-#{service_name}.log"),
       :logrotate => false
     }
     h.merge!(params[:logs] || {})
