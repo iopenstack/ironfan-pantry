@@ -18,15 +18,15 @@ if [ -f "<%= @options[:conf_dir] %>/hadoop-env.sh" ] ; then
 fi
 
 <%- if @options[:java_gc_log] %>
-export HADOOP_OPTS="$HADOOP_OPTS -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:$HADOOP_LOG_DIR/hadoop-$HADOOP_IDENT_STRING-$command-$HADOOP_NODENAME.gc.log"
+export HADOOP_OPTS="$HADOOP_OPTS -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:$HADOOP_LOG_DIR/hadoop-$command.gc.log"
 <%- end %>
 
 # some variables
-export _HADOOP_DAEMON_OUT=$HADOOP_LOG_DIR/hadoop-$HADOOP_IDENT_STRING-$command-$HADOOP_NODENAME.out
-export _HADOOP_DAEMON_PIDFILE=$HADOOP_PID_DIR/hadoop-$HADOOP_IDENT_STRING-$command.pid
+export _HADOOP_DAEMON_OUT=$HADOOP_LOG_DIR/hadoop-$command.out
+export _HADOOP_DAEMON_PIDFILE=$HADOOP_PID_DIR/hadoop-$command.pid
 export _HADOOP_DAEMON_DETACHED="false"
 
-export HADOOP_LOGFILE=hadoop-$HADOOP_IDENT_STRING-$command-$HADOOP_NODENAME.log
+export HADOOP_LOGFILE=hadoop-$command.log
 export HADOOP_ROOT_LOGGER="INFO,FA"
 export HADOOP_SECURITY_LOGGER="INFO,FAS"
 
