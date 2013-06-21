@@ -22,9 +22,9 @@ include_recipe  'ganglia'
 
 script_code = <<-CODE
     cd /tmp
-    wget http://sourceforge.net/projects/ganglia/files/ganglia-web/3.5.7/ganglia-web-3.5.7.tar.gz
-    tar zxvf ganglia-web-3.5.7.tar.gz
-    mv ganglia-web-3.5.7 /var/www/ganglia-stats-v2
+    wget http://sourceforge.net/projects/ganglia/files/ganglia-web/3.5.8/ganglia-web-3.5.8.tar.gz
+    tar zxvf ganglia-web-3.5.8.tar.gz
+    mv ganglia-web-3.5.8 /var/www/ganglia-stats-v2
     cd /var/www/ganglia-stats-v2
     cat Makefile | sed \"s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g\" | sed \"s/APACHE_USER.=.*/APACHE_USER = www-data/g\" >Makefile.tmp
     cp Makefile.tmp Makefile
