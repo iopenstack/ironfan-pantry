@@ -65,8 +65,7 @@ default[:cassandra][:open_file_limit]   = "65535"
 # Install
 #
 
-# install_from_release
-default[:cassandra][:version]           = "1.0.12"
+default[:cassandra][:version]           = "1.2.4"
 # install_from_release: tarball url
 default[:cassandra][:release_url]       = ":apache_mirror:/cassandra/:version:/apache-cassandra-:version:-bin.tar.gz"
 
@@ -134,9 +133,8 @@ default[:cassandra][:row_cache_size_in_mb]         = 0
 # Tunables -- Memory, Disk and Performance
 #
 
-default[:cassandra][:java_heap_size_min]           = "128M"        # consider setting equal to max_heap in production
-default[:cassandra][:java_heap_size_max]           = "1650M"
-default[:cassandra][:java_heap_size_eden]          = "1500M"
+default[:cassandra][:max_heap_size_in_mb]         = nil
+default[:cassandra][:new_heap_size_in_mb]         = nil
 
 # attribute removed in v1.2.0
 default[:cassandra][:disk_access_mode]             = "auto"

@@ -22,5 +22,5 @@
 include_recipe 'apt'
 
 apt_package "cassandra" do
-    version '1.2.4'
+    version node[:cassandra][:version]
 end
