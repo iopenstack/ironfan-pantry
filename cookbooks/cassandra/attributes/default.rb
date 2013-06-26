@@ -165,6 +165,7 @@ default[:cassandra][:commitlog_sync_period]        = 10000
 default[:cassandra][:flush_largest_memtables_at]   = 0.75
 
 # attribute removed in v1.2.0
+default[:cassandra][:request_timeout_in_ms]        = 30000
 default[:cassandra][:rpc_timeout_in_ms]            = 10000
 
 default[:cassandra][:rpc_keepalive]                = "false"

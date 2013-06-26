@@ -353,6 +353,11 @@ attribute "cassandra/row_cache_size_in_mb",
   :description           => "Number of keys from the key cache to save. Default value is 0, to disable row caching.",
   :default               => "0"
 
+attribute "cassandra/request_timeout_in_ms",
+  :display_name          => "",
+  :description           => "",
+  :default               => "30000"
+
 attribute "cassandra/rpc_timeout_in_ms",
   :display_name          => "",
   :description           => "",

@@ -130,6 +130,7 @@ Cookbook dependencies:
 * `[:cassandra][:key_cache_size_in_mb]` -  (default: "")
 * `[:cassandra][:key_cache_save_period]` -  (default: "14400")
 * `[:cassandra][:row_cache_size_in_mb]` -  (default: "0")
+* `[:cassandra][:request_timeout_in_ms]`  -  (default: "30000")
 * `[:cassandra][:rpc_timeout_in_ms]`  -  (default: "10000")
 * `[:cassandra][:rpc_keepalive]`      -  (default: "false")
 * `[:cassandra][:phi_convict_threshold]` -  (default: "8")
