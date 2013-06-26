@@ -53,7 +53,7 @@ git "#{sources_dir}/iostat" do
 end
 
 ganglia_plugin "iostat_module" do
-    source          "#{sources_dir}/iostat/current/lib/libiostat.so"
+    source          "#{sources_dir}/iostat/lib/libiostat.so"
     metrics     ({  'rrqm_s'    => 'read requests merged rate',
                     'wrqm_s'    => 'write request rate',
                     'r_s'       => 'read request rate',
