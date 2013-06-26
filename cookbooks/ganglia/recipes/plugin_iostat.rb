@@ -19,49 +19,54 @@
 # limitations under the License.
 #
 
-include_recipe 'ganglia::plugins'
-
-sources_dir = "#{Chef::Config[:file_cache_path]}/ganglia_plugins"
-
-deploy "#{sources_dir}/iostat" do
-    repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
-    revision    'master'
-    symlinks.clear
-    symlink_before_migrate.clear
-    migrate     false
-    user        'root'
-    group       'root'
-    action      :deploy
-end
-
-# TODO: only compile when "deploy" has run using action :nothing and 
-# a notification
-execute "compile" do
-    user        'root'
-    cwd         "#{sources_dir}/iostat/current"
-    creates     "#{sources_dir}/iostat/current/lib/libiostat.so"
-    command     'make'
-
-    not_if      { ::File.exists("#{sources_dir}/iostat/current/lib/libiostat.so") }
-end
+include_recipe 'github'
+include_recipe 'build-essential'
+include_recipe 'ganglia::plugin'
 
 package 'sysstat'
 
+sources_dir = "#{Chef::Config[:file_cache_path]}/ganglia_plugins"
+
+directory sources_dir do
+    user    'root'
+    group   'root'
+    action  :create
+end
+
+execute "compile" do
+    user        'root'
+    cwd         "#{sources_dir}/iostat"
+    creates     "#{sources_dir}/iostat/lib/libiostat.so"
+    command     'make'
+
+    action      :nothing
+end
+
+git "#{sources_dir}/iostat" do
+    repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
+    revision    'master'
+    user        'root'
+    group       'root'
+    action      :sync
+
+    notifies    :run, resources(:execute => "compile"), :immediately
+end
+
 ganglia_plugin "iostat_module" do
     source          "#{sources_dir}/iostat/current/lib/libiostat.so"
-    metrics     {   'rrqm_s'    => 'The number of read requests merged per second that were queued to the device',
-                    'wrqm_s'    => 'The number of write requests merged per second that were queued to the device',
-                    'r_s'       => 'The number of read requests that were issued to the device per second',
-                    'w_s'       => 'The number of write requests that were issued to the device per second',
-                    'rkB_s'     => 'The number of kilobytes read from the device per second',
-                    'wkB_s'     => 'The number of kilobytes written to the device per second',
-                    'avgrq_sz'  => 'The average size of the requests that were issued to the device',
-                    'avgqu_s'   => 'The average queue length of the requests that were issued to the device',
-                    'await'     => 'The average time for I/O requests issued to the device to be served',
-                    'r_await'   => 'The average time for read requests issued to the device to be served',
-                    'w_await'   => 'The average time for write requests issued to the device to be served',
-                    'svctm'     => 'The average service time for I/O requests that were issued to the device',
-                    'util'      => 'Percentage of CPU time during which I/O requests were issued to the device'  }
+    metrics     ({  'rrqm_s'    => 'read requests merged rate',
+                    'wrqm_s'    => 'write request rate',
+                    'r_s'       => 'read request rate',
+                    'w_s'       => 'total write requests',
+                    'rkB_s'     => 'total kilobytes read',
+                    'wkB_s'     => 'total kilobytes written',
+                    'avgrq_sz'  => 'average request size',
+                    'avgqu_s'   => 'average request queue length',
+                    'await'     => 'average I/O requests time',
+                    'r_await'   => 'average read requests time',
+                    'w_await'   => 'average write requests time',
+                    'svctm'     => 'average I/O service time',
+                    'util'      => 'CPU time during I/O'  })
 
     collect_time    20
     threshold_time  60

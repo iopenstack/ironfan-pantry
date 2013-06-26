@@ -19,5 +19,5 @@
 # limitations under the License.
 #
 
-#include_recipe 'ganglia::plugin_iostat'
-include_recipe 'ganglia::plugin_modules_linux'
+include_recipe 'ganglia::plugin_iostat'
+#include_recipe 'ganglia::plugin_modules_linux'
