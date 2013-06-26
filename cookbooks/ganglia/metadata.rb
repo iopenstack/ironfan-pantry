@@ -10,6 +10,8 @@ depends          "java"
 depends          "runit"
 depends          "volumes"
 depends          "silverware"
+depends          "build-essential"
+depends          "github"
 
 recipe           "ganglia::default",                   "Base configuration for ganglia"
 recipe           "ganglia::server",                    "Ganglia server -- contact point for all ganglia_agents"
