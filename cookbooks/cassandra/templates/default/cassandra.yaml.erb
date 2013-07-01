@@ -192,7 +192,7 @@ row_cache_size_in_mb: <%= @cassandra[:row_cache_size_in_mb] %>
 # has limited use.
 #
 # Default is 0 to disable saving the row cache.
-row_cache_save_period: 0
+row_cache_save_period: <%= @cassandra[:row_cache_save_period] %>
 
 # Number of keys from the row cache to save
 # Disabled by default, meaning all keys are going to be saved

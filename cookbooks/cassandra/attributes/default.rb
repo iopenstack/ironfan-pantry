@@ -124,10 +124,10 @@ default[:cassandra][:reduce_cache_sizes_at]        = 0.85
 default[:cassandra][:reduce_cache_capacity_to]     = 0.6
 
 # new attributes in v1.2.0:
-default[:cassandra][:key_cache_size_in_mb]         = ""
+default[:cassandra][:key_cache_size_in_mb]         = ""           # empty to make it "auto", set to 0 to disable
 default[:cassandra][:key_cache_save_period]        = 14400
 default[:cassandra][:row_cache_size_in_mb]         = 0
-
+default[:cassandra][:row_cache_save_period]        = 0
 
 #
 # Tunables -- Memory, Disk and Performance
