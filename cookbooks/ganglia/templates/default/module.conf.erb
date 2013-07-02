@@ -15,7 +15,11 @@ collection_group {
 
     <% @metrics.each do |id, title| -%>
     metric {
+        <% if @use_regex -%>
+        name_match = "<%= id %>"
+        <% else -%>
         name = "<%= id %>"
+        <% end -%>
         title = "<%= title %>"
     }
     <% end -%>

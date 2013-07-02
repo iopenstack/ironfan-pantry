@@ -36,7 +36,7 @@ end
 execute "compile" do
     user        'root'
     cwd         "#{sources_dir}/iostat"
-    creates     "#{sources_dir}/iostat/lib/libiostat.so"
+    creates     "#{sources_dir}/iostat/lib/libdiskstats.so"
     command     'make'
 
     action      :nothing
@@ -44,7 +44,7 @@ end
 
 git "#{sources_dir}/iostat" do
     repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
-    revision    'master'
+    revision    'refactor_proc'
     user        'root'
     group       'root'
     action      :sync
@@ -52,22 +52,22 @@ git "#{sources_dir}/iostat" do
     notifies    :run, resources(:execute => "compile"), :immediately
 end
 
-ganglia_plugin "iostat_module" do
-    source          "#{sources_dir}/iostat/lib/libiostat.so"
-    metrics     ({  'rrqm_s'    => 'read requests merged rate',
-                    'wrqm_s'    => 'write request rate',
-                    'r_s'       => 'read request rate',
-                    'w_s'       => 'total write requests',
-                    'rkB_s'     => 'total kilobytes read',
-                    'wkB_s'     => 'total kilobytes written',
-                    'avgrq_sz'  => 'average request size',
-                    'avgqu_s'   => 'average request queue length',
-                    'await'     => 'average I/O requests time',
-                    'r_await'   => 'average read requests time',
-                    'w_await'   => 'average write requests time',
-                    'svctm'     => 'average I/O service time',
-                    'util'      => 'CPU time during I/O'  })
+ganglia_plugin "_diskstats_module" do
+    source          "#{sources_dir}/iostat/lib/libdiskstats.so"
 
-    collect_time    20
+    metrics     ({  'readsCompleted'            => 'total completed reads',
+                    'readsMerged'               => 'total merged reads',
+                    'sectorsRead'               => 'total sectors read',
+                    'timeSpentReading'          => 'time spent reading',
+                    'writesCompleted'           => 'total completed writes',
+                    'writesMerged'              => 'total merged writes',
+                    'sectorsWritten'            => 'total sectors written',
+                    'timeSpentWriting'          => 'time spent writing',
+                    'ioInProgress'              => 'I/O in progress',
+                    'timeSpentDoingIO'          => 'time spent doing I/O',
+                    'weightedTimeSpentDoingIO'  => 'time spent doing I/O (weighted)'  })
+
+    use_regex       true
+    collect_time    15
     threshold_time  60
 end

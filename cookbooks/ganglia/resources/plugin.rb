@@ -6,11 +6,12 @@
 actions         :deploy
 default_action  :deploy
 
-attribute :name             , :kind_of => String, :name_attribute => true
+attribute :name             , :kind_of => String    , :name_attribute => true
+attribute :collect_time     , :kind_of => Integer   , :default => 40
+attribute :threshold_time   , :kind_of => Integer   , :default => 60
+attribute :use_regex        , :kind_of => [TrueClass, FalseClass], :default => false
 attribute :source           , :kind_of => String
 attribute :metrics          , :kind_of => Hash
-attribute :collect_time     , :kind_of => Integer
-attribute :threshold_time   , :kind_of => Integer
 
 def initialize(*args)
   super
