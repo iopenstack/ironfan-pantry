@@ -31,7 +31,7 @@
 
 # general configuration
 default[:ganglia][:grid]             = 'grid'
-default[:ganglia][:home_dir]         = '/var/lib/ganglia'
+default[:ganglia][:home_dir]         = '/mnt/ganglia'
 default[:ganglia][:conf_dir]         = '/var/etc/ganglia'
 default[:ganglia][:pid_dir]          = '/var/run/ganglia'
 default[:ganglia][:plugin_dir]       = '/usr/ganglia/plugins'

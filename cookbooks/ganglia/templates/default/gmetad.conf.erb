@@ -114,7 +114,7 @@ setuid off
 #-------------------------------------------------------------------------------
 # Where gmetad stores its round-robin databases
 # default: "#{node[:ganglia][:home_dir]}/rrds"
-# rrd_rootdir "/some/other/place"
+rrd_rootdir "<%=@data_dir%>"
 #
 #-------------------------------------------------------------------------------
 # In earlier versions of gmetad, hostnames were handled in a case
