@@ -44,6 +44,6 @@ template "/var/www/ganglia-stats-v2/conf.php" do
 end
 
 link "#{node[:ganglia][:data_dir]}/events.json" do
-    to "/var/lib/ganglia-web/events.json"
+    to "/var/lib/ganglia-web/conf/events.json"
 end
 
