@@ -2,5 +2,5 @@
 
 exec 2>&1
 cd   <%= @options[:dirs][:pid] %>
-exec chpst -u <%= @options[:user] %>:<%= @options[:group] %> /usr/sbin/gmetad --conf=<%= @options[:dirs][:conf] %>/gmetad.conf --debug=3
+exec chpst -u <%= @options[:user] %>:<%= @options[:group] %> /usr/sbin/gmetad --conf=<%= @options[:dirs][:conf] %>/gmetad.conf --debug=2
 

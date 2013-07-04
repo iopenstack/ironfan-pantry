@@ -47,7 +47,7 @@ tcp_accept_channel  {
 <%- end %>
 } 
 
-
+<%- if @config[:include_modules] %>
 modules { 
   module { 
     name = "core_metrics" 
@@ -293,4 +293,5 @@ collection_group {
     title = "Maximum Disk Space Used" 
   } 
 }
+<%- end %>
 

@@ -61,7 +61,8 @@ if is_collector?
                 },
                 :config => {
                     :host_lifetime          => node[:ganglia][:config][:host_lifetime],
-                    :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold]
+                    :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
+                    :include_modules        => false
                 }
             )
             notifies :restart, "service[ganglia_collector_#{cluster_id}]", :delayed if startable?(node[:ganglia][:collector])
@@ -70,44 +71,6 @@ if is_collector?
 
     h = Hash.new
     own_collectors_data.map{|k,v| h[k] = "localhost:#{v[1]}"}
-
-    # collector is also generator
-    if is_generator?
-        
-        h[cluster_id] = 'localhost:6666'
-        
-        realm      = node[:ganglia][:grid]
-        cluster_id = node[:cluster_name] || ""
-
-        template "#{node[:ganglia][:conf_dir]}/gmond.conf" do
-            source      'gmond.conf.erb'
-            backup      false
-            owner       node[:ganglia][:user]
-            group       node[:ganglia][:group]
-            mode        '0644'
-            variables(
-                :user    => node[:ganglia][:user],
-                :cluster => {
-                    :name          => cluster_id,
-                    :owner         => nil,
-                    :latlong       => nil,
-                    :url           => nil,
-                    :host_location => nil
-                },
-                :send_udp => nil,
-                :recv_udp => nil,
-                :recv_tcp => 6666,
-                :config => {
-                    :host_lifetime          => node[:ganglia][:config][:host_lifetime],
-                    :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
-                    :hostname               => "#{node[:launch_spec][:facet_name]}-#{node[:launch_spec][:facet_index]}",
-                    :plugin_dir             => node[:ganglia][:plugin_dir]
-                }
-            )
-
-            notifies :restart, 'service[ganglia_generator]', :delayed if startable?(node[:ganglia][:generator]) && has_collector?(cluster_id)
-        end
-    end
 
     Chef::Log.debug("Ganglia::config_files --- monitor_groups: #{h.inspect}")
 
@@ -124,8 +87,9 @@ if is_collector?
             :all_trusted    => node[:ganglia][:all_trusted]
         })
     end
+end
 
-elsif is_generator?
+if is_generator?
     realm                          = node[:ganglia][:grid]
     cluster_id                     = node[:cluster_name] || ""
     collector_addr, collector_port = find_collector_addr_info(cluster_id) rescue [nil, nil]
@@ -157,7 +121,8 @@ elsif is_generator?
                 :host_lifetime          => node[:ganglia][:config][:host_lifetime],
                 :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
                 :hostname               => "#{node[:launch_spec][:facet_name]}-#{node[:launch_spec][:facet_index]}",
-                :plugin_dir             => node[:ganglia][:plugin_dir]
+                :plugin_dir             => node[:ganglia][:plugin_dir],
+                :include_modules        => true
             }
         )
 
