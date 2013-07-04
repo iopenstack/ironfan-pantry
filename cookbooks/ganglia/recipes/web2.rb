@@ -39,3 +39,6 @@ bash('do_it') do
     not_if      { ::File.exists?("/var/www/ganglia-stats-v2/Makefile") }
 end
 
+template "/var/www/ganglia-stats-v2/conf.php" do
+    source      'conf.php.erb'
+end
