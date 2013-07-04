@@ -42,3 +42,8 @@ end
 template "/var/www/ganglia-stats-v2/conf.php" do
     source      'conf.php.erb'
 end
+
+link "#{node[:ganglia][:data_dir]}/events.json" do
+    to "/var/lib/ganglia-web/events.json"
+end
+
