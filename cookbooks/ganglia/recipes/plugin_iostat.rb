@@ -23,8 +23,6 @@ include_recipe 'github'
 include_recipe 'build-essential'
 include_recipe 'ganglia::plugin'
 
-package 'sysstat'
-
 sources_dir = "#{Chef::Config[:file_cache_path]}/ganglia_plugins"
 
 directory sources_dir do
@@ -42,14 +40,21 @@ execute "compile" do
     action      :nothing
 end
 
-git "#{sources_dir}/iostat" do
-    repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
-    revision    'refactor_proc'
-    user        'root'
-    group       'root'
-    action      :sync
+retries = 0
+begin
+    git "#{sources_dir}/iostat" do
+        repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
+        revision    'refactor_proc'
+        user        'root'
+        group       'root'
+        action      :sync
 
-    notifies    :run, resources(:execute => "compile"), :immediately
+        notifies    :run, resources(:execute => "compile"), :immediately
+    end
+rescue
+    retries += 1
+    Chef::Log.warn("GIT action failed! retry: #{retries} of 5")
+    retry unless retries > 5
 end
 
 ganglia_plugin "_diskstats_module" do
