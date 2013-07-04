@@ -89,14 +89,6 @@ if is_collector?
         })
     end
 
-    # Replace the default ganglia home_dir by a symlink to the real location (for the web front ends)
-    link '/var/lib/ganglia' do
-        to      "#{node[:ganglia][:home_dir]}"
-        owner   'root'
-        group   'root'
-        action  :create
-    end
-
 end
 
 

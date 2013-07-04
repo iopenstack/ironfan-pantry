@@ -36,18 +36,21 @@ kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 # Create service
 #
 
-standard_dirs('ganglia.collector') do
+standard_dirs('ganglia') do
     directories [:home_dir, :log_dir, :conf_dir, :pid_dir]
     user        node[:ganglia][:user]
     group       node[:ganglia][:group]
 end
 
-volume_dirs('ganglia.collector.data') do
-    type        :persistent
+volume_dirs('ganglia.data') do
     selects     :single
     owner       node[:ganglia][:user]
     group       node[:ganglia][:group]
-    path        'rrds'
+    path        'ganglia/data/rrds'
+end
+
+link "#{node[:ganglia][:home_dir]}/rrds" do
+    to      node[:ganglia][:data_dir]
 end
 
 # global data storage for ganglia (gmetad)
