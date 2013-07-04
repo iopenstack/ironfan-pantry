@@ -84,10 +84,21 @@ if is_collector?
         variables   ({
             :monitor_groups => h,
             :grid           => node[:ganglia][:grid],
-            :all_trusted    => node[:ganglia][:all_trusted]
+            :all_trusted    => node[:ganglia][:all_trusted],
+            :data_dir       => node[:ganglia][:data_dir]	
         })
     end
+
+    # Replace the default ganglia home_dir by a symlink to the real location (for the web front ends)
+    link '/var/lib/ganglia' do
+        to      "#{node[:ganglia][:home_dir]}"
+        owner   'root'
+        group   'root'
+        action  :create
+    end
+
 end
+
 
 if is_generator?
     realm                          = node[:ganglia][:grid]
