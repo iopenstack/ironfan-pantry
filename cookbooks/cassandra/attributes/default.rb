@@ -159,7 +159,6 @@ default[:cassandra][:memtable_ops]                 = 0.3
 default[:cassandra][:column_index_size]            = 64
 default[:cassandra][:in_memory_compaction_limit]   = 64
 default[:cassandra][:compaction_preheat_key_cache] = true
-default[:cassandra][:commitlog_rotation_threshold] = 128
 default[:cassandra][:commitlog_sync]               = "periodic"
 default[:cassandra][:commitlog_sync_period]        = 10000
 default[:cassandra][:flush_largest_memtables_at]   = 0.75

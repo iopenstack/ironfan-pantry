@@ -94,7 +94,6 @@ Cookbook dependencies:
 * `[:cassandra][:partitioner]`        -  (default: "org.apache.cassandra.dht.RandomPartitioner")
 * `[:cassandra][:num_tokens]` -  (default: "256")
 * `[:cassandra][:initial_token]`      -
-* `[:cassandra][:commitlog_rotation_threshold]` -  (default: "128")
 * `[:cassandra][:thrift_framed_transport]` -  (default: "15")
 * `[:cassandra][:disk_access_mode]`   -  (default: "auto")
 * `[:cassandra][:sliced_buffer_size]` -  (default: "64")
