@@ -41,6 +41,8 @@ def run_deploy
             },
             :use_regex => node_resource.use_regex
         })
+
+        notifies    :restart,   resources(:service => "ganglia_generator"), :delayed
     end
 end
 
