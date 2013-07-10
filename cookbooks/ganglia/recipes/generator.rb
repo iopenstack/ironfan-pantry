@@ -33,8 +33,6 @@ apt_repository 'ganglia_generator' do
   notifies        :run, "execute[apt-get-update]", :immediately
 end
 
-daemon_user('ganglia.generator')
-
 package('ganglia-monitor') do
     options     "--force-yes"
     action      :upgrade
