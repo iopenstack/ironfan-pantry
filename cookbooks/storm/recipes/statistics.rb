@@ -26,7 +26,7 @@ deploy_dir = '/usr/local/storm_ganglia'
 
 git deploy_dir do
   repository    'git@github.com:Technicolor-Portico/storm-nimbus-stats.git'
-  revision      'develop'
+  revision      'release_2013_w29'
   action        :sync
   user          'root'
 end

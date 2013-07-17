@@ -42,7 +42,7 @@ end
 
 git "#{sources_dir}/iostat" do
     repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
-    revision    'refactor_proc'
+    revision    'release_2013_w29'
     user        'root'
     group       'root'
     action      :sync
