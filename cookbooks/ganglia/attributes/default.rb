@@ -55,5 +55,5 @@ default[:ganglia][:collector][:end_port  ] = 45000
 default[:ganglia][:collector][:used_ports] = []
 
 default[:ganglia][:config][:host_lifetime]          = 0
-default[:ganglia][:config][:host_cleanup_threshold] = 300
+default[:ganglia][:config][:host_cleanup_threshold] = 0
 

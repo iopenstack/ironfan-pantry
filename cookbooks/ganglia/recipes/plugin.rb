@@ -2,9 +2,9 @@
 # Cookbook Name::       ganglia
 # Description::         plugin development dependencies
 # Recipe::              plugin
-# Author::              Chris Howe - Infochimps, Inc
+# Author::              dev@portico.io
 #
-# Copyright 2011, Chris Howe - Infochimps, Inc
+# Copyright 2013, Technicolor, Portico
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

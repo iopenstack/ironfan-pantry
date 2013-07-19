@@ -40,21 +40,14 @@ execute "compile" do
     action      :nothing
 end
 
-retries = 0
-begin
-    git "#{sources_dir}/iostat" do
-        repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
-        revision    'refactor_proc'
-        user        'root'
-        group       'root'
-        action      :sync
+git "#{sources_dir}/iostat" do
+    repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
+    revision    'refactor_proc'
+    user        'root'
+    group       'root'
+    action      :sync
 
-        notifies    :run, resources(:execute => "compile"), :immediately
-    end
-rescue
-    retries += 1
-    Chef::Log.warn("GIT action failed! retry: #{retries} of 5")
-    retry unless retries > 5
+    notifies    :run, resources(:execute => "compile"), :immediately
 end
 
 ganglia_plugin "_diskstats_module" do

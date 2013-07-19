@@ -19,16 +19,5 @@
 # limitations under the License.
 #
 
-group node[:ganglia][:group] do
-    action  :create
-end
-
-cmd = "grep #{node[:ganglia][:user]} /etc/passwd"
-
-user node[:ganglia][:user] do
-    comment     "Ganglia Stats user"
-    gid         node[:ganglia][:group]
-    action      :create
-    only_if { `#{cmd}`.chomp == "" }
-end
+daemon_user('ganglia')
 
