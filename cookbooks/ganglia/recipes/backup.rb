@@ -1,15 +1,16 @@
 include_recipe "github"
 
-deploy "/mnt/hecubetest" do
-    repo "git@github.com:Technicolor-Portico/hecube.git"
-    revision "master"
-    symlinks.clear
-    symlink_before_migrate.clear
-    migrate false
-    user user
-    group group
-    action :deploy
+
+
+git "/mnt/hecubetest2" do
+    repo        "git@github.com:Technicolor-Portico/hecube.git"
+    revision    "master"
+    user        user
+    group       group
+    action      :sync
 end
+
+
 
 config = {
     :region => node[:ganglia][:grid]

@@ -85,3 +85,4 @@ attribute "groups/ganglia/gid",
   :display_name          => "",
   :description           => "",
   :default               => "320"
+
