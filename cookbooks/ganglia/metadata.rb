@@ -12,6 +12,8 @@ depends          "volumes"
 depends          "silverware"
 depends          "build-essential"
 depends          "github"
+depends          "cron"
+
 
 #recipe           "ganglia::default",                   "Base configuration for ganglia"
 #recipe           "ganglia::server",                    "Ganglia server -- contact point for all ganglia_agents"
