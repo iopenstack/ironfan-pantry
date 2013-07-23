@@ -56,3 +56,12 @@ default[:ganglia][:collector][:used_ports] = []
 default[:ganglia][:config][:host_lifetime]          = 0
 default[:ganglia][:config][:host_cleanup_threshold] = 0
 
+# 'web 2.0' configuration
+default[:ganglia][:web][:user]        = 'www-data'
+default[:ganglia][:web][:group]       = 'www-data'
+default[:ganglia][:web][:name]        = 'ganglia-web'
+default[:ganglia][:web][:version]     = '3.5.8'
+default[:ganglia][:web][:url]         = "http://sourceforge.net/projects/ganglia/files/#{node[:ganglia][:web][:name]}/#{node[:ganglia][:web][:version]}/#{node[:ganglia][:web][:name]}-#{node[:ganglia][:web][:version]}.tar.gz"
+default[:ganglia][:web][:deploy_dir]  = '/usr/local/ganglia'
+default[:ganglia][:web][:install_dir] = '/var/www/ganglia-stats-v2'
+

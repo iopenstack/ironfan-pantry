@@ -25,14 +25,13 @@ package 'php5'
 package 'apache2'
 package 'rrdtool'
 
-# TODO: make attributes out of this:
-w_deploy_dir  = '/tmp'
-w_name        = 'ganglia-web'
-w_version     = '3.5.8'
-w_url         = "http://sourceforge.net/projects/ganglia/files/#{w_name}/#{w_version}/#{w_name}-#{w_version}.tar.gz"
-w_install_dir = '/var/www/ganglia-stats-v2'
-w_user        = 'www-data'
-w_group       = 'www-data'
+w_deploy_dir  = node[:ganglia][:web][:deploy_dir]
+w_name        = node[:ganglia][:web][:name]
+w_version     = node[:ganglia][:web][:version]
+w_url         = node[:ganglia][:web][:url]
+w_install_dir = node[:ganglia][:web][:install_dir]
+w_user        = node[:ganglia][:web][:user]
+w_group       = node[:ganglia][:web][:group]
 
 directory w_install_dir do
     user    w_user
@@ -47,6 +46,15 @@ ark "#{w_name}-#{w_version}" do
 
     action      :put
     not_if      { ::Dir.exists?("#{w_deploy_dir}/#{w_name}-#{w_version}") }
+end
+
+bash 'web2_clean' do
+    user        'root'
+    group       'root'
+    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
+
+    code        'make clean'
+    action      :nothing
 end
 
 bash 'web2_install' do
@@ -67,6 +75,7 @@ template "#{w_deploy_dir}/#{w_name}-#{w_version}/Makefile" do
         :GWEB_STATEDIR   => "#{node[:ganglia][:home_dir]}/web-state",
         :APACHE_USER     => w_user
     )
+    notifies  :run, "bash[web2_clean]", :immediately
     notifies  :run, "bash[web2_install]", :immediately
 end
 
@@ -74,11 +83,5 @@ template "#{w_install_dir}/conf.php" do
     user        w_user
     group       w_group
     source      'conf.php.erb'
-end
-
-link "#{node[:ganglia][:home_dir]}/rrds/events.json" do
-    owner       node[:ganglia][:user]
-    group       node[:ganglia][:group]
-    to          '/var/lib/ganglia-web/conf/events.json'
 end
 
