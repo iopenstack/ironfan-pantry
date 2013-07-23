@@ -32,19 +32,6 @@ package "ganglia-monitor"
 kill_old_service('gmetad')
 kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 
-# remove default database
-#   /var/lib/ganglia/rrds
-directory '/var/lib/ganglia/rrds' do
-    recursive   true
-    action      :delete
-end
-
-# remove default config files
-#   /etc/ganglia/gmetad.conf
-file '/etc/ganglia/gmetad.conf' do
-    action      :delete
-end
-
 #
 # Create service
 #
@@ -60,6 +47,12 @@ volume_dirs('ganglia.home') do
     group       node[:ganglia][:group]
     selects     :single
     path        'ganglia/data'
+end
+
+directory "#{node[:ganglia][:home_dir]}/rrds" do
+    owner       node[:ganglia][:user]
+    group       node[:ganglia][:group]
+    action      :create
 end
 
 # global data storage for ganglia (gmetad)

@@ -30,11 +30,18 @@ directory '/var/www/ganglia-stats-v2' do
     action  :create
 end
 
+home_dir_escaped = node[:ganglia][:home_dir].to_s.gsub('/', '\/')
+
+sed1 = "s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g"
+sed2 = "s/APACHE_USER.=.*/APACHE_USER = www-data/g"
+sed3 = "s/GMETAD_ROOTDIR.=.*/GMETAD_ROOTDIR = #{home_dir_escaped}/g"
+
 script_code = <<-CODE
     cd /tmp
     wget http://sourceforge.net/projects/ganglia/files/ganglia-web/3.5.8/ganglia-web-3.5.8.tar.gz
     tar zxvf ganglia-web-3.5.8.tar.gz
-    cat Makefile | sed \"s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g\" | sed \"s/APACHE_USER.=.*/APACHE_USER = www-data/g\" | sed \"s/GMETAD_ROOTDIR.=.*/GMETAD_ROOTDIR = #{node[:ganglia][:home_dir]}/g\" >Makefile.tmp
+    cd /tmp/ganglia-web-3.5.8
+    cat Makefile | sed \"#{sed1}\" | sed \"#{sed2}\" | sed \"#{sed3}\" >Makefile.tmp
     cp Makefile.tmp Makefile
     rm Makefile.tmp
     make install
@@ -42,8 +49,8 @@ CODE
 
 bash('do_it') do
     code        script_code
-    user        'www-data'
-    group       'www-data'
+    user        'root'
+    group       'root'
     not_if      { ::File.exists?("/var/www/ganglia-stats-v2/Makefile") }
 end
 
