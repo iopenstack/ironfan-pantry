@@ -29,6 +29,6 @@ end
 #  it has been run everywhere in the organization, it is safe to remove.
 # Since it is not inherently dangerous, I recommend leaving it in place
 #  until silverware v4.
-node.normal_attrs.delete(:announces)
+# node.normal_attrs.delete(:announces)
 
 announce(:silverware, :default)
