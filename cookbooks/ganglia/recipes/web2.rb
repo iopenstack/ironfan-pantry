@@ -20,9 +20,13 @@
 
 include_recipe  'ganglia'
 
+package 'php5'
 package 'apache2'
+package 'rrdtool'
 
 directory '/var/www/ganglia-stats-v2' do
+    user    'www-data'
+    group   'www-data'
     action  :create
 end
 
@@ -30,25 +34,28 @@ script_code = <<-CODE
     cd /tmp
     wget http://sourceforge.net/projects/ganglia/files/ganglia-web/3.5.8/ganglia-web-3.5.8.tar.gz
     tar zxvf ganglia-web-3.5.8.tar.gz
-    mv ganglia-web-3.5.8/* /var/www/ganglia-stats-v2
-    cd /var/www/ganglia-stats-v2
-    cat Makefile | sed \"s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g\" | sed \"s/APACHE_USER.=.*/APACHE_USER = www-data/g\" >Makefile.tmp
+    cat Makefile | sed \"s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g\" | sed \"s/APACHE_USER.=.*/APACHE_USER = www-data/g\" | sed \"s/GMETAD_ROOTDIR.=.*/GMETAD_ROOTDIR = #{node[:ganglia][:home_dir]}/g\" >Makefile.tmp
     cp Makefile.tmp Makefile
     rm Makefile.tmp
     make install
 CODE
 
-#download from :
 bash('do_it') do
     code        script_code
+    user        'www-data'
+    group       'www-data'
     not_if      { ::File.exists?("/var/www/ganglia-stats-v2/Makefile") }
 end
 
 template "/var/www/ganglia-stats-v2/conf.php" do
+    user        'www-data'
+    group       'www-data'
     source      'conf.php.erb'
 end
 
-link "#{node[:ganglia][:data_dir]}/events.json" do
-    to "/var/lib/ganglia-web/conf/events.json"
+link "#{node[:ganglia][:home_dir]}/rrds/events.json" do
+    owner       node[:ganglia][:user]
+    group       node[:ganglia][:group]
+    to          '/var/lib/ganglia-web/conf/events.json'
 end
 

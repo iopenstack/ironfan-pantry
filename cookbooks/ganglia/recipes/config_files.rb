@@ -85,7 +85,7 @@ if is_collector?
             :monitor_groups => h,
             :grid           => node[:ganglia][:grid],
             :all_trusted    => node[:ganglia][:all_trusted],
-            :data_dir       => node[:ganglia][:data_dir]	
+            :home_dir       => node[:ganglia][:home_dir]
         })
     end
 

@@ -53,7 +53,7 @@ end
 #
 
 standard_dirs('ganglia.generator') do
-    directories [:home_dir, :log_dir, :conf_dir, :pid_dir, :plugin_dir]
+    directories [:log_dir, :conf_dir, :pid_dir, :plugin_dir]
     user        node[:ganglia][:user]
     group       node[:ganglia][:group]
 end

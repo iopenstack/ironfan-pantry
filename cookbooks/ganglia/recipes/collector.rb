@@ -50,20 +50,16 @@ end
 #
 
 standard_dirs('ganglia') do
-    directories [:home_dir, :log_dir, :conf_dir, :pid_dir]
-    user  node[:ganglia][:user]
-    group node[:ganglia][:group]
+    directories [:log_dir, :conf_dir, :pid_dir]
+    user        node[:ganglia][:user]
+    group       node[:ganglia][:group]
 end
 
-volume_dirs('ganglia.data') do
-    selects :single
-    owner node[:ganglia][:user]
-    group node[:ganglia][:group]
-    path  'ganglia/data/rrds'
-end
-
-link "#{node[:ganglia][:home_dir]}/rrds" do
-    to node[:ganglia][:data_dir]
+volume_dirs('ganglia.home') do
+    owner       node[:ganglia][:user]
+    group       node[:ganglia][:group]
+    selects     :single
+    path        'ganglia/data'
 end
 
 # global data storage for ganglia (gmetad)
