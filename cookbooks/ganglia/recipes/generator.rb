@@ -42,6 +42,12 @@ end
 # stop them first ...
 kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 
+# remove default config files
+#   /etc/ganglia/gmond.conf
+file '/etc/ganglia/gmond.conf' do
+    action      :delete
+end
+
 #
 # Create service
 #

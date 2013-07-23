@@ -20,11 +20,17 @@
 
 include_recipe  'ganglia'
 
+package 'apache2'
+
+directory '/var/www/ganglia-stats-v2' do
+    action  :create
+end
+
 script_code = <<-CODE
     cd /tmp
     wget http://sourceforge.net/projects/ganglia/files/ganglia-web/3.5.8/ganglia-web-3.5.8.tar.gz
     tar zxvf ganglia-web-3.5.8.tar.gz
-    mv ganglia-web-3.5.8 /var/www/ganglia-stats-v2
+    mv ganglia-web-3.5.8/* /var/www/ganglia-stats-v2
     cd /var/www/ganglia-stats-v2
     cat Makefile | sed \"s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g\" | sed \"s/APACHE_USER.=.*/APACHE_USER = www-data/g\" >Makefile.tmp
     cp Makefile.tmp Makefile
@@ -35,7 +41,6 @@ CODE
 #download from :
 bash('do_it') do
     code        script_code
-    user        'root'
     not_if      { ::File.exists?("/var/www/ganglia-stats-v2/Makefile") }
 end
 

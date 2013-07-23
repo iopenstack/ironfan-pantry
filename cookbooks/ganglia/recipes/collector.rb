@@ -32,6 +32,19 @@ package "ganglia-monitor"
 kill_old_service('gmetad')
 kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 
+# remove default database
+#   /var/lib/ganglia/rrds
+directory '/var/lib/ganglia/rrds' do
+    recursive   true
+    action      :delete
+end
+
+# remove default config files
+#   /etc/ganglia/gmetad.conf
+file '/etc/ganglia/gmetad.conf' do
+    action      :delete
+end
+
 #
 # Create service
 #
