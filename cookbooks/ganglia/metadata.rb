@@ -13,4 +13,5 @@ depends  "silverware"
 depends  "build-essential"
 depends  "github"
 depends  "cron"
+depends  "ark"
 

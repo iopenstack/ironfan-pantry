@@ -19,44 +19,60 @@
 #
 
 include_recipe  'ganglia'
+include_recipe  'ark'
 
 package 'php5'
 package 'apache2'
 package 'rrdtool'
 
-directory '/var/www/ganglia-stats-v2' do
-    user    'www-data'
-    group   'www-data'
+# TODO: make attributes out of this:
+w_deploy_dir  = '/tmp'
+w_name        = 'ganglia-web'
+w_version     = '3.5.8'
+w_url         = "http://sourceforge.net/projects/ganglia/files/#{w_name}/#{w_version}/#{w_name}-#{w_version}.tar.gz"
+w_install_dir = '/var/www/ganglia-stats-v2'
+w_user        = 'www-data'
+w_group       = 'www-data'
+
+directory w_install_dir do
+    user    w_user
+    group   w_group
     action  :create
 end
 
-home_dir_escaped = node[:ganglia][:home_dir].to_s.gsub('/', '\/')
+ark "#{w_name}-#{w_version}" do
+    url         w_url
+    version     w_version
+    path        w_deploy_dir
 
-sed1 = "s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g"
-sed2 = "s/APACHE_USER.=.*/APACHE_USER = www-data/g"
-sed3 = "s/GMETAD_ROOTDIR.=.*/GMETAD_ROOTDIR = #{home_dir_escaped}/g"
-
-script_code = <<-CODE
-    cd /tmp
-    wget http://sourceforge.net/projects/ganglia/files/ganglia-web/3.5.8/ganglia-web-3.5.8.tar.gz
-    tar zxvf ganglia-web-3.5.8.tar.gz
-    cd /tmp/ganglia-web-3.5.8
-    cat Makefile | sed \"#{sed1}\" | sed \"#{sed2}\" | sed \"#{sed3}\" >Makefile.tmp
-    cp Makefile.tmp Makefile
-    rm Makefile.tmp
-    make install
-CODE
-
-bash('do_it') do
-    code        script_code
-    user        'root'
-    group       'root'
-    not_if      { ::File.exists?("/var/www/ganglia-stats-v2/Makefile") }
+    action      :put
+    not_if      { ::Dir.exists?("#{w_deploy_dir}/#{w_name}-#{w_version}") }
 end
 
-template "/var/www/ganglia-stats-v2/conf.php" do
-    user        'www-data'
-    group       'www-data'
+bash 'web2_install' do
+    user        'root'
+    group       'root'
+    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
+
+    code        'make install'
+    action      :nothing
+end
+
+template "#{w_deploy_dir}/#{w_name}-#{w_version}/Makefile" do
+    source      'web2.Makefile.erb'
+    backup      false
+    variables(
+        :GDESTDIR        => w_install_dir,
+        :GMETAD_ROOTDIR  => node[:ganglia][:home_dir],
+        :GWEB_STATEDIR   => "#{node[:ganglia][:home_dir]}/web-state",
+        :APACHE_USER     => w_user
+    )
+    notifies  :run, "bash[web2_install]", :immediately
+end
+
+template "#{w_install_dir}/conf.php" do
+    user        w_user
+    group       w_group
     source      'conf.php.erb'
 end
 
