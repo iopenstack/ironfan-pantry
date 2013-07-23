@@ -83,7 +83,7 @@ end
 # TODO Elegently figure out when to announce election and leader ports as they are not always open.  
 
 # NOTE: iron_cuke will not pick up the daemon as running due to username length > 8, len(zookeeper) = 9 
-
+node.set[:zookeeper][:client_port] = node[:zookeeper][:client_port]
 announce(:zookeeper, :server, {
            :logs  => { :server => node[:zookeeper][:log_dir] },
            :ports => {
