@@ -2,7 +2,7 @@
 include_recipe "github"
 include_recipe "cron"
 
-
+package "s3cmd"
 
 git "/mnt/hecube" do
     repo        "git@github.com:Technicolor-Portico/hecube.git"
