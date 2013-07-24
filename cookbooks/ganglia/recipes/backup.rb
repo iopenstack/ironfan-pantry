@@ -15,13 +15,13 @@ end
 
 
 config = {
-    :region => node[:ganglia][:grid],
-    :path => node[:ganglia][:home_dir]
+    :access_key => "AKIAJ37FZV5DSRKGODTA",
+    :secret_key => "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"
 
 }
 
-template "/mnt/hecube/ganglia/servername.txt" do
-    source      'hecube-servername.erb'
+template "/home/ubuntu/.s3cfg" do
+    source      's3cfg.erb'
     backup      false
     owner       node[:ganglia][:user]
     group       node[:ganglia][:group]
