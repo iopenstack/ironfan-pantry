@@ -55,6 +55,7 @@ default[:ganglia][:collector][:used_ports] = []
 
 default[:ganglia][:config][:host_lifetime]          = 0
 default[:ganglia][:config][:host_cleanup_threshold] = 0
+default[:ganglia][:config][:metadata_interval]      = 600
 
 # 'web 2.0' configuration
 default[:ganglia][:web][:user]        = 'www-data'

@@ -2,9 +2,8 @@
 # Cookbook Name::       ganglia
 # Description::         Base configuration for ganglia
 # Recipe::              default
-# Author::              
 #
-# Copyright 2011, Chris Howe - Infochimps, Inc
+# Copyright 2013, Technicolor, Portico
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,4 +19,15 @@
 #
 
 daemon_user('ganglia')
+
+# Add cloudera package repo
+apt_repository 'ganglia_generator' do
+  uri             'http://ppa.launchpad.net/rufustfirefly/ganglia/ubuntu'
+  components      ['main']
+  keyserver       'keyserver.ubuntu.com'
+  key             'AD13F4200E7B39DA049B56CF10B02F77A93EFBE2'
+  distribution    node[:lsb][:codename]
+  action          :add
+  notifies        :run, "execute[apt-get-update]", :immediately
+end
 

@@ -31,7 +31,7 @@ directory sources_dir do
     action  :create
 end
 
-execute "compile" do
+execute "ganglia_iostat_compile" do
     user        'root'
     cwd         "#{sources_dir}/iostat"
     creates     "#{sources_dir}/iostat/lib/libdiskstats.so"
@@ -47,7 +47,7 @@ git "#{sources_dir}/iostat" do
     group       'root'
     action      :sync
 
-    notifies    :run, resources(:execute => "compile"), :immediately
+    notifies    :run, resources(:execute => "ganglia_iostat_compile"), :immediately
 end
 
 ganglia_plugin "_diskstats_module" do
