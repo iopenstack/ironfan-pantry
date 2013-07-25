@@ -34,6 +34,12 @@ if is_collector?
 
         Chef::Log.debug("Ganglia::config_files --- setup collector for cluster '#{cluster_id}' @ #{ip}:#{port}")
 
+        # Here, the service resource is created when it would not exist
+        # e.g. the case when a previously monitored cluster disapears, the template still tries to
+        # restart the service for monitoring this cluster while the service would not exist => Chef::Exceptions::ResourceNotFound
+        # Hence this fix to make sure the service resource is always defined.
+        monitor_service = service("ganglia_collector_#{cluster_id}")
+
         #template for individual collector gmond services
         template "#{node[:ganglia][:conf_dir]}/gmond.#{cluster_id}.conf" do
             source      'gmond.conf.erb'
@@ -65,7 +71,7 @@ if is_collector?
                     :include_modules        => false
                 }
             )
-            notifies :restart, "service[ganglia_collector_#{cluster_id}]", :delayed if startable?(node[:ganglia][:collector])
+            notifies :restart, monitor_service, :delayed if startable?(node[:ganglia][:collector])
         end
     end
 
