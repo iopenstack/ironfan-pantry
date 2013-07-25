@@ -1,4 +1,3 @@
-
 include_recipe "github"
 include_recipe "cron"
 
@@ -37,7 +36,3 @@ cron "ganglia_backup" do
   command "/mnt/hecube/ganglia/ganglia_backup.sh -d #{node[:ganglia][:home_dir]}  -p #{node[:ganglia][:grid].split("_").first} -c #{node[:ganglia][:grid].split("_").last}  >> /var/log/ganglia_backup.log 2>&1"
   action :create
 end
-
-
-
-
