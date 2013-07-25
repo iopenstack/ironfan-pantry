@@ -20,7 +20,7 @@ config = {
 
 }
 
-template "/home/ubuntu/.s3cfg" do
+template "/root/.s3cfg" do
     source      's3cfg.erb'
     backup      false
     owner       node[:ganglia][:user]
