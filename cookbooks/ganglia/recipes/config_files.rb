@@ -68,6 +68,7 @@ if is_collector?
                 :config => {
                     :host_lifetime          => node[:ganglia][:config][:host_lifetime],
                     :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
+                    :metadata_interval      => node[:ganglia][:config][:metadata_interval],
                     :include_modules        => false
                 }
             )
@@ -129,6 +130,7 @@ if is_generator?
             :config => {
                 :host_lifetime          => node[:ganglia][:config][:host_lifetime],
                 :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
+                :metadata_interval      => node[:ganglia][:config][:metadata_interval],
                 :hostname               => "#{node[:launch_spec][:facet_name]}-#{node[:launch_spec][:facet_index]}",
                 :plugin_dir             => node[:ganglia][:plugin_dir],
                 :include_modules        => true
