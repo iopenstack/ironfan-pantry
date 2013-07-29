@@ -57,15 +57,6 @@ bash 'web2_clean' do
     action      :nothing
 end
 
-bash 'web2_install' do
-    user        'root'
-    group       'root'
-    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
-
-    code        'make install'
-    action      :nothing
-end
-
 template "#{w_deploy_dir}/#{w_name}-#{w_version}/Makefile" do
     source      'web2.Makefile.erb'
     backup      false
@@ -76,7 +67,15 @@ template "#{w_deploy_dir}/#{w_name}-#{w_version}/Makefile" do
         :APACHE_USER     => w_user
     )
     notifies  :run, "bash[web2_clean]", :immediately
-    notifies  :run, "bash[web2_install]", :immediately
+end
+
+bash 'web2_install' do
+    user        'root'
+    group       'root'
+    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
+
+    code        'make install'
+    action      :run
 end
 
 template "#{w_install_dir}/conf.php" do
