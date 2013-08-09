@@ -45,6 +45,7 @@ end
 runit_service "cassandra_server" do
     options       node[:cassandra]
     run_state     node[:cassandra][:run_state]
+    finish_script true
 end
 
 # have some fraction of the nodes announce as a seed
