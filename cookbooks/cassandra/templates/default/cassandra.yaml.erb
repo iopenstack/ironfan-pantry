@@ -192,7 +192,7 @@ row_cache_size_in_mb: <%= @cassandra[:row_cache_size_in_mb] %>
 # has limited use.
 #
 # Default is 0 to disable saving the row cache.
-row_cache_save_period: 0
+row_cache_save_period: <%= @cassandra[:row_cache_save_period] %>
 
 # Number of keys from the row cache to save
 # Disabled by default, meaning all keys are going to be saved
@@ -217,9 +217,6 @@ row_cache_provider: SerializingCacheProvider
 
 # saved caches
 saved_caches_directory: <%= @cassandra[:saved_caches_dir] %>
-
-# Size to allow commitlog to grow to before creating a new segment
-#commitlog_rotation_threshold_in_mb: <%= @cassandra[:commitlog_rotation_threshold] %>
 
 # commitlog_sync may be either "periodic" or "batch."
 # When in batch mode, Cassandra won't ack writes until the commit log
@@ -574,17 +571,17 @@ compaction_preheat_key_cache: <%= @cassandra[:compaction_preheat_key_cache] %>
 # stream_throughput_outbound_megabits_per_sec: 400
 
 # How long the coordinator should wait for read operations to complete
-read_request_timeout_in_ms: 10000
+read_request_timeout_in_ms: <%= @cassandra[:request_timeout_in_ms] %>
 # How long the coordinator should wait for seq or index scans to complete
-range_request_timeout_in_ms: 10000
+range_request_timeout_in_ms: <%= @cassandra[:request_timeout_in_ms] %>
 # How long the coordinator should wait for writes to complete
-write_request_timeout_in_ms: 10000
+write_request_timeout_in_ms: <%= @cassandra[:request_timeout_in_ms] %>
 # How long the coordinator should wait for truncates to complete
 # (This can be much longer, because unless auto_snapshot is disabled
 # we need to flush first so we can snapshot before removing the data.)
 truncate_request_timeout_in_ms: 60000
 # The default timeout for other, miscellaneous operations
-request_timeout_in_ms: 10000
+request_timeout_in_ms: <%= @cassandra[:request_timeout_in_ms] %>
 
 # Enable operation timeout information exchange between nodes to accurately
 # measure request timeouts, If disabled cassandra will assuming the request
@@ -593,6 +590,17 @@ request_timeout_in_ms: 10000
 # Warning: before enabling this property make sure to ntp is installed
 # and the times are synchronized between the nodes.
 cross_node_timeout: false
+
+# Enable socket timeout for streaming operation.
+# When a timeout occurs during streaming, streaming is retried from the start
+# of the current file. This _can_ involve re-streaming an important amount of
+# data, so you should avoid setting the value too low.
+# Default value is 0, which never timeout streams.
+# streaming_socket_timeout_in_ms: 0
+
+# phi value that must be reached for a host to be marked down.
+# most users should never need to adjust this.
+# phi_convict_threshold: 8
 <%- else %>
 # Time to wait for a reply from other nodes before failing the command
 rpc_timeout_in_ms: <%= @cassandra[:rpc_timeout_in_ms] %>

@@ -41,20 +41,20 @@ end
 
 ganglia_plugin "stormModuleDefinition" do
     source          "#{deploy_dir}/ganglia_plugin/binaries/libstorm.so"
-    metrics     [   'raw_storage_in',
-                    'raw_storage_out',
-                    'raw_storage_latency',
-                    'raw_storage_fail',
-                    'raw_storage_conntest_in',
-                    'raw_storage_conntest_out',
-		            'raw_storage_conntest_latency',
-                    'raw_storage_conntest_fail',
-                    'paris_writer_in',
-                    'paris_writer_out',
-		            'paris_writer_latency',
-                    'paris_writer_fail' ]
+    metrics     ({  'raw_storage_in'               => 'Raw-Storage topology input rate',
+                    'raw_storage_out'              => 'Raw-Storage topology output rate',
+                    'raw_storage_latency'          => 'Raw-Storage topology average max message latency',
+                    'raw_storage_fail'             => 'Raw-Storage topology failure rate',
+                    'raw_storage_conntest_in'      => 'Raw-Storage-Conntest topology input rate',
+                    'raw_storage_conntest_out'     => 'Raw-Storage-Conntest topology output rate',
+		            'raw_storage_conntest_latency' => 'Raw-Storage-Conntest topology average max message latency',
+                    'raw_storage_conntest_fail'    => 'Raw-Storage-Conntest topology failure rate',
+                    'paris_writer_in'              => 'Paris-Writer topology input rate',
+                    'paris_writer_out'             => 'Paris-Writer topology output rate',
+		            'paris_writer_latency'         => 'Paris-Writer topology average max message latency',
+                    'paris_writer_fail'            => 'Paris-Writer topology failure rate'  })
 
-    collect_time    60
+    collect_time    30
     threshold_time  60
 end
 

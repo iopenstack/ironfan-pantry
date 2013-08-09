@@ -19,23 +19,68 @@
 #
 
 include_recipe  'ganglia'
+include_recipe  'ark'
 
-script_code = <<-CODE
-    cd /tmp
-    wget http://sourceforge.net/projects/ganglia/files/ganglia-web/3.5.7/ganglia-web-3.5.7.tar.gz
-    tar zxvf ganglia-web-3.5.7.tar.gz
-    mv ganglia-web-3.5.7 /var/www/ganglia-stats-v2
-    cd /var/www/ganglia-stats-v2
-    cat Makefile | sed \"s/GDESTDIR.=.\\/var\\/www.*/GDESTDIR = \\/var\\/www\\/ganglia-stats-v2/g\" | sed \"s/APACHE_USER.=.*/APACHE_USER = www-data/g\" >Makefile.tmp
-    cp Makefile.tmp Makefile
-    rm Makefile.tmp
-    make install
-CODE
+package 'php5'
+package 'apache2'
+package 'rrdtool'
 
-#download from :
-bash('do_it') do
-    code        script_code
+w_deploy_dir  = node[:ganglia][:web][:deploy_dir]
+w_name        = node[:ganglia][:web][:name]
+w_version     = node[:ganglia][:web][:version]
+w_url         = node[:ganglia][:web][:url]
+w_install_dir = node[:ganglia][:web][:install_dir]
+w_user        = node[:ganglia][:web][:user]
+w_group       = node[:ganglia][:web][:group]
+
+directory w_install_dir do
+    user    w_user
+    group   w_group
+    action  :create
+end
+
+ark "#{w_name}-#{w_version}" do
+    url         w_url
+    version     w_version
+    path        w_deploy_dir
+
+    action      :put
+    not_if      { ::Dir.exists?("#{w_deploy_dir}/#{w_name}-#{w_version}") }
+end
+
+bash 'web2_clean' do
     user        'root'
-    not_if      { ::File.exists?("/var/www/ganglia-stats-v2/Makefile") }
+    group       'root'
+    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
+
+    code        'make clean'
+    action      :nothing
+end
+
+template "#{w_deploy_dir}/#{w_name}-#{w_version}/Makefile" do
+    source      'web2.Makefile.erb'
+    backup      false
+    variables(
+        :GDESTDIR        => w_install_dir,
+        :GMETAD_ROOTDIR  => node[:ganglia][:home_dir],
+        :GWEB_STATEDIR   => "#{node[:ganglia][:home_dir]}/web-state",
+        :APACHE_USER     => w_user
+    )
+    notifies  :run, "bash[web2_clean]", :immediately
+end
+
+bash 'web2_install' do
+    user        'root'
+    group       'root'
+    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
+
+    code        'make install'
+    action      :run
+end
+
+template "#{w_install_dir}/conf.php" do
+    user        w_user
+    group       w_group
+    source      'conf.php.erb'
 end
 

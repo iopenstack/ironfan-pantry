@@ -22,19 +22,6 @@ include_recipe 'ganglia'
 include_recipe 'runit'
 include_recipe 'apt'
 
-# Add cloudera package repo
-apt_repository 'ganglia_generator' do
-  uri             'http://ppa.launchpad.net/rufustfirefly/ganglia/ubuntu'
-  components      ['main']
-  keyserver       'keyserver.ubuntu.com'
-  key             'AD13F4200E7B39DA049B56CF10B02F77A93EFBE2'
-  distribution    node[:lsb][:codename]
-  action          :add
-  notifies        :run, "execute[apt-get-update]", :immediately
-end
-
-daemon_user('ganglia.generator')
-
 package('ganglia-monitor') do
     options     "--force-yes"
     action      :upgrade
@@ -49,7 +36,7 @@ kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 #
 
 standard_dirs('ganglia.generator') do
-    directories [:home_dir, :log_dir, :conf_dir, :pid_dir, :plugin_dir]
+    directories [:log_dir, :conf_dir, :pid_dir, :plugin_dir]
     user        node[:ganglia][:user]
     group       node[:ganglia][:group]
 end
@@ -57,14 +44,9 @@ end
 # Set up service
 cluster_id = node[:cluster_name] || ""
 realm      = node[:ganglia][:grid] || ""
-runstate   = has_collector?(cluster_id) ? node[:ganglia][:generator][:run_state] : :stop
-
-if !::File.exists?("#{node[:ganglia][:conf_dir]}/gmond.conf")
-    runstate = :stop
-end
 
 runit_service "ganglia_generator" do
-    run_state       runstate 
+    run_state       :nothing 
     options         ({ 
         :dirs => {
             :pid    => node[:ganglia][:pid_dir],

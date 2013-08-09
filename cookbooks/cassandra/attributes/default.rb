@@ -65,8 +65,7 @@ default[:cassandra][:open_file_limit]   = "65535"
 # Install
 #
 
-# install_from_release
-default[:cassandra][:version]           = "1.0.12"
+default[:cassandra][:version]           = "1.2.4"
 # install_from_release: tarball url
 default[:cassandra][:release_url]       = ":apache_mirror:/cassandra/:version:/apache-cassandra-:version:-bin.tar.gz"
 
@@ -125,18 +124,17 @@ default[:cassandra][:reduce_cache_sizes_at]        = 0.85
 default[:cassandra][:reduce_cache_capacity_to]     = 0.6
 
 # new attributes in v1.2.0:
-default[:cassandra][:key_cache_size_in_mb]         = ""
+default[:cassandra][:key_cache_size_in_mb]         = ""           # empty to make it "auto", set to 0 to disable
 default[:cassandra][:key_cache_save_period]        = 14400
 default[:cassandra][:row_cache_size_in_mb]         = 0
-
+default[:cassandra][:row_cache_save_period]        = 0
 
 #
 # Tunables -- Memory, Disk and Performance
 #
 
-default[:cassandra][:java_heap_size_min]           = "128M"        # consider setting equal to max_heap in production
-default[:cassandra][:java_heap_size_max]           = "1650M"
-default[:cassandra][:java_heap_size_eden]          = "1500M"
+default[:cassandra][:max_heap_size_in_mb]         = nil
+default[:cassandra][:new_heap_size_in_mb]         = nil
 
 # attribute removed in v1.2.0
 default[:cassandra][:disk_access_mode]             = "auto"
@@ -161,12 +159,12 @@ default[:cassandra][:memtable_ops]                 = 0.3
 default[:cassandra][:column_index_size]            = 64
 default[:cassandra][:in_memory_compaction_limit]   = 64
 default[:cassandra][:compaction_preheat_key_cache] = true
-default[:cassandra][:commitlog_rotation_threshold] = 128
 default[:cassandra][:commitlog_sync]               = "periodic"
 default[:cassandra][:commitlog_sync_period]        = 10000
 default[:cassandra][:flush_largest_memtables_at]   = 0.75
 
 # attribute removed in v1.2.0
+default[:cassandra][:request_timeout_in_ms]        = 30000
 default[:cassandra][:rpc_timeout_in_ms]            = 10000
 
 default[:cassandra][:rpc_keepalive]                = "false"

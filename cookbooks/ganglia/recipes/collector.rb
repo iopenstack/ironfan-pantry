@@ -36,24 +36,29 @@ kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 # Create service
 #
 
-standard_dirs('ganglia.collector') do
-    directories [:home_dir, :log_dir, :conf_dir, :pid_dir]
+standard_dirs('ganglia') do
+    directories [:log_dir, :conf_dir, :pid_dir]
     user        node[:ganglia][:user]
     group       node[:ganglia][:group]
 end
 
-volume_dirs('ganglia.collector.data') do
-    type        :persistent
-    selects     :single
+volume_dirs('ganglia.home') do
     owner       node[:ganglia][:user]
     group       node[:ganglia][:group]
-    path        'rrds'
+    selects     :single
+    path        'ganglia/data'
+end
+
+directory "#{node[:ganglia][:home_dir]}/rrds" do
+    owner       node[:ganglia][:user]
+    group       node[:ganglia][:group]
+    action      :create
 end
 
 # global data storage for ganglia (gmetad)
 runit_service "ganglia_metad" do
-    run_state       :nothing
-    options         ({ 
+    run_state :nothing
+    options({
         :dirs => {
             :pid    => node[:ganglia][:pid_dir],
             :conf   => node[:ganglia][:conf_dir],
@@ -68,4 +73,3 @@ find_all_monitorable_clusters.each do |cluster|
     Chef::Log.info("Ganglia::collector --- found a cluster to monitor: #{cluster}")
     collector_service(cluster)
 end
-

@@ -38,8 +38,11 @@ def run_deploy
             :time => {
                 :collect   => node_resource.collect_time,
                 :threshold => node_resource.threshold_time
-            }
+            },
+            :use_regex => node_resource.use_regex
         })
+
+        notifies    :restart,   resources(:service => "ganglia_generator"), :delayed
     end
 end
 

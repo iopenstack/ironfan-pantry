@@ -13,9 +13,14 @@ collection_group {
     time_threshold = <%= @time[:threshold] %>
     <% end -%>
 
-    <% @metrics.each do |m| -%>
+    <% @metrics.each do |id, title| -%>
     metric {
-        name = <%= m %>
+        <% if @use_regex -%>
+        name_match = "<%= id %>"
+        <% else -%>
+        name = "<%= id %>"
+        <% end -%>
+        title = "<%= title %>"
     }
     <% end -%>
 }

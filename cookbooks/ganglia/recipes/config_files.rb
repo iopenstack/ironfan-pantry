@@ -34,6 +34,12 @@ if is_collector?
 
         Chef::Log.debug("Ganglia::config_files --- setup collector for cluster '#{cluster_id}' @ #{ip}:#{port}")
 
+        # Here, the service resource is created when it would not exist
+        # e.g. the case when a previously monitored cluster disapears, the template still tries to
+        # restart the service for monitoring this cluster while the service would not exist => Chef::Exceptions::ResourceNotFound
+        # Hence this fix to make sure the service resource is always defined.
+        monitor_service = service("ganglia_collector_#{cluster_id}")
+
         #template for individual collector gmond services
         template "#{node[:ganglia][:conf_dir]}/gmond.#{cluster_id}.conf" do
             source      'gmond.conf.erb'
@@ -61,10 +67,12 @@ if is_collector?
                 },
                 :config => {
                     :host_lifetime          => node[:ganglia][:config][:host_lifetime],
-                    :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold]
+                    :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
+                    :metadata_interval      => node[:ganglia][:config][:metadata_interval],
+                    :include_modules        => false
                 }
             )
-            notifies :restart, "service[ganglia_collector_#{cluster_id}]", :delayed if startable?(node[:ganglia][:collector])
+            notifies :restart, monitor_service, :delayed if startable?(node[:ganglia][:collector])
         end
     end
 
@@ -83,10 +91,13 @@ if is_collector?
         variables   ({
             :monitor_groups => h,
             :grid           => node[:ganglia][:grid],
-            :all_trusted    => node[:ganglia][:all_trusted]
+            :all_trusted    => node[:ganglia][:all_trusted],
+            :home_dir       => node[:ganglia][:home_dir]
         })
     end
+
 end
+
 
 if is_generator?
     realm                          = node[:ganglia][:grid]
@@ -119,8 +130,10 @@ if is_generator?
             :config => {
                 :host_lifetime          => node[:ganglia][:config][:host_lifetime],
                 :host_cleanup_threshold => node[:ganglia][:config][:host_cleanup_threshold],
+                :metadata_interval      => node[:ganglia][:config][:metadata_interval],
                 :hostname               => "#{node[:launch_spec][:facet_name]}-#{node[:launch_spec][:facet_index]}",
-                :plugin_dir             => node[:ganglia][:plugin_dir]
+                :plugin_dir             => node[:ganglia][:plugin_dir],
+                :include_modules        => true
             }
         )
 

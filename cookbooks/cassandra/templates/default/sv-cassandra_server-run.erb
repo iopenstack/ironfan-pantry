@@ -1,4 +1,3 @@
 #!/bin/bash
 exec 2>&1
-exec chpst -u <%=@options[:user]%> cassandra -f
-
+exec chpst -o <%=@options[:open_file_limit]%> -u <%=@options[:user]%> cassandra -f

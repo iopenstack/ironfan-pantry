@@ -39,13 +39,26 @@ end
 # If there is an initial token, force auto_bootstrap to false.
 node.set[:cassandra][:auto_bootstrap] = false if node[:cassandra][:initial_token]
 
+template "#{node[:cassandra][:conf_dir]}/cassandra-env.sh" do
+  source        "cassandra-env.sh.erb"
+  owner         "root"
+  group         "root"
+  mode          "0644"
+  variables({
+      :cassandra => node[:cassandra]
+  })
+  notifies      :restart, "service[cassandra_server]", :delayed if startable?(node[:cassandra])
+end
+
 template "#{node[:cassandra][:conf_dir]}/cassandra.yaml" do
   source        "cassandra.yaml.erb"
   owner         "root"
   group         "root"
   mode          "0644"
-  variables({   :cassandra => node[:cassandra],
-                :seeds     => seed_ips })
+  variables({
+      :cassandra => node[:cassandra],
+      :seeds     => seed_ips
+  })
   notifies      :restart, "service[cassandra_server]", :delayed if startable?(node[:cassandra])
 end
 

@@ -9,7 +9,7 @@ globals {
   host_dmax              = <%= @config[:host_lifetime] %> 
   cleanup_threshold      = <%= @config[:host_cleanup_threshold] %>  
   gexec                  = no             
-  send_metadata_interval = <%= @config[:host_cleanup_threshold] %>
+  send_metadata_interval = <%= @config[:metadata_interval] %>
 <%- if @config[:hostname] %>
   override_hostname      = <%= @config[:hostname] %>
 <%- end %>
@@ -47,7 +47,7 @@ tcp_accept_channel  {
 <%- end %>
 } 
 
-
+<%- if @config[:include_modules] %>
 modules { 
   module { 
     name = "core_metrics" 
@@ -293,4 +293,5 @@ collection_group {
     title = "Maximum Disk Space Used" 
   } 
 }
+<%- end %>
 
