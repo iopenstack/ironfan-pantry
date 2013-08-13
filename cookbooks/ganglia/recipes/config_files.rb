@@ -87,7 +87,7 @@ if is_collector?
         owner       node[:ganglia][:user]
         group       node[:ganglia][:group]
         mode        '0644'
-        notifies    :restart, "service[ganglia_metad]", :delayed if startable?(node[:ganglia][:collector])
+        notifies    :restart, "service[ganglia_metad]", :delayed
         variables   ({
             :monitor_groups => h,
             :grid           => node[:ganglia][:grid],
@@ -123,7 +123,7 @@ if is_generator?
             },
             :send_udp => {
                 :addr => collector_addr,
-                :port => collector_port
+                :port => node[:ganglia][:send_to_udp_port]
             },
             :recv_udp => node[:ganglia][:generator][:inject_port].nil? ? nil : {:port => node[:ganglia][:generator][:inject_port]},
             :recv_tcp => nil,
@@ -136,8 +136,7 @@ if is_generator?
                 :include_modules        => true
             }
         )
-
-        notifies :restart, 'service[ganglia_generator]', :delayed if startable?(node[:ganglia][:generator]) && has_collector?(cluster_id)
+        notifies :restart, 'service[ganglia_generator]'
     end
 end
 

@@ -23,8 +23,8 @@ include_recipe 'runit'
 include_recipe 'apt'
 
 package('ganglia-monitor') do
-    options     "--force-yes"
-    action      :upgrade
+  options     "--force-yes"
+  action      :upgrade
 end
 
 # after installation, the services are started automatically
@@ -36,9 +36,9 @@ kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 #
 
 standard_dirs('ganglia.generator') do
-    directories [:log_dir, :conf_dir, :pid_dir, :plugin_dir]
-    user        node[:ganglia][:user]
-    group       node[:ganglia][:group]
+  directories [:log_dir, :conf_dir, :pid_dir, :plugin_dir]
+  user        node[:ganglia][:user]
+  group       node[:ganglia][:group]
 end
 
 # Set up service
@@ -46,18 +46,17 @@ cluster_id = node[:cluster_name] || ""
 realm      = node[:ganglia][:grid] || ""
 
 runit_service "ganglia_generator" do
-    run_state       :nothing 
-    options         ({ 
-        :dirs => {
-            :pid    => node[:ganglia][:pid_dir],
-            :conf   => node[:ganglia][:conf_dir],
-            :log    => node[:ganglia][:log_dir]
-        },
-        :user     => node[:ganglia][:user],
-        :group    => node[:ganglia][:group]
-    })
+  run_state       :nothing 
+  options         ({ 
+    :dirs => {
+      :pid    => node[:ganglia][:pid_dir],
+      :conf   => node[:ganglia][:conf_dir],
+      :log    => node[:ganglia][:log_dir]
+    },
+    :user     => node[:ganglia][:user],
+    :group    => node[:ganglia][:group]
+  })
 end
 
-Chef::Log.info("Ganglia::generator --- announce stats generator for cluster '#{realm}::#{cluster_id}'")
-announce(:ganglia, :generator, {:cluster_id => cluster_id, :realm => realm} )
+node.set[:ganglia][:send_to_udp_port] = node[:ganglia][:send_to_udp_port]
 

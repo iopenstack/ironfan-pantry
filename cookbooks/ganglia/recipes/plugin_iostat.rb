@@ -26,46 +26,43 @@ include_recipe 'ganglia::plugin'
 sources_dir = "#{Chef::Config[:file_cache_path]}/ganglia_plugins"
 
 directory sources_dir do
-    user    'root'
-    group   'root'
-    action  :create
+  user    'root'
+  group   'root'
+  action  :create
 end
 
 execute "ganglia_iostat_compile" do
-    user        'root'
-    cwd         "#{sources_dir}/iostat"
-    creates     "#{sources_dir}/iostat/lib/libdiskstats.so"
-    command     'make'
-
-    action      :nothing
+  user        'root'
+  cwd         "#{sources_dir}/iostat"
+  creates     "#{sources_dir}/iostat/lib/libdiskstats.so"
+  command     'make'
+  action      :nothing
 end
 
 git "#{sources_dir}/iostat" do
-    repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
-    revision    'refactor_proc'
-    user        'root'
-    group       'root'
-    action      :sync
-
-    notifies    :run, resources(:execute => "ganglia_iostat_compile"), :immediately
+  repo        'git@github.com:Technicolor-Portico/iostat-ganglia.git'
+  revision    'refactor_proc'
+  user        'root'
+  group       'root'
+  action      :sync
+  notifies    :run, resources(:execute => "ganglia_iostat_compile"), :immediately
 end
 
 ganglia_plugin "_diskstats_module" do
-    source          "#{sources_dir}/iostat/lib/libdiskstats.so"
-
-    metrics     ({  'readsCompleted'            => 'total completed reads',
-                    'readsMerged'               => 'total merged reads',
-                    'sectorsRead'               => 'total sectors read',
-                    'timeSpentReading'          => 'time spent reading',
-                    'writesCompleted'           => 'total completed writes',
-                    'writesMerged'              => 'total merged writes',
-                    'sectorsWritten'            => 'total sectors written',
-                    'timeSpentWriting'          => 'time spent writing',
-                    'ioInProgress'              => 'I/O in progress',
-                    'timeSpentDoingIO'          => 'time spent doing I/O',
-                    'weightedTimeSpentDoingIO'  => 'time spent doing I/O (weighted)'  })
-
-    use_regex       true
-    collect_time    15
-    threshold_time  60
+  source          "#{sources_dir}/iostat/lib/libdiskstats.so"
+  metrics     ({  'readsCompleted'            => 'total completed reads',
+                  'readsMerged'               => 'total merged reads',
+                  'sectorsRead'               => 'total sectors read',
+                  'timeSpentReading'          => 'time spent reading',
+                  'writesCompleted'           => 'total completed writes',
+                  'writesMerged'              => 'total merged writes',
+                  'sectorsWritten'            => 'total sectors written',
+                  'timeSpentWriting'          => 'time spent writing',
+                  'ioInProgress'              => 'I/O in progress',
+                  'timeSpentDoingIO'          => 'time spent doing I/O',
+                  'weightedTimeSpentDoingIO'  => 'time spent doing I/O (weighted)'
+  })
+  use_regex       true
+  collect_time    15
+  threshold_time  60
 end

@@ -34,53 +34,49 @@ w_user        = node[:ganglia][:web][:user]
 w_group       = node[:ganglia][:web][:group]
 
 directory w_install_dir do
-    user    w_user
-    group   w_group
-    action  :create
+  user    w_user
+  group   w_group
+  action  :create
 end
 
 ark "#{w_name}-#{w_version}" do
-    url         w_url
-    version     w_version
-    path        w_deploy_dir
-
-    action      :put
-    not_if      { ::Dir.exists?("#{w_deploy_dir}/#{w_name}-#{w_version}") }
+  url         w_url
+  version     w_version
+  path        w_deploy_dir
+  action      :put
+  not_if      { ::Dir.exists?("#{w_deploy_dir}/#{w_name}-#{w_version}") }
 end
 
 bash 'web2_clean' do
-    user        'root'
-    group       'root'
-    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
-
-    code        'make clean'
-    action      :nothing
+  user        'root'
+  group       'root'
+  cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
+  code        'make clean'
+  action      :nothing
 end
 
 template "#{w_deploy_dir}/#{w_name}-#{w_version}/Makefile" do
-    source      'web2.Makefile.erb'
-    backup      false
-    variables(
-        :GDESTDIR        => w_install_dir,
-        :GMETAD_ROOTDIR  => node[:ganglia][:home_dir],
-        :GWEB_STATEDIR   => "#{node[:ganglia][:home_dir]}/web-state",
-        :APACHE_USER     => w_user
-    )
-    notifies  :run, "bash[web2_clean]", :immediately
+  source      'web2.Makefile.erb'
+  backup      false
+  variables(
+    :GDESTDIR        => w_install_dir,
+    :GMETAD_ROOTDIR  => node[:ganglia][:home_dir],
+    :GWEB_STATEDIR   => "#{node[:ganglia][:home_dir]}/web-state",
+    :APACHE_USER     => w_user
+  )
+  notifies  :run, "bash[web2_clean]", :immediately
 end
 
 bash 'web2_install' do
-    user        'root'
-    group       'root'
-    cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
-
-    code        'make install'
-    action      :run
+  user        'root'
+  group       'root'
+  cwd         "#{w_deploy_dir}/#{w_name}-#{w_version}"
+  code        'make install'
+  action      :run
 end
 
 template "#{w_install_dir}/conf.php" do
-    user        w_user
-    group       w_group
-    source      'conf.php.erb'
+  user        w_user
+  group       w_group
+  source      'conf.php.erb'
 end
-

@@ -24,15 +24,15 @@ include_recipe 'ganglia::plugin'
 package 'ganglia-modules-linux'
 
 ganglia_plugin 'io_module' do
-    source      '/usr/lib/ganglia/modio.so'
-    metrics ({  'io_reads'          => 'total disk reads',
-                'io_nread'          => 'total bytes read',
-                'io_writes'         => 'total disk writes',
-                'io_nwrite'         => 'total bytes written',
-                'io_max_svc_time'   => 'max service time seen across disks',
-                'io_max_wait_time'  => 'max queue time seen across disks',
-                'io_busymax'        => 'max IO busy time seen across disks' })
-
-    collect_time    20
-    threshold_time  30
+  source      '/usr/lib/ganglia/modio.so'
+  metrics ({  'io_reads'          => 'total disk reads',
+              'io_nread'          => 'total bytes read',
+              'io_writes'         => 'total disk writes',
+              'io_nwrite'         => 'total bytes written',
+              'io_max_svc_time'   => 'max service time seen across disks',
+              'io_max_wait_time'  => 'max queue time seen across disks',
+              'io_busymax'        => 'max IO busy time seen across disks'
+  })
+  collect_time    20
+  threshold_time  30
 end

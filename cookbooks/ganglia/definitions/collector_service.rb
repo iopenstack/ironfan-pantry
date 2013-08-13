@@ -19,33 +19,27 @@
 #
 
 define(:collector_service) do
-    name  = params[:name]
-    realm = node[:ganglia][:grid] || ""
-
-    port = get_previously_announced_collector_port(name) rescue allocate_free_port
-
-    # Set up service
-    runit_service "ganglia_collector_#{name}" do
-        run_state       :nothing
-        template_name   'ganglia_collector'
-        options         ({ 
-            :dirs    => {
-                :pid    => node[:ganglia][:pid_dir],
-                :conf   => node[:ganglia][:conf_dir],
-                :log    => node[:ganglia][:log_dir]
-            },
-            :user    => node[:ganglia][:user],
-            :group   => node[:ganglia][:group],
-            :cluster => {
-                :name   => name
-            }
-        })
-    end
-
-    Chef::Log.debug("Ganglia::collector_service --- #{node[:ganglia][:collector][:run_state]} monitoring service for cluster '#{realm}::#{name}' @ #{private_ip_of(node)}:#{port}")
-
-    # make sure to announce the service each chef-client run
-    # otherwise the announcement will be gone on the chef-server
-    announce(:ganglia, "collector-#{name}", {:recv_port => port, :cluster_id => name, :realm => realm } )
+  name  = params[:name]
+  realm = node[:ganglia][:grid] || ""
+  port = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND cluster_name:#{name}").first[:ganglia][:send_to_udp_port]
+  # Set up service
+  runit_service "ganglia_collector_#{name}" do
+    run_state       :nothing
+    template_name   'ganglia_collector'
+    options         ({ 
+      :dirs    => {
+        :pid    => node[:ganglia][:pid_dir],
+        :conf   => node[:ganglia][:conf_dir],
+        :log    => node[:ganglia][:log_dir]
+      },
+      :user    => node[:ganglia][:user],
+      :group   => node[:ganglia][:group],
+      :cluster => { :name   => name }
+    })
+  end
+  Chef::Log.debug("Ganglia::collector_service --- #{node[:ganglia][:collector][:run_state]} monitoring service for cluster '#{realm}::#{name}' @ #{private_ip_of(node)}:#{port}")
+  # make sure to announce the service each chef-client run
+  # otherwise the announcement will be gone on the chef-server
+  node.set[:ganglia][:collectors][name] = { :recv_port => port, :cluster_id => name, :realm => realm }
 end
 

@@ -28,122 +28,65 @@ include Ironfan::Discovery
 
 module GangliaHelper
 
-    def get_previously_announced_collector_port(cluster_id)
-        realm = node[:ganglia][:grid] || ""
-        key   = Ironfan::Component.fullname(realm, :ganglia, "collector-#{cluster_id}")
-        elem  = search(:node, "announces:#{key}")[0]
-        port  = elem[:announces][key][:info][:recv_port].to_i
+  # true  if :ganglia:generator has been announced by this node
+  def is_generator?
+    r = node.run_list.include? "role[ganglia_generator]"
+    Chef::Log.info("Ganglia::helper::is_generator? => #{r}")
+    r
+  end
 
-        Chef::Log.debug("Ganglia::helper::get_previously_announced_collector_port for: #{key} => port:#{port}")
-        port
+  def own_collectors
+    r = node[:ganglia][:collectors]
+    Chef::Log.info("Ganglia::helper::own_collectors => #{r.inspect}")
+    r
+  end
+
+  def own_collectors_data
+    r = Hash.new
+    own_collectors.keys.each do |k|
+      ip         = node['launch_spec']['ipv4']['local']
+      port       = node[:ganglia][:collectors][k][:recv_port].to_i
+      cluster_id = node[:ganglia][:collectors][k][:cluster_id]
+      r[cluster_id] = ip, port
     end
-
-    # true  if :ganglia:generator has been announced by this node
-    def is_generator?
-        realm = node[:ganglia][:grid] || ""
-        r = announced_services(:ganglia, [:generator], realm).any?
-        Chef::Log.debug("Ganglia::helper::is_generator? => #{r}")
-        r
-    end
-
-    def own_collectors
-        realm = node[:ganglia][:grid]
-        component_name = Ironfan::Component.fullname(realm, :ganglia, "collector-")
-        r = node[:announces].select{ |ann| ann.start_with?(component_name) }
-        Chef::Log.debug("Ganglia::helper::own_collectors => #{r.inspect}")
-        r
-    end
-
-    def own_collectors_data
-        r = Hash.new
-        own_collectors.keys.each do |k|
-            ip         = private_ip_of(node)
-            port       = node[:announces][k][:info][:recv_port].to_i
-            cluster_id = node[:announces][k][:info][:cluster_id]
-            r[cluster_id] = ip, port
-        end
-
-        Chef::Log.debug("Ganglia::helper::own_collectors_data => r:#{r.inspect}")
-        r
-    end
-
-    def number_of_own_collectors
-        r = own_collectors.length
-        Chef::Log.debug("Ganglia::helper::number_of_own_collectors => #{r}")
-        r
-    end
-
-    # check if collector is already announced for this cluster_id
-    # use 'search' i.s.o. 'discover' because we also want to find our own node,
-    # which is filtered out by 'discover/discover_all'
-    def was_collector_previously_announced?(cluster_id)
-        realm = node[:ganglia][:grid] || ""
-        component_name = Ironfan::Component.fullname(realm, :ganglia, "collector-#{cluster_id}")
-        r = search(:node, "announces:#{component_name}").any? rescue false
-        Chef::Log.debug("Ganglia::helper::is_collector_already_announced? => #{r}")
-        r
-    end
+    Chef::Log.info("Ganglia::helper::own_collectors_data => r:#{r.inspect}")
+    r
+  end
 
     # true  if :ganglia:collector has been nannounced by this node
     def is_collector?
-        r = number_of_own_collectors > 0
-        Chef::Log.debug("Ganglia::helper::is_collector? => #{r}")
-        r
-    end
-
-    def allocate_free_port
-        all_ports = *(node[:ganglia][:collector][:start_port]..node[:ganglia][:collector][:end_port])
-        used_ports = []
-        node[:ganglia][:collector][:used_ports].each do |p|
-            used_ports << p
-        end
-        
-        free_port = (all_ports - used_ports)[0]
-        used_ports << free_port
-        node.set[:ganglia][:collector][:used_ports] = used_ports
-
-        Chef::Log.debug("Ganglia::helper::next_free_port => free_port:#{free_port}")
-        free_port
+      r = node.run_list.include? "role[ganglia_collector]"
+      Chef::Log.info("Ganglia::helper::is_collector? => #{r}")
+      r
     end
 
     def find_all_monitorable_clusters
-        cluster_list = []
-        realm        = node[:ganglia][:grid] || ""
-
-        if node[:ganglia][:collector][:cluster_names].nil? || node[:ganglia][:collector][:cluster_names].empty?
-            discover_all(:ganglia, :generator, realm).each do |gen|
-                cluster_list << gen.info[:info][:cluster_id]
-            end
-        else
-            cluster_list = node[:ganglia][:collector][:cluster_names]
+      cluster_list = []
+      realm        = node[:ganglia][:grid] || ""
+      nodes = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:ganglia_generator")
+      Chef::Log.info("Ganglia::helper::find_all_monitorable_clusters => cluster_list:#{nodes.inspect}")
+      if not nodes.nil?
+        nodes.each do |n|
+          cluster_list << n['launch_spec']['cluster_name']
         end
-
-        Chef::Log.debug("Ganglia::helper::find_all_monitorable_clusters => cluster_list:#{cluster_list.inspect}")
-        cluster_list.sort.uniq
-    end                 
-
-
-    def has_collector?(cluster_id)
-        realm     = node[:ganglia][:grid] || ""
-        collector = discover(:ganglia, "collector-#{cluster_id}", realm) rescue nil
-        Chef::Log.debug("Ganglia::helper::has_collector? => collector:#{collector.inspect}")
-
-        (collector != nil) ? true : false
+      end
+      Chef::Log.info("Ganglia::helper::find_all_monitorable_clusters => cluster_list:#{cluster_list.inspect}")
+      cluster_list.sort.uniq
     end
 
     def find_collector_addr_info(cluster_id)
-        port      = nil
-        addr      = nil
-        realm     = node[:ganglia][:grid] || ""
-        collector = discover(:ganglia, "collector-#{cluster_id}", realm) rescue nil
-        if (collector != nil)
-            addr = collector.private_ip
-            port = collector.info[:info][:recv_port].to_i
-        end
-
-        Chef::Log.debug("Ganglia::helper::find_collector_addr_info => addr:#{addr}, port:#{port}")
-        return addr, port
+      port      = nil
+      addr      = nil
+      realm     = node[:ganglia][:grid] || ""
+      collector = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:ganglia_collector").first rescue nil
+      if (collector != nil)
+        addr = collector['launch_spec']['ipv4']['local']
+        port = collector[:ganglia][:collectors][cluster_id][:recv_port].to_i
+      end
+      Chef::Log.info("Ganglia::helper::find_collector_addr_info => addr:#{addr}, port:#{port}")
+      return addr, port
     end
+    
 end
 
 class Chef::Recipe              ; include GangliaHelper ; end

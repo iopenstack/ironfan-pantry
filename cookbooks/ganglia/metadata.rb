@@ -2,7 +2,7 @@ maintainer          "Portico"
 maintainer_email    "dev@portico.io"
 license             "Apache 2.0"
 long_description    IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version             IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
+version             '1.0.8'
 
 description         "Ganglia: a distributed high-performance monitoring system"
 

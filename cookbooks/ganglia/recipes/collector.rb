@@ -57,16 +57,16 @@ end
 
 # global data storage for ganglia (gmetad)
 runit_service "ganglia_metad" do
-    run_state :nothing
-    options({
-        :dirs => {
-            :pid    => node[:ganglia][:pid_dir],
-            :conf   => node[:ganglia][:conf_dir],
-            :log    => node[:ganglia][:log_dir]
-        },
-        :user  => node[:ganglia][:user],
-        :group => node[:ganglia][:group]
-    })
+  run_state :nothing
+  options({
+    :dirs => {
+      :pid    => node[:ganglia][:pid_dir],
+      :conf   => node[:ganglia][:conf_dir],
+      :log    => node[:ganglia][:log_dir]
+    },
+    :user  => node[:ganglia][:user],
+    :group => node[:ganglia][:group]
+  })
 end
 
 find_all_monitorable_clusters.each do |cluster|

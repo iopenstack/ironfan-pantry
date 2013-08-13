@@ -26,6 +26,6 @@ package "ganglia-webfrontend"
 # /var/www/ganglia-stats -> /usr/share/ganglia-webfrontend
 
 link '/var/www/ganglia-stats' do
-    to      '/usr/share/ganglia-webfrontend'
-    action  :create
+  to      '/usr/share/ganglia-webfrontend'
+  action  :create
 end

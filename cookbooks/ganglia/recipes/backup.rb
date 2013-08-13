@@ -1,24 +1,20 @@
 include_recipe "github"
 include_recipe "cron"
-
 package "s3cmd"
 
 git "/mnt/hecube" do
-    repo        "git@github.com:Technicolor-Portico/hecube.git"
-    revision    "master"
-    user        user
-    group       group
-    action      :sync
+  repo        "git@github.com:Technicolor-Portico/hecube.git"
+  revision    "master"
+  user        user
+  group       group
+  action      :sync
 end
 
-
-
+aws_dbi = data_bag_item('global_access_settings', 'aws')
 config = {
-    :access_key => "AKIAJ37FZV5DSRKGODTA",
-    :secret_key => "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"
+  :access_key => aws_dbi["access_key"],
+  :secret_key => aws_dbi["secret_key"],
 }
-
-
 
 template "/root/.s3cfg" do
     source      's3cfg.erb'
@@ -28,7 +24,6 @@ template "/root/.s3cfg" do
     mode        '0644'
     variables(config)
 end
-
 
 cron "ganglia_backup" do
   minute 0
