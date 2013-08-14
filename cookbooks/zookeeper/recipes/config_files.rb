@@ -25,7 +25,12 @@
 
 # Sorting ensures the host list is stable so the chef run is idempotent
 # (otherwise the server will flap)
-zookeeper_hosts = discover_all(:zookeeper, :server).map{|svr| [ svr.node[:zookeeper][:zkid], svr.node[:ipaddress] ] }.sort!
+zookeepers = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:zookeeper_server") rescue []
+zookeeper_hosts = []
+zookeepers.each do |zk|
+  zookeeper_hosts << [ (zk['launch_spec']['facet_index'].to_s.to_i+1), zk['launch_spec']['ipv4']['local'] ]
+end
+zookeeper_hosts.sort!
 
 # use explicit value if set, otherwise make the leader a server iff there are
 # four or more zookeepers kicking around
