@@ -24,10 +24,10 @@
 #
 
 if is_collector?
-    # monitoring_groups = map of all 'monitorable clusters' with their contact address:
-    # cluster_name, ip:port
-    # here, as all cluster collectors normally run on the same node as gmetad, 'ip' would always be 'localhost'
-
+  # monitoring_groups = map of all 'monitorable clusters' with their contact address:
+  # cluster_name, ip:port
+  # here, as all cluster collectors normally run on the same node as gmetad, 'ip' would always be 'localhost'
+  
     own_collectors_data.each do |cluster_id, collector_addr|
         ip   = collector_addr[0]
         port = collector_addr[1]
@@ -78,6 +78,9 @@ if is_collector?
 
     h = Hash.new
     own_collectors_data.map{|k,v| h[k] = "localhost:#{v[1]}"}
+    if not h.has_key? node['launch_spec']['cluster_name']
+      h[ node['launch_spec']['cluster_name'] ] = "localhost:#{node[:ganglia][:send_to_udp_port]}"
+    end
 
     Chef::Log.debug("Ganglia::config_files --- monitor_groups: #{h.inspect}")
 

@@ -59,4 +59,3 @@ runit_service "ganglia_generator" do
 end
 
 node.set[:ganglia][:send_to_udp_port] = node[:ganglia][:send_to_udp_port]
-

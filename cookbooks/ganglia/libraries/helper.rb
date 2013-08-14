@@ -31,12 +31,14 @@ module GangliaHelper
   # true  if :ganglia:generator has been announced by this node
   def is_generator?
     r = node.run_list.include? "role[ganglia_generator]"
+    r = node.run_list.include? "role[ganglia_collector]" unless r
     Chef::Log.info("Ganglia::helper::is_generator? => #{r}")
     r
   end
 
   def own_collectors
     r = node[:ganglia][:collectors]
+    r = Hash.new if r.nil?
     Chef::Log.info("Ganglia::helper::own_collectors => #{r.inspect}")
     r
   end
@@ -78,10 +80,15 @@ module GangliaHelper
       port      = nil
       addr      = nil
       realm     = node[:ganglia][:grid] || ""
-      collector = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:ganglia_collector").first rescue nil
-      if (collector != nil)
-        addr = collector['launch_spec']['ipv4']['local']
-        port = collector[:ganglia][:collectors][cluster_id][:recv_port].to_i
+      if is_collector?
+        addr = node['launch_spec']['ipv4']['local']
+        port = node[:ganglia][:send_to_udp_port]
+      else
+        collector = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:ganglia_collector").first rescue nil
+        if not collector.nil?
+          addr = collector['launch_spec']['ipv4']['local']
+          port = collector[:ganglia][:collectors][cluster_id][:recv_port].to_i
+        end
       end
       Chef::Log.info("Ganglia::helper::find_collector_addr_info => addr:#{addr}, port:#{port}")
       return addr, port

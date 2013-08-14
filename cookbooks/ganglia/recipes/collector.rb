@@ -30,6 +30,19 @@ package "ganglia-monitor"
 # after installation, the services are started automatically
 # stop them first ...
 kill_old_service('gmetad')
+
+# the above will not take care of the service started after installing the package, we need to take care of that:
+script "kill-gemtad-services" do
+  interpreter "bash"
+  user "root"
+  code <<-EOS
+    list=$(ps aux | grep gmetad | grep -v grep | awk '{print $2}')
+    if [ -n "$list" ]; then
+      kill $list
+    fi
+  EOS
+end
+
 kill_old_service('ganglia-monitor'){ pattern 'gmond' }
 
 #
@@ -50,14 +63,14 @@ volume_dirs('ganglia.home') do
 end
 
 directory "#{node[:ganglia][:home_dir]}/rrds" do
-    owner       node[:ganglia][:user]
-    group       node[:ganglia][:group]
-    action      :create
+  owner       node[:ganglia][:user]
+  group       node[:ganglia][:group]
+  action      :create
 end
 
 # global data storage for ganglia (gmetad)
 runit_service "ganglia_metad" do
-  run_state :nothing
+  run_state :stop
   options({
     :dirs => {
       :pid    => node[:ganglia][:pid_dir],
