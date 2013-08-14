@@ -21,7 +21,11 @@
 define(:collector_service) do
   name  = params[:name]
   realm = node[:ganglia][:grid] || ""
-  port = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND cluster_name:#{name}").first[:ganglia][:send_to_udp_port]
+  
+  port = nil
+  looked_up_node = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND cluster_name:#{name}").first
+  port = looked_up_node[:ganglia][:send_to_udp_port] rescue nil # not in a single line, I want to rescue only when port is not available
+  
   # Set up service
   runit_service "ganglia_collector_#{name}" do
     run_state       :nothing
