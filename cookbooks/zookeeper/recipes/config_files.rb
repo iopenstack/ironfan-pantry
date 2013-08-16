@@ -42,7 +42,7 @@ end
 template_variables = {
   :zookeeper         => node[:zookeeper],
   :zookeeper_hosts   => zookeeper_hosts,
-  :myid              => node[:zookeeper][:zkid],
+  :myid              => (node['launch_spec']['facet_index'].to_s.to_i+1),
 }
 
 %w[ zoo.cfg log4j.properties].each do |conf_file|
