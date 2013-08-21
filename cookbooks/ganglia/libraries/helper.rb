@@ -65,7 +65,7 @@ module GangliaHelper
     def find_all_monitorable_clusters
       cluster_list = []
       realm        = node[:ganglia][:grid] || ""
-      nodes = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:ganglia_generator")
+      nodes = search(:node, "(cluster_set:#{node['launch_spec']['cluster_set']} AND role:ganglia_generator) OR (cluster_set:#{node['launch_spec']['cluster_set']} AND role:ganglia_collector)")
       Chef::Log.info("Ganglia::helper::find_all_monitorable_clusters => cluster_list:#{nodes.inspect}")
       if not nodes.nil?
         nodes.each do |n|
