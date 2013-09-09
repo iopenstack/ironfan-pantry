@@ -76,6 +76,24 @@ module GangliaHelper
       cluster_list.sort.uniq
     end
 
+    def find_all_monitorable_clusters_local
+      cluster_list = []
+      ::Dir.mkdir("/tmp/chef-repo") if not ::Dir.exists?("/tmp/chef-repo")
+      Chef::Log.info(" :::::::::::: Ganglia::helper::find_all_monitorable_clusters_local => Checking out the Chef repo")
+      output = `cd /tmp/chef-repo && git clone #{node['ganglia']['portico']['repository']} .`
+      Chef::Log.info(" :::::::::::: Ganglia::helper::find_all_monitorable_clusters_local => GITHUB: #{output}")
+      Chef::Log.info(" :::::::::::: Ganglia::helper::find_all_monitorable_clusters_local => Grepping for stuff")
+      data = `grep -r ':send_to_udp_port' /tmp/chef-repo/clusters/#{node['launch_spec']['cluster_set']}`
+      data.each_line do |line|
+        Chef::Log.info(" :::::::::::: Ganglia::helper::find_all_monitorable_clusters_local => Found #{line}")
+        cluster_data = line.match(/(.*)[\s|\t]{1,}:send_to_udp_port[\s|\t]{1,}=>[\s|\t]{1,}(\d{4,5}).*/).to_a
+        cluster_name = "#{node['launch_spec']['cluster_set']}_#{::File.basename(cluster_data[1], ".*")}"
+        cluster_list.push({ :cluster_name => cluster_name, :udp_port => cluster_data[2] })
+      end
+      `rm -Rf /tmp/chef-repo`
+      cluster_list
+    end
+
     def find_collector_addr_info(cluster_id)
       port      = nil
       addr      = nil

@@ -20,11 +20,8 @@
 
 define(:collector_service) do
   name  = params[:name]
+  udp_port = params[:udp_port]
   realm = node[:ganglia][:grid] || ""
-  
-  port = nil
-  looked_up_node = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND cluster_name:#{name}").first
-  port = looked_up_node[:ganglia][:send_to_udp_port] rescue nil # not in a single line, I want to rescue only when port is not available
   
   # Set up service
   runit_service "ganglia_collector_#{name}" do
@@ -41,9 +38,9 @@ define(:collector_service) do
       :cluster => { :name   => name }
     })
   end
-  Chef::Log.debug("Ganglia::collector_service --- #{node[:ganglia][:collector][:run_state]} monitoring service for cluster '#{realm}::#{name}' @ #{private_ip_of(node)}:#{port}")
+  Chef::Log.debug("Ganglia::collector_service --- #{node[:ganglia][:collector][:run_state]} monitoring service for cluster '#{realm}::#{name}' @ #{private_ip_of(node)}:#{udp_port}")
   # make sure to announce the service each chef-client run
   # otherwise the announcement will be gone on the chef-server
-  node.set[:ganglia][:collectors][name] = { :recv_port => port, :cluster_id => name, :realm => realm }
+  node.set[:ganglia][:collectors][name] = { :recv_port => udp_port, :cluster_id => name, :realm => realm }
 end
 
