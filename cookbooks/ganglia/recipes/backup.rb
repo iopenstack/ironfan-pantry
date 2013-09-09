@@ -1,4 +1,3 @@
-include_recipe "github"
 include_recipe "cron"
 package "s3cmd"
 

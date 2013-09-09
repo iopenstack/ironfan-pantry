@@ -1,5 +1,3 @@
-include_recipe 'github'
-
 package 'pkg-config'
 package 'libtool'
 

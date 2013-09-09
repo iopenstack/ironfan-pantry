@@ -13,7 +13,6 @@ depends          "zeromq"
 depends          "jzmq"
 depends          "silverware"
 depends          "install_from"
-depends          "github"
 depends          "ganglia"
 
 recipe           "storm::default",                  "Base configuration for storm"

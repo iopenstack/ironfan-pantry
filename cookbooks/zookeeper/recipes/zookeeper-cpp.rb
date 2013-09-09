@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe "github"
 include_recipe "boost::release"
 
 package "cmake"

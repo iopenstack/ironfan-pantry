@@ -11,7 +11,6 @@ depends  "runit"
 depends  "volumes"
 depends  "silverware"
 depends  "build-essential"
-depends  "github"
 depends  "cron"
 depends  "ark"
 

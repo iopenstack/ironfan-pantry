@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe "github"
-
 sources_dir = "#{Chef::Config[:file_cache_path]}"
 
 # Redis client library for C

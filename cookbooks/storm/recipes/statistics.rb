@@ -20,7 +20,6 @@
 
 include_recipe 'storm::default'
 include_recipe 'ganglia::plugin'
-include_recipe 'github'
 
 deploy_dir = '/usr/local/storm_ganglia'
 

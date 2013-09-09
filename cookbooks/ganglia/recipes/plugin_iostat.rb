@@ -19,7 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe 'github'
 include_recipe 'build-essential'
 include_recipe 'ganglia::plugin'
 
