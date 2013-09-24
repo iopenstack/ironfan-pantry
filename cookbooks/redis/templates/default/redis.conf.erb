@@ -114,7 +114,7 @@ slaveof <%= @redis[:master_server] %> <%= @redis[:master_port] %>
 # Glue small output buffers together in order to send small replies in a
 # single TCP packet. Uses a bit more CPU but most of the times it is a win
 # in terms of number of queries per second. Use 'yes' if unsure.
-glueoutputbuf <%= @redis[:glueoutputbuf] %>
+#glueoutputbuf <%= @redis[:glueoutputbuf] %>
 
 # Use object sharing. Can save a lot of memory if you have many common
 # string in your dataset, but performs lookups against the share objects
@@ -132,5 +132,5 @@ glueoutputbuf <%= @redis[:glueoutputbuf] %>
 # your development environment so that we can test it better.
 # shareobjects <%= @redis[:shareobjects] %>
 <% if @redis[:shareobjects] == "yes" %>
-shareobjectspoolsize <%= @redis[:shareobjectspoolsize] %>
+#shareobjectspoolsize <%= @redis[:shareobjectspoolsize] %>
 <% end %>
