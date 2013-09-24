@@ -4,7 +4,7 @@ default[:zookeeper][:cluster_name]           = node[:cluster_name]
 #
 # Locations
 #
-default[:zookeeper][:home_dir]               = '/usr/lib/zookeeper'
+default[:zookeeper][:home_dir]               = '/opt/zookeeper'
 default[:zookeeper][:conf_dir]               = '/etc/zookeeper'
 default[:zookeeper][:log_dir]                = '/var/log/zookeeper'
 default[:zookeeper][:pid_dir]                = '/var/run/zookeeper'
