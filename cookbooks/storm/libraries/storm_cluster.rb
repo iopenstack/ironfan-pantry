@@ -32,11 +32,11 @@ module StormCluster
         if node[:storm][:zookeeper][:servers].any?
             node[:storm][:zookeeper][:port]
         else
-          if node[:storm][:zookeeper][:cluster_name].nil?
-            discover(:zookeeper, :server).node_info[:client_port] rescue ""
-          else
-            discover(:zookeeper, :server, node[:storm][:zookeeper][:cluster_name]).node_info[:client_port] rescue ""
-          end
+            zookeeper_server = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:zookeeper_server").first rescue nil
+            unless zookeeper_server.nil?
+                return zookeeper_server['zookeeper']['client_port']
+            end
+            return ""
         end
     end
 
@@ -45,22 +45,23 @@ module StormCluster
         if node[:storm][:zookeeper][:servers].any?
             node[:storm][:zookeeper][:servers]
         else
-          if node[:storm][:zookeeper][:cluster_name].nil?
-            discover_all(:zookeeper, :server).map(&:private_ip).sort.uniq rescue ""
-          else
-            discover_all(:zookeeper, :server,  node[:storm][:zookeeper][:cluster_name]).map(&:private_ip).sort.uniq rescue ""
-          end
+            zk_hosts = []
+            zookeeper_servers = search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:zookeeper_server")
+            if not zookeeper_servers.nil?
+                zk_hosts = zookeeper_servers.map{|s| s['launch_spec']['ipv4']['local'] }
+            end
+            zk_hosts.sort.uniq
         end
     end
 
     # discover nimbus ip address
     def storm_nimbus
         if node[:storm][:nimbus][:host].nil?
-            discover(:storm, :nimbus).private_ip rescue nil
+            search(:node, "cluster_set:#{node['launch_spec']['cluster_set']} AND role:storm_master").first['launch_spec']['ipv4']['local'] rescue nil
         else
             node[:storm][:nimbus][:host]
         end
-    end 
+    end
 
     # List of the storm services this machine provides
     def storm_services
