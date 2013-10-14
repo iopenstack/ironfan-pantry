@@ -22,7 +22,7 @@ maven_home = node['maven']["m2_home"]
 
 java_ark "maven3" do
   url node['maven']['3']['url']
-  checksum node['maven']['3']['checksum']
+#  checksum node['maven']['3']['checksum']
   app_home maven_home
   bin_cmds ["mvn"]
   action :install
